@@ -1,32 +1,104 @@
 ---
+// src/pages/experience.astro
 import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 import Main from "@/layouts/Main.astro";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
-import Card from "@/components/Card.astro";
 import Pagination from "@/components/Pagination.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
 import { SITE } from "@/config";
 
 export const getStaticPaths = (async ({ paginate }) => {
-  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  const posts = await getCollection("blog", ({ data }) =>
+    !data.draft && data.tags?.includes("experience")
+  );
   return paginate(getSortedPosts(posts), { pageSize: SITE.postPerPage });
 }) satisfies GetStaticPaths;
 
 const { page } = Astro.props;
+
+const experiences = [
+  {
+    title: "Cybersecurity Engineer",
+    company: "Ignite Africa",
+    date: "Jun 2024 – May 2025",
+    description: `At Ignite Africa I designed and enforced security architectures with Check Point firewalls and Microsoft Intune, defined both internal and external policies, and leveraged Rapid7 to identify and remediate vulnerabilities across our environment.`,
+    techStack: ["Check Point", "Microsoft Intune", "Internal & External Policy", "Rapid7"],
+  },
+  {
+    title: "Software Engineer",
+    company: "Accenture",
+    date: "Feb 2023 – Nov 2023",
+    description: `At Accenture I built full-stack applications using Java and Spring Boot, exposed RESTful APIs consumed by React.js frontends, and managed data persistence in MongoDB.`,
+    techStack: ["Java", "Spring Boot", "RESTful API", "React.js", "MongoDB"],
+  },
+  {
+    title: "Freelance Software Engineer",
+    company: "Fiverr",
+    date: "Aug 2022 – Feb 2023",
+    description: `On Fiverr I delivered end-to-end solutions including database design, backend scripting, containerization, and API development to small business clients.`,
+    techStack: ["MySQL", "Python", "Docker", "RESTful API", "C"],
+  },
+];
 ---
 
-<Layout title={`Posts | ${SITE.title}`}>
+<Layout title={`Experiences | ${SITE.title}`}>
   <Header />
-  <Main pageTitle="Posts" pageDesc="All the articles I've posted.">
-    <ul>
-      {page.data.map(data => <Card {...data} />)}
-    </ul>
+
+  <Main
+    pageTitle="Experiences"
+    pageDesc="A chronicle of my engineering roles and achievements."
+  >
+      <div class="h-1 w-20 bg-blue-500 dark:bg-orange-500 mt-2 mb-8 rounded"></div>
+
+    <div class="mx-auto max-w-4xl px-6 py-12">
+      <!-- Section heading -->
+
+      <!-- Single-column list of experiences -->
+      <div class="flex flex-col gap-8">
+        {experiences.map((exp, i) => (
+          <article
+            class="
+              relative group
+              border-l-4 border-blue-500 dark:border-orange-500
+              rounded-2xl bg-white dark:bg-zinc-900
+              p-6
+              shadow-lg hover:shadow-2xl
+              transition-all duration-300
+              transform hover:-translate-y-1
+            "
+            style={`animation: fadeInUp 0.5s ease ${i * 0.1}s both;`}
+          >
+            <h2 class="font-mono text-2xl font-semibold text-blue-500 dark:text-orange-500 mb-1">
+              {exp.title}
+            </h2>
+            <p class="text-sm text-muted-foreground mb-4">
+              {exp.company} · {exp.date}
+            </p>
+            <p class="mb-4 text-gray-700 dark:text-gray-300">
+              {exp.description}
+            </p>
+            <p class="font-semibold text-gray-800 dark:text-gray-100 mb-1">
+              Tech Stack:
+            </p>
+            <p class="text-gray-700 dark:text-gray-300">
+              {exp.techStack.join(", ")}
+            </p>
+          </article>
+        ))}
+      </div>
+    </div>
   </Main>
 
   <Pagination {page} />
-
   <Footer noMarginTop={page.lastPage > 1} />
+
+  <style>
+    @keyframes fadeInUp {
+      0%   { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </Layout>

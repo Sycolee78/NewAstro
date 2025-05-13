@@ -18,6 +18,7 @@ export type Props = StringTitleProp | ArrayTitleProp;
 const { props } = Astro;
 
 const backUrl = SITE.showBackButton ? Astro.url.pathname : "/";
+
 ---
 
 <Breadcrumb />
@@ -52,3 +53,5 @@ const backUrl = SITE.showBackButton ? Astro.url.pathname : "/";
     }
   });
 </script>
+
+

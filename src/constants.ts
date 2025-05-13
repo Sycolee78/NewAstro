@@ -11,25 +11,19 @@ import { SITE } from "@/config";
 export const SOCIALS = [
   {
     name: "Github",
-    href: "https://github.com/satnaing/astro-paper",
+    href: "https://github.com/Sycolee78",
     linkTitle: ` ${SITE.title} on Github`,
     icon: IconGitHub,
   },
   {
-    name: "X",
-    href: "https://x.com/username",
-    linkTitle: `${SITE.title} on X`,
-    icon: IconBrandX,
-  },
-  {
     name: "LinkedIn",
-    href: "https://www.linkedin.com/in/username/",
+    href: "https://www.linkedin.com/in/emmanuel-buruvuru-a20b46246/",
     linkTitle: `${SITE.title} on LinkedIn`,
     icon: IconLinkedin,
   },
   {
     name: "Mail",
-    href: "mailto:yourmail@gmail.com",
+    href: "mailto:emmanuelburuvuru@gmail.com",
     linkTitle: `Send an email to ${SITE.title}`,
     icon: IconMail,
   },
@@ -47,18 +41,6 @@ export const SHARE_LINKS = [
     href: "https://www.facebook.com/sharer.php?u=",
     linkTitle: `Share this post on Facebook`,
     icon: IconFacebook,
-  },
-  {
-    name: "X",
-    href: "https://x.com/intent/post?url=",
-    linkTitle: `Share this post on X`,
-    icon: IconBrandX,
-  },
-  {
-    name: "Telegram",
-    href: "https://t.me/share/url?url=",
-    linkTitle: `Share this post via Telegram`,
-    icon: IconTelegram,
   },
   {
     name: "Pinterest",

@@ -1,24 +1,118 @@
 ---
-import { getCollection } from "astro:content";
+// src/pages/projects.astro
 import Main from "@/layouts/Main.astro";
 import Layout from "@/layouts/Layout.astro";
-import Tag from "@/components/Tag.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
-import getUniqueTags from "@/utils/getUniqueTags";
 import { SITE } from "@/config";
 
-const posts = await getCollection("blog");
+// import your SVG as a URL so <img> can use it
+import githubIconUrl from "@/assets/icons/IconGitHub.svg?url";
 
-let tags = getUniqueTags(posts);
+const projects = [
+  {
+    title: "Avail Sport Application",
+    description:
+      "A FlutterFlow app connecting users with sports, gym, and educational activities in Mauritius.",
+    status: "In Progress",
+    technologies: ["FlutterFlow", "Firebase Database", "Figma Design"],
+    // on FlutterFlow – no repo yet
+    repo: null,
+    repoHint: "No public repo (built in FlutterFlow)",
+  },
+  {
+    title: "Online Classroom for Accenture",
+    description:
+      "Internal learning platform for Accenture employees, with live sessions and resource sharing.",
+    status: "Completed",
+    technologies: ["Spring Boot", "Java", "REST API", "React.js", "MongoDB"],
+    // private repo
+    repo: null,
+    repoHint: "Private company repo",
+  },
+  {
+    title: "Custom Machine Learning Models",
+    description:
+      "Created and deployed ML models to predict business‐specific metrics on Azure VMs.",
+    status: "Completed",
+    technologies: ["Python", "Anaconda", "Azure VMs", "LLaMA"],
+    // replace with your actual GitHub URL
+    repo: "https://github.com/yourusername/custom-ml-models",
+    repoHint: null,
+  },
+];
 ---
 
-<Layout title={`Tags | ${SITE.title}`}>
+<Layout title={`Projects | ${SITE.title}`}>
   <Header />
-  <Main pageTitle="Tags" pageDesc="All the tags used in posts.">
-    <ul>
-      {tags.map(({ tag, tagName }) => <Tag {tag} {tagName} size="lg" />)}
-    </ul>
+
+  <Main pageTitle="Projects" pageDesc="A selection of projects I’ve built or contributed to.">
+    <div class="h-1 w-20 bg-blue-500 dark:bg-orange-500 mt-2 mb-8 rounded"></div>
+    <div class="mx-auto max-w-4xl px-6 py-12">
+      <!-- Single column -->
+      <div class="flex flex-col gap-4">
+        {projects.map((proj, i) => (
+          <article
+            class="
+              relative group
+              border-l-4 border-blue-500 dark:border-orange-500
+              rounded-2xl bg-white dark:bg-zinc-900
+              p-6
+              shadow-lg hover:shadow-2xl
+              transition-all duration-300
+              transform hover:-translate-y-1
+            "
+            style={`animation: fadeInUp 0.5s ease ${i * 0.1}s both;`}
+          >
+            <div class="flex items-center justify-between">
+              <h2 class="font-mono text-2xl font-semibold text-blue-500 dark:text-orange-500">
+                {proj.title}
+              </h2>
+
+              <!-- GitHub icon -->
+              {proj.repo ? (
+                <a
+                  href={proj.repo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="opacity-80 hover:opacity-100 transition-opacity"
+                  title="View source on GitHub"
+                >
+                  <img src={githubIconUrl} alt="GitHub" class="w-6 h-6" />
+                </a>
+              ) : (
+                <span class="opacity-50 cursor-default" title={proj.repoHint}>
+                  <img src={githubIconUrl} alt="GitHub" class="w-6 h-6" />
+                </span>
+              )}
+            </div>
+
+            <p class="text-sm text-blue-600 dark:text-blue-400 italic mt-1">
+              Status: {proj.status}
+            </p>
+
+            <p class="mt-4 text-gray-700 dark:text-gray-300">
+              {proj.description}
+            </p>
+
+            <p class="mt-4 font-semibold text-gray-800 dark:text-gray-100">
+              Tech Stack:
+            </p>
+            <p class="text-gray-700 dark:text-gray-300">
+              {proj.technologies.join(", ")}
+            </p>
+          </article>
+        ))}
+      </div>
+    </div>
   </Main>
+
   <Footer />
+  
+  <style>
+    @keyframes fadeInUp {
+      0%   { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </Layout>

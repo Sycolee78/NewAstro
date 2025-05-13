@@ -1,4 +1,5 @@
 ---
+// src/pages/404.astro
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
@@ -6,24 +7,33 @@ import LinkButton from "@/components/LinkButton.astro";
 import { SITE } from "@/config";
 ---
 
-<Layout title={`404 Not Found | ${SITE.title}`}>
+<Layout title={`404 – Page Not Found | ${SITE.title}`}>
   <Header />
 
   <main
     id="main-content"
-    class="mx-auto flex max-w-3xl flex-1 items-center justify-center"
+    class="flex grow flex-col items-center justify-center px-4 py-32 text-center"
   >
-    <div class="mb-14 flex flex-col items-center justify-center">
-      <h1 class="text-9xl font-bold text-accent">404</h1>
-      <span aria-hidden="true">¯\_(ツ)_/¯</span>
-      <p class="mt-4 text-2xl sm:text-3xl">Page Not Found</p>
-      <LinkButton
-        href="/"
-        class="my-6 text-lg underline decoration-dashed underline-offset-8"
-      >
-        Go back home
-      </LinkButton>
-    </div>
+    <!-- Big monospace 404 -->
+    <h1 class="font-mono text-[6rem] font-bold leading-none text-blue-500 dark:text-orange-500">
+      404
+    </h1>
+
+    <!-- Friendly message -->
+    <p class="mt-4 text-xl text-slate-700 dark:text-slate-300 max-w-lg">
+      Oops — the page you’re looking for doesn’t exist.
+    </p>
+    <p class="mt-2 text-lg text-slate-500 dark:text-slate-400 max-w-md">
+      It may have been moved or removed. Try heading back home or using the menu above.
+    </p>
+
+    <!-- Home button -->
+    <LinkButton
+      href="/"
+      class="mt-8 px-6 py-3 text-lg font-semibold transition hover:bg-accent hover:text-white"
+    >
+      ← Back to Home
+    </LinkButton>
   </main>
 
   <Footer />

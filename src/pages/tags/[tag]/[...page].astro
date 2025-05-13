@@ -1,9 +1,10 @@
 ---
-import { getCollection } from "astro:content";
-import type { GetStaticPathsOptions } from "astro";
-import Main from "@/layouts/Main.astro";
+// src/pages/tag/[tag].astro
+import { getCollection, type CollectionEntry } from "astro:content";
+import type { GetStaticPathsOptions, Page } from "astro";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
+import Main from "@/layouts/Main.astro";
 import Footer from "@/components/Footer.astro";
 import Card from "@/components/Card.astro";
 import Pagination from "@/components/Pagination.astro";
@@ -11,40 +12,52 @@ import getUniqueTags from "@/utils/getUniqueTags";
 import getPostsByTag from "@/utils/getPostsByTag";
 import { SITE } from "@/config";
 
+// 1) Generate all the paginated tag pages
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const posts = await getCollection("blog");
   const tags = getUniqueTags(posts);
 
-  return tags.flatMap(({ tag, tagName }) => {
+  return tags.flatMap(({ tag }) => {
     const tagPosts = getPostsByTag(posts, tag);
-
     return paginate(tagPosts, {
       params: { tag },
-      props: { tagName },
+      props: { tagName: tag },
       pageSize: SITE.postPerPage,
     });
   });
 }
 
-const params = Astro.params;
-const { tag } = params;
-const { page, tagName } = Astro.props;
+// 2) Tell TS that params.tag is always a string
+const { tag } = Astro.params as { tag: string };
+
+// 3) Tell TS exactly what shape Astro.props has
+const { page, tagName } = Astro.props as {
+  page: Page<CollectionEntry<"blog">>;
+  tagName: string;
+};
 ---
 
 <Layout title={`Tag: ${tagName} | ${SITE.title}`}>
   <Header />
+
   <Main
-    pageTitle={[`Tag:`, `${tagName}`]}
+    pageTitle={["Tag:", tagName]}
     titleTransition={tag}
-    pageDesc={`All the articles with the tag "${tagName}".`}
+    pageDesc={`All the articles tagged "${tagName}".`}
   >
-    <h1 slot="title" transition:name={tag}>{`Tag:${tag}`}</h1>
-    <ul>
-      {page.data.map(data => <Card {...data} />)}
+    <h1 slot="title" transition:name={tag}>
+      Tag: {tagName}
+    </h1>
+
+    <ul class="space-y-6">
+      {page.data.map((post) => (
+        <Card {...post} />
+      ))}
     </ul>
   </Main>
 
-  <Pagination {page} />
+  <!-- Now page is correctly typed as a full Page<T> -->
+  <Pagination page={page} />
 
-  <Footer noMarginTop={page.lastPage > 1} />
+  <Footer noMarginTop={!page.lastPage} />
 </Layout>

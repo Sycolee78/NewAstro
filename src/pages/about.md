@@ -1,36 +1,38 @@
 ---
 layout: ../layouts/AboutLayout.astro
 title: "About"
+profile: ../assets/images/profile.png
 ---
 
-AstroPaper is a minimal, responsive and SEO-friendly Astro blog theme. I designed and crafted this based on [my personal blog](https://satnaing.dev/blog).
+<strong class="text-blue-500 dark:text-orange-500">Hello!</strong> I’m a Cybersecurity & Software Engineer who loves building clean, performant, and secure applications.
 
-This theme is aimed to be accessible out of the box. Light and dark mode are supported by
-default and additional color schemes can also be configured.
+My journey began in 2022 as a <strong class="text-blue-500 dark:text-orange-500">Freelance Software Engineer on Fiverr</strong>, where I delivered end-to-end solutions—designing MySQL schemas, writing Python scripts, containerizing with Docker, and exposing RESTful APIs in C and Python. In 2023, I joined <strong class="text-blue-500 dark:text-orange-500">Accenture</strong> to help architect and launch a full-stack online classroom using Java, Spring Boot, RESTful APIs, React.js, and MongoDB. After graduation, I pivoted into cybersecurity at <strong class="text-blue-500 dark:text-orange-500">Ignite Africa</strong>, designing and enforcing security architectures with Check Point firewalls, Microsoft Intune, internal/external policy frameworks, and Rapid7, while handling threat detection and incident response across our environments.
 
-This theme is self-documented \_ which means articles/posts in this theme can also be considered as documentations. So, see the documentation for more info.
+---
 
-<div>
-  <img src="/dev.svg" class="sm:w-1/2 mx-auto" alt="coding dev illustration">
-</div>
+## Skills
 
-## Tech Stack
+| Category                   | Technologies                                                                         |
+| -------------------------- | ------------------------------------------------------------------------------------ |
+| **Languages & Frameworks** | Java · JavaScript · Python · C · TypeScript · Node.js · React.js · Spring Boot       |
+| **DevOps & Cloud**         | Docker · Kubernetes · CI/CD (GitHub Actions) · Azure · AWS                            |
+| **Databases & Storage**    | MySQL · PostgreSQL · MongoDB · Firebase                                               |
+| **Security & Monitoring**  | Check Point · Microsoft Intune · Rapid7 · OWASP · SIEM · Vulnerability Scanning       |
+| **Styling & UI**           | Tailwind CSS · CSS3 · HTML5                                                           |
+| **Tools & Design**         | Git · GitHub · Figma · IntelliJ IDE                                                   |
 
-This theme is written in vanilla JavaScript (+ TypeScript for type checking) and a little bit of ReactJS for some interactions. TailwindCSS is used for styling; and Markdown is used for blog contents.
+---
 
-## Features
+## Interests
 
-Here are certain features of this site.
+I’m also passionate about:
 
-- fully responsive and accessible
-- SEO-friendly
-- light & dark mode
-- fuzzy search
-- super fast performance
-- draft posts
-- pagination
-- sitemap & rss feed
-- highly customizable
 
-If you like this theme, you can star/contribute to the [repo](https://github.com/satnaing/astro-paper).  
-Or you can even give any feedback via my [email](mailto:contact@satnaing.dev).
+- <strong class="text-blue-500 dark:text-orange-500">Badminton & Running</strong> – Training and competing with an eye toward elite performance  
+- <strong class="text-blue-500 dark:text-orange-500">Continuous Learning</strong> – Diving into data science, ML, and AI to build smarter systems  
+- <strong class="text-blue-500 dark:text-orange-500">Cultural Exchange</strong> – Studying new languages and traditions to connect across borders 
+- <strong class="text-blue-500 dark:text-orange-500">Creative Writing</strong> – Crafting introspective poetry that explores human emotion   
+
+---
+
+> 👉 **Let’s connect** — [email me](mailto:emmanuelburuvuru@example.com) or find me on [LinkedIn](https://www.linkedin.com/in/emmanuel-buruvuru-a20b46246/).

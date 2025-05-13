@@ -1,4 +1,5 @@
 ---
+// src/layouts/AboutLayout.astro
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import Breadcrumb from "@/components/Breadcrumb.astro";
@@ -18,11 +19,26 @@ const { frontmatter } = Astro.props;
 <Layout title={`${frontmatter.title} | ${SITE.title}`}>
   <Header />
   <Breadcrumb />
+
   <main id="main-content">
-    <section id="about" class="prose mb-28 max-w-3xl prose-img:border-0">
-      <h1 class="text-2xl tracking-wider sm:text-3xl">{frontmatter.title}</h1>
+    <section
+      id="about"
+      class="
+        prose
+        prose-strong:text-blue-500
+        dark:prose-dark
+        dark:prose-strong:text-orange-500
+        mb-28
+        max-w-3xl
+        prose-img:border-0
+      "
+    >
+      <h1 class="text-2xl tracking-wider sm:text-3xl">
+        {frontmatter.title}
+      </h1>
       <slot />
     </section>
   </main>
+
   <Footer />
 </Layout>
