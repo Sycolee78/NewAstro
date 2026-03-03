@@ -1,0 +1,50 @@
+---
+// src/components/StravaLink.astro
+import IconStrava from "@/assets/icons/IconStrava.svg";
+
+export interface Props {
+  profileUrl?: string;
+  variant?: "button" | "inline";
+}
+
+const { 
+  profileUrl = import.meta.env.STRAVA_PROFILE_URL || "https://www.strava.com/athletes/emmanuel-buruvuru",
+  variant = "button" 
+} = Astro.props;
+---
+
+{variant === "button" ? (
+  <section class="mb-12">
+    <div class="flex flex-col items-center gap-4 rounded-lg border border-border bg-muted/30 p-8 text-center sm:flex-row sm:justify-between sm:text-left">
+      <div>
+        <h3 class="text-lg font-semibold text-foreground">
+          Training Journey
+        </h3>
+        <p class="mt-1 text-foreground/70">
+          Follow my running and training progress on Strava.
+        </p>
+      </div>
+      <a
+        href={profileUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 rounded-lg bg-[#FC4C02] px-6 py-3 font-semibold text-white transition-all hover:bg-[#E34402] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#FC4C02] focus:ring-offset-2"
+        aria-label="Follow My Training Journey on Strava"
+      >
+        <IconStrava class="h-5 w-5" />
+        Follow My Training Journey
+      </a>
+    </div>
+  </section>
+) : (
+  <a
+    href={profileUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="inline-flex items-center gap-1.5 text-sm text-foreground/70 transition-colors hover:text-[#FC4C02]"
+    aria-label="View Strava profile"
+  >
+    <IconStrava class="h-4 w-4" />
+    Strava
+  </a>
+)}

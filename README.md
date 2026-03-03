@@ -130,6 +130,39 @@ docker build -t astropaper .
 docker run -p 4321:80 astropaper
 ```
 
+## Environment Variables
+
+The following environment variables can be configured:
+
+| Variable                           | Description                                          | Required |
+| :--------------------------------- | :--------------------------------------------------- | :------- |
+| `INSTAGRAM_ACCESS_TOKEN`           | Instagram Basic Display API access token             | Optional |
+| `STRAVA_PROFILE_URL`               | Your Strava profile URL                              | Optional |
+| `AGRIMESH_REPO_URL`                | GitHub URL for Agrimesh project                      | Optional |
+| `PUBLIC_GOOGLE_SITE_VERIFICATION`  | Google Search Console verification tag               | Optional |
+
+### Instagram Integration
+
+To enable the Instagram feed:
+
+1. Create a Facebook Developer account and set up an Instagram Basic Display app
+2. Generate a long-lived access token
+3. Add to your `.env` file:
+
+```bash
+INSTAGRAM_ACCESS_TOKEN=your-long-lived-access-token
+```
+
+The feed will automatically display your 6 most recent posts. If the token is not configured, a fallback UI with a link to your Instagram profile will be shown.
+
+### Strava Integration
+
+To customize the Strava profile link:
+
+```bash
+STRAVA_PROFILE_URL=https://www.strava.com/athletes/your-athlete-id
+```
+
 ## Google Site Verification (optional)
 
 You can easily add your [Google Site Verification HTML tag](https://support.google.com/webmasters/answer/9008080#meta_tag_verification&zippy=%2Chtml-tag) in AstroPaper using an environment variable. This step is optional. If you don't add the following environment variable, the google-site-verification tag won't appear in the HTML `<head>` section.
