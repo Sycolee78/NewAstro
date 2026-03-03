@@ -1,38 +1,56 @@
 ---
 layout: ../layouts/AboutLayout.astro
-title: "About"
-profile: ../assets/images/profile.png
+title: "About Me"
 ---
 
-<strong class="text-blue-500 dark:text-orange-500">Hello!</strong> I’m a Cybersecurity & Software Engineer who loves building clean, performant, and secure applications.
+I'm a <strong class="text-blue-500 dark:text-orange-500">Cybersecurity & Software Engineer</strong> who builds secure, performant systems that actually solve problems. But beyond the code, I'm also a competitive athlete and a writer who believes deeply in discipline, intentionality, and the pursuit of long-term mastery.
 
-My journey began in 2022 as a <strong class="text-blue-500 dark:text-orange-500">Freelance Software Engineer on Fiverr</strong>, where I delivered end-to-end solutions—designing MySQL schemas, writing Python scripts, containerizing with Docker, and exposing RESTful APIs in C and Python. In 2023, I joined <strong class="text-blue-500 dark:text-orange-500">Accenture</strong> to help architect and launch a full-stack online classroom using Java, Spring Boot, RESTful APIs, React.js, and MongoDB. After graduation, I pivoted into cybersecurity at <strong class="text-blue-500 dark:text-orange-500">Ignite Africa</strong>, designing and enforcing security architectures with Check Point firewalls, Microsoft Intune, internal/external policy frameworks, and Rapid7, while handling threat detection and incident response across our environments.
-
----
-
-## Skills
-
-| Category                   | Technologies                                                                         |
-| -------------------------- | ------------------------------------------------------------------------------------ |
-| **Languages & Frameworks** | Java · JavaScript · Python · C · TypeScript · Node.js · React.js · Spring Boot       |
-| **DevOps & Cloud**         | Docker · Kubernetes · CI/CD (GitHub Actions) · Azure · AWS                            |
-| **Databases & Storage**    | MySQL · PostgreSQL · MongoDB · Firebase                                               |
-| **Security & Monitoring**  | Check Point · Microsoft Intune · Rapid7 · OWASP · SIEM · Vulnerability Scanning       |
-| **Styling & UI**           | Tailwind CSS · CSS3 · HTML5                                                           |
-| **Tools & Design**         | Git · GitHub · Figma · IntelliJ IDE                                                   |
+This page is less of a résumé and more of a story — how I got here, what I've built, and where I'm going.
 
 ---
 
-## Interests
+## Where It Started
 
-I’m also passionate about:
+My journey into software began in <strong class="text-blue-500 dark:text-orange-500">2022 as a freelance engineer on Fiverr</strong>. I wasn't waiting for permission — I built what clients needed: MySQL schemas for data-heavy applications, Python automation scripts, Docker containers for deployment, and RESTful APIs in both C and Python.
 
-
-- <strong class="text-blue-500 dark:text-orange-500">Badminton & Running</strong> – Training and competing with an eye toward elite performance  
-- <strong class="text-blue-500 dark:text-orange-500">Continuous Learning</strong> – Diving into data science, ML, and AI to build smarter systems  
-- <strong class="text-blue-500 dark:text-orange-500">Cultural Exchange</strong> – Studying new languages and traditions to connect across borders 
-- <strong class="text-blue-500 dark:text-orange-500">Creative Writing</strong> – Crafting introspective poetry that explores human emotion   
+Those early projects taught me the fundamentals: how to scope work, ship on deadline, and communicate with people who don't speak "developer." It was messy, fast, and exactly the education I needed.
 
 ---
 
-> 👉 **Let’s connect** — [email me](mailto:emmanuelburuvuru@example.com) or find me on [LinkedIn](https://www.linkedin.com/in/emmanuel-buruvuru-a20b46246/).
+## Building at Scale
+
+In 2023, I joined <strong class="text-blue-500 dark:text-orange-500">Accenture</strong> to help architect and launch a full-stack online classroom platform. This wasn't freelance chaos — it was enterprise-grade engineering: Java on the backend with Spring Boot, React.js on the frontend, MongoDB for flexible data modeling, and REST APIs tying it all together.
+
+Working at scale meant thinking differently. Performance mattered. Code reviews mattered. System design decisions had downstream consequences. I learned to build software that could grow — and that other engineers could maintain.
+
+---
+
+## Securing the Systems
+
+After graduation, I pivoted into cybersecurity at <strong class="text-blue-500 dark:text-orange-500">Ignite Africa</strong>. The mission shifted from "build it" to "protect it."
+
+I designed and enforced security architectures using Check Point firewalls, managed endpoints with Microsoft Intune, and built internal/external policy frameworks. I worked with Rapid7 for vulnerability scanning and SIEM tools for threat detection and incident response. The role taught me that security isn't an afterthought — it's a discipline woven into every layer of a system.
+
+---
+
+## Beyond the Keyboard
+
+Engineering is what I do. But it's not all I am.
+
+<strong class="text-blue-500 dark:text-orange-500">Badminton & Running</strong> — I train with the mindset of an elite athlete. Badminton is my competitive edge (I'm working toward the Mauritian Open 2026), and running builds the aerobic base and mental toughness that spills into everything else. I track, iterate, and optimize my training the same way I approach code.
+
+<strong class="text-blue-500 dark:text-orange-500">Continuous Learning</strong> — I'm constantly diving into AI, machine learning, and data systems. Not just to stay relevant — but because building smarter systems genuinely excites me.
+
+<strong class="text-blue-500 dark:text-orange-500">Language & Culture</strong> — I speak French fluently and I'm learning German. Language unlocks culture, and culture expands perspective. It's all connected.
+
+<strong class="text-blue-500 dark:text-orange-500">Writing</strong> — I write introspective poetry that explores emotion, paradox, and the human condition. It's a different kind of engineering — building meaning from words.
+
+---
+
+## Let's Build Something Meaningful
+
+I'm always open to conversations about interesting problems, ambitious projects, or collaborations that matter.
+
+👉 **[Email me](mailto:emmanuelburuvuru@gmail.com)** or connect on **[LinkedIn](https://www.linkedin.com/in/emmanuel-buruvuru-a20b46246/)**.
+
+Let's build something worth building.
