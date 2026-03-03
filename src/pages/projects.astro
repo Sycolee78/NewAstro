@@ -1,0 +1,85 @@
+---
+// src/pages/projects.astro
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Breadcrumb from "@/components/Breadcrumb.astro";
+import ProjectCard from "@/components/ProjectCard.astro";
+import { SITE } from "@/config";
+
+// Environment variable for Agrimesh repo URL with fallback
+const AGRIMESH_REPO_URL = import.meta.env.AGRIMESH_REPO_URL || "https://github.com/Sycolee78/agrimesh-autonomous";
+
+interface Project {
+  title: string;
+  description: string;
+  status: "Completed" | "In Progress" | "Planned";
+  githubUrl?: string;
+  liveUrl?: string;
+  tags: string[];
+}
+
+const projects: Project[] = [
+  {
+    title: "Agrimesh",
+    description: "Agrimesh is an autonomous farm intelligence system that designs and simulates smart agricultural layouts based on geospatial land selection. The system integrates AI planning, environmental modeling, and agent-based positioning to optimize crop selection, livestock placement, and farm profitability.",
+    status: "In Progress",
+    githubUrl: AGRIMESH_REPO_URL,
+    tags: ["Python", "AI/ML", "Simulation", "Streamlit", "FastAPI", "React", "OpenStreetMap"],
+  },
+  {
+    title: "Personal Portfolio",
+    description: "A modern, accessible personal portfolio website built with Astro and Tailwind CSS. Features dynamic content, dark mode, and optimized performance with a perfect Lighthouse score.",
+    status: "Completed",
+    githubUrl: "https://github.com/Sycolee78/NewAstro",
+    liveUrl: "https://emmanuelburuvuru.dev",
+    tags: ["Astro", "TypeScript", "Tailwind CSS", "SEO"],
+  },
+];
+---
+
+<Layout title={`Projects | ${SITE.title}`}>
+  <Header />
+  <Breadcrumb />
+
+  <main id="main-content">
+    <section class="mb-28">
+      <h1 class="text-2xl font-bold tracking-wider sm:text-3xl mb-2">
+        Projects
+      </h1>
+      <p class="text-foreground/70 mb-8">
+        A collection of projects I've built — from AI-powered systems to full-stack applications.
+      </p>
+
+      <div class="grid gap-6 sm:grid-cols-1 lg:grid-cols-2">
+        {projects.map((project) => (
+          <ProjectCard
+            title={project.title}
+            description={project.description}
+            status={project.status}
+            githubUrl={project.githubUrl}
+            liveUrl={project.liveUrl}
+            tags={project.tags}
+          />
+        ))}
+      </div>
+
+      <div class="mt-12 rounded-lg border border-dashed border-border p-8 text-center">
+        <p class="text-foreground/60 italic">
+          More projects coming soon. Check my 
+          <a 
+            href="https://github.com/Sycolee78" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="text-accent hover:underline"
+          >
+            GitHub
+          </a>
+          for the latest.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
