@@ -7,33 +7,21 @@ import Breadcrumb from "@/components/Breadcrumb.astro";
 import ProjectCard from "@/components/ProjectCard.astro";
 import { SITE } from "@/config";
 
-// Environment variable for Agrimesh repo URL with fallback
-const AGRIMESH_REPO_URL = import.meta.env.AGRIMESH_REPO_URL || "https://github.com/Sycolee78/agrimesh-autonomous";
-
-interface Project {
+// Project data - can be moved to a separate file or CMS later
+const projects: Array<{
   title: string;
+  status: "In Progress" | "Completed" | "Archived";
   description: string;
-  status: "Completed" | "In Progress" | "Planned";
   githubUrl?: string;
-  liveUrl?: string;
-  tags: string[];
-}
-
-const projects: Project[] = [
+  tags?: string[];
+}> = [
   {
     title: "Agrimesh",
-    description: "Agrimesh is an autonomous farm intelligence system that designs and simulates smart agricultural layouts based on geospatial land selection. The system integrates AI planning, environmental modeling, and agent-based positioning to optimize crop selection, livestock placement, and farm profitability.",
     status: "In Progress",
-    githubUrl: AGRIMESH_REPO_URL,
-    tags: ["Python", "AI/ML", "Simulation", "Streamlit", "FastAPI", "React", "OpenStreetMap"],
-  },
-  {
-    title: "Personal Portfolio",
-    description: "A modern, accessible personal portfolio website built with Astro and Tailwind CSS. Features dynamic content, dark mode, and optimized performance with a perfect Lighthouse score.",
-    status: "Completed",
-    githubUrl: "https://github.com/Sycolee78/NewAstro",
-    liveUrl: "https://emmanuelburuvuru.dev",
-    tags: ["Astro", "TypeScript", "Tailwind CSS", "SEO"],
+    description:
+      "Agrimesh is an autonomous farm intelligence system that designs and simulates smart agricultural layouts based on geospatial land selection. The system integrates AI planning, environmental modeling, and agent-based positioning to optimize crop selection, livestock placement, and farm profitability.",
+    githubUrl: import.meta.env.AGRIMESH_REPO_URL || "https://github.com/Sycolee78/agrimesh",
+    tags: ["Python", "AI/ML", "Simulation", "Agriculture"],
   },
 ];
 ---
@@ -43,40 +31,24 @@ const projects: Project[] = [
   <Breadcrumb />
 
   <main id="main-content">
-    <section class="mb-28">
-      <h1 class="text-2xl font-bold tracking-wider sm:text-3xl mb-2">
+    <section id="projects" class="pb-6 pt-8">
+      <h1 class="text-2xl font-semibold tracking-wider sm:text-3xl">
         Projects
       </h1>
-      <p class="text-foreground/70 mb-8">
-        A collection of projects I've built — from AI-powered systems to full-stack applications.
+      <p class="mt-4 mb-8 text-foreground/80">
+        A collection of projects I'm working on — from security tools to intelligent systems.
       </p>
 
       <div class="grid gap-6 sm:grid-cols-1 lg:grid-cols-2">
         {projects.map((project) => (
           <ProjectCard
             title={project.title}
-            description={project.description}
             status={project.status}
+            description={project.description}
             githubUrl={project.githubUrl}
-            liveUrl={project.liveUrl}
             tags={project.tags}
           />
         ))}
-      </div>
-
-      <div class="mt-12 rounded-lg border border-dashed border-border p-8 text-center">
-        <p class="text-foreground/60 italic">
-          More projects coming soon. Check my 
-          <a 
-            href="https://github.com/Sycolee78" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            class="text-accent hover:underline"
-          >
-            GitHub
-          </a>
-          for the latest.
-        </p>
       </div>
     </section>
   </main>

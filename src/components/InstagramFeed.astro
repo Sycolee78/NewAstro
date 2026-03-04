@@ -1,102 +1,151 @@
 ---
 // src/components/InstagramFeed.astro
-import IconInstagram from "@/assets/icons/IconInstagram.svg";
+// Fetches Instagram posts from API endpoint or displays fallback
 
-interface InstagramPost {
-  id: string;
-  caption: string;
-  imageUrl: string;
-  permalink: string;
-  timestamp: string;
+export interface Props {
+  limit?: number;
 }
 
-// Fetch posts at build time (SSG) or request time (SSR)
-let posts: InstagramPost[] = [];
-let error: string | null = null;
+const { limit = 6 } = Astro.props;
 
-try {
-  const accessToken = import.meta.env.INSTAGRAM_ACCESS_TOKEN;
-  
-  if (accessToken) {
-    const url = `https://graph.instagram.com/me/media?fields=id,caption,media_url,media_type,permalink,timestamp,thumbnail_url&access_token=${accessToken}&limit=6`;
-    const response = await fetch(url);
-    
-    if (response.ok) {
-      const data = await response.json();
-      posts = data.data.map((post: any) => ({
-        id: post.id,
-        caption: post.caption?.slice(0, 100) || "",
-        imageUrl: post.media_type === "VIDEO" ? post.thumbnail_url : post.media_url,
-        permalink: post.permalink,
-        timestamp: post.timestamp,
-      }));
-    }
-  }
-} catch (e) {
-  error = "Could not load Instagram feed";
-}
-
-const hasContent = posts.length > 0;
+// Instagram posts will be fetched client-side to avoid exposing tokens
+// Server-side caching happens in the API route
 ---
 
-<section class="mb-12">
-  <div class="mb-6 flex items-center gap-3">
-    <IconInstagram class="h-6 w-6 text-accent" />
-    <h2 class="text-xl font-bold tracking-wider sm:text-2xl">
-      Latest Training & Life Updates
-    </h2>
+<section id="instagram-feed" class="py-8">
+  <h2 class="mb-6 text-xl font-semibold tracking-wider sm:text-2xl">
+    Latest Training & Life Updates
+  </h2>
+  
+  <div
+    id="instagram-grid"
+    class="grid grid-cols-2 gap-4 sm:grid-cols-3"
+    data-limit={limit}
+  >
+    <!-- Posts loaded via JavaScript -->
+    <div class="instagram-loading col-span-full flex items-center justify-center py-12">
+      <div class="flex items-center gap-3 text-foreground/60">
+        <svg class="h-5 w-5 animate-spin" viewBox="0 0 24 24" fill="none">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span>Loading updates...</span>
+      </div>
+    </div>
   </div>
 
-  {hasContent ? (
-    <div class="grid grid-cols-2 gap-4 sm:grid-cols-3">
-      {posts.map((post) => (
-        <a
-          href={post.permalink}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="group relative aspect-square overflow-hidden rounded-lg border border-border transition-all hover:border-accent hover:shadow-lg"
-          aria-label={post.caption || "View Instagram post"}
-        >
-          <img
-            src={post.imageUrl}
-            alt={post.caption || "Instagram post"}
-            class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-            loading="lazy"
-          />
-          <div class="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-            <p class="p-3 text-xs text-white line-clamp-2">
-              {post.caption || "View on Instagram"}
-            </p>
-          </div>
-        </a>
-      ))}
-    </div>
-  ) : (
-    <div class="rounded-lg border border-dashed border-border p-8 text-center">
-      <IconInstagram class="mx-auto mb-3 h-8 w-8 text-foreground/40" />
-      <p class="text-foreground/60">
-        {error || "Instagram feed coming soon!"}
+  <!-- Fallback UI -->
+  <div id="instagram-fallback" class="hidden">
+    <div class="rounded-lg border border-border bg-muted/30 p-6 text-center">
+      <p class="mb-4 text-foreground/70">
+        Follow my journey on Instagram for training updates and life moments.
       </p>
       <a
-        href="https://instagram.com/emmanuel.buruvuru"
+        href="https://instagram.com/sycolee_gg"
         target="_blank"
         rel="noopener noreferrer"
-        class="mt-3 inline-block text-accent hover:underline"
+        class="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
+        aria-label="Follow on Instagram"
       >
-        Follow me on Instagram →
+        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+        </svg>
+        Follow @sycolee_gg
       </a>
     </div>
-  )}
-
-  <div class="mt-4 text-center">
-    <a
-      href="https://instagram.com/emmanuel.buruvuru"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="inline-flex items-center gap-2 text-sm text-foreground/70 transition-colors hover:text-accent"
-    >
-      <IconInstagram class="h-4 w-4" />
-      Follow @emmanuel.buruvuru
-    </a>
   </div>
 </section>
+
+<style>
+  .instagram-post {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 0.5rem;
+  }
+  
+  .instagram-post img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    transition: transform 300ms;
+  }
+  
+  .instagram-post:hover img {
+    transform: scale(1.05);
+  }
+  
+  .instagram-post .overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(0 0 0 / 0.5);
+    opacity: 0;
+    transition: opacity 300ms;
+  }
+  
+  .instagram-post:hover .overlay {
+    opacity: 1;
+  }
+</style>
+
+<script>
+  async function loadInstagramFeed() {
+    const grid = document.getElementById('instagram-grid');
+    const loading = document.querySelector('.instagram-loading');
+    const fallback = document.getElementById('instagram-fallback');
+    
+    if (!grid) return;
+    
+    const limit = parseInt(grid.dataset.limit || '6', 10);
+    
+    try {
+      const response = await fetch(`/api/instagram?limit=${limit}`);
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch Instagram feed');
+      }
+      
+      const posts = await response.json();
+      
+      if (!posts || posts.length === 0) {
+        throw new Error('No posts available');
+      }
+      
+      // Remove loading state
+      loading?.remove();
+      
+      // Render posts
+      posts.forEach((post: { id: string; permalink: string; media_url: string; caption?: string }) => {
+        const article = document.createElement('a');
+        article.href = post.permalink;
+        article.target = '_blank';
+        article.rel = 'noopener noreferrer';
+        article.className = 'instagram-post';
+        article.setAttribute('aria-label', post.caption?.slice(0, 50) || 'Instagram post');
+        
+        article.innerHTML = `
+          <img src="${post.media_url}" alt="${post.caption?.slice(0, 100) || 'Instagram post'}" loading="lazy" />
+          <div class="overlay">
+            <svg class="h-8 w-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073z"/>
+            </svg>
+          </div>
+        `;
+        
+        grid.appendChild(article);
+      });
+      
+    } catch (error) {
+      console.error('Instagram feed error:', error);
+      loading?.remove();
+      fallback?.classList.remove('hidden');
+    }
+  }
+  
+  // Load on DOM ready and after Astro view transitions
+  loadInstagramFeed();
+  document.addEventListener('astro:after-swap', loadInstagramFeed);
+</script>

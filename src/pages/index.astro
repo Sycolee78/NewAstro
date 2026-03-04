@@ -11,8 +11,8 @@ import Hr from "@/components/Hr.astro";
 import InstagramFeed from "@/components/InstagramFeed.astro";
 import StravaLink from "@/components/StravaLink.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
-import IconRss from "@/assets/icons/IconRss.svg";
-import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
+import IconRss from "@/components/icons/IconRss.astro";
+import IconArrowRight from "@/components/icons/IconArrowRight.astro";
 import { SITE } from "@/config";
 import { SOCIALS } from "@/constants";
 
@@ -71,6 +71,16 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 
     <!-- Instagram Feed Section -->
     <InstagramFeed />
+
+    <Hr />
+
+    <!-- Training & Life Updates Section -->
+    <InstagramFeed limit={6} />
+
+    <Hr />
+
+    <!-- Strava Training Section -->
+    <StravaLink profileUrl="https://www.strava.com/athletes/emmanuel-buruvuru" />
 
   </main>
 

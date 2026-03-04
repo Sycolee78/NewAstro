@@ -1,11 +1,11 @@
-import IconMail from "@/assets/icons/IconMail.svg";
-import IconGitHub from "@/assets/icons/IconGitHub.svg";
-import IconBrandX from "@/assets/icons/IconBrandX.svg";
-import IconLinkedin from "@/assets/icons/IconLinkedin.svg";
-import IconWhatsapp from "@/assets/icons/IconWhatsapp.svg";
-import IconFacebook from "@/assets/icons/IconFacebook.svg";
-import IconTelegram from "@/assets/icons/IconTelegram.svg";
-import IconPinterest from "@/assets/icons/IconPinterest.svg";
+import IconMail from "@/components/icons/IconMail.astro";
+import IconGitHub from "@/components/icons/IconGitHub.astro";
+import IconBrandX from "@/components/icons/IconBrandX.astro";
+import IconLinkedin from "@/components/icons/IconLinkedin.astro";
+import IconWhatsapp from "@/components/icons/IconWhatsapp.astro";
+import IconFacebook from "@/components/icons/IconFacebook.astro";
+import IconTelegram from "@/components/icons/IconTelegram.astro";
+import IconPinterest from "@/components/icons/IconPinterest.astro";
 import { SITE } from "@/config";
 
 export const SOCIALS = [

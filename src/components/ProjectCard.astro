@@ -1,71 +1,64 @@
 ---
 // src/components/ProjectCard.astro
-import IconGitHub from "@/assets/icons/IconGitHub.svg";
-import IconExternalLink from "@/assets/icons/IconExternalLink.svg";
+import IconGitHub from "./icons/IconGitHub.astro";
 
 export interface Props {
   title: string;
+  status: "In Progress" | "Completed" | "Archived";
   description: string;
-  status: "Completed" | "In Progress" | "Planned";
   githubUrl?: string;
-  liveUrl?: string;
   tags?: string[];
 }
 
-const { title, description, status, githubUrl, liveUrl, tags = [] } = Astro.props;
+const { title, status, description, githubUrl, tags = [] } = Astro.props;
 
 const statusColors = {
-  "Completed": "bg-green-500/20 text-green-600 dark:text-green-400 border-green-500/30",
-  "In Progress": "bg-yellow-500/20 text-yellow-600 dark:text-yellow-400 border-yellow-500/30",
-  "Planned": "bg-blue-500/20 text-blue-600 dark:text-blue-400 border-blue-500/30",
+  "In Progress": "bg-yellow-500/20 text-yellow-600 dark:text-yellow-400",
+  "Completed": "bg-green-500/20 text-green-600 dark:text-green-400",
+  "Archived": "bg-gray-500/20 text-gray-600 dark:text-gray-400",
 };
 ---
 
-<article class="group relative flex flex-col rounded-lg border border-border bg-muted/30 p-6 transition-all hover:border-accent/50 hover:shadow-lg">
+<article
+  class="group relative flex flex-col rounded-lg border border-border bg-background p-6 transition-all hover:border-accent/50 hover:shadow-lg"
+>
   <div class="mb-4 flex items-start justify-between">
-    <div class="flex items-center gap-3">
-      <h3 class="text-xl font-semibold text-foreground group-hover:text-accent transition-colors">
+    <div>
+      <h2 class="text-xl font-semibold text-foreground group-hover:text-accent transition-colors">
         {title}
-      </h3>
-      <span class={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium ${statusColors[status]}`}>
+      </h2>
+      <span
+        class:list={[
+          "mt-2 inline-block rounded-full px-3 py-1 text-xs font-medium",
+          statusColors[status],
+        ]}
+      >
         {status}
       </span>
     </div>
-    
-    <div class="flex items-center gap-2">
-      {githubUrl && (
-        <a
-          href={githubUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="rounded-full p-2 text-foreground/70 transition-colors hover:bg-accent/10 hover:text-accent"
-          aria-label={`View ${title} source code on GitHub`}
-        >
-          <IconGitHub class="h-5 w-5" />
-        </a>
-      )}
-      {liveUrl && (
-        <a
-          href={liveUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="rounded-full p-2 text-foreground/70 transition-colors hover:bg-accent/10 hover:text-accent"
-          aria-label={`View ${title} live demo`}
-        >
-          <IconExternalLink class="h-5 w-5" />
-        </a>
-      )}
-    </div>
+
+    {githubUrl && (
+      <a
+        href={githubUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="rounded-lg p-2 text-foreground/60 transition-colors hover:bg-muted hover:text-accent"
+        aria-label={`View ${title} on GitHub`}
+        title={`View ${title} on GitHub`}
+      >
+        <IconGitHub class="h-6 w-6" />
+      </a>
+    )}
   </div>
 
-  <p class="mb-4 flex-grow text-foreground/80 leading-relaxed">
+  <p class="mb-4 flex-grow text-sm leading-relaxed text-foreground/80">
     {description}
   </p>
 
   {tags.length > 0 && (
     <div class="flex flex-wrap gap-2">
       {tags.map((tag) => (
-        <span class="rounded-md bg-accent/10 px-2 py-1 text-xs font-medium text-accent">
+        <span class="rounded-md bg-muted px-2 py-1 text-xs font-medium text-foreground/70">
           {tag}
         </span>
       ))}

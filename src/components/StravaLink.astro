@@ -1,50 +1,34 @@
 ---
 // src/components/StravaLink.astro
-import IconStrava from "@/assets/icons/IconStrava.svg";
+// Strava profile link component
 
 export interface Props {
   profileUrl?: string;
-  variant?: "button" | "inline";
 }
 
-const { 
-  profileUrl = import.meta.env.STRAVA_PROFILE_URL || "https://www.strava.com/athletes/emmanuel-buruvuru",
-  variant = "button" 
-} = Astro.props;
+const { profileUrl = "https://www.strava.com/athletes/emmanuel-buruvuru" } = Astro.props;
 ---
 
-{variant === "button" ? (
-  <section class="mb-12">
-    <div class="flex flex-col items-center gap-4 rounded-lg border border-border bg-muted/30 p-8 text-center sm:flex-row sm:justify-between sm:text-left">
-      <div>
-        <h3 class="text-lg font-semibold text-foreground">
-          Training Journey
-        </h3>
-        <p class="mt-1 text-foreground/70">
-          Follow my running and training progress on Strava.
-        </p>
-      </div>
-      <a
-        href={profileUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="inline-flex items-center gap-2 rounded-lg bg-[#FC4C02] px-6 py-3 font-semibold text-white transition-all hover:bg-[#E34402] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#FC4C02] focus:ring-offset-2"
-        aria-label="Follow My Training Journey on Strava"
-      >
-        <IconStrava class="h-5 w-5" />
-        Follow My Training Journey
-      </a>
-    </div>
-  </section>
-) : (
+<section id="training" class="py-8">
+  <h2 class="mb-4 text-xl font-semibold tracking-wider sm:text-2xl">
+    Training
+  </h2>
+  
+  <p class="mb-6 text-foreground/80">
+    I track my runs and training on Strava. Follow along to see the work behind the results.
+  </p>
+  
   <a
     href={profileUrl}
     target="_blank"
     rel="noopener noreferrer"
-    class="inline-flex items-center gap-1.5 text-sm text-foreground/70 transition-colors hover:text-[#FC4C02]"
-    aria-label="View Strava profile"
+    class="inline-flex items-center gap-3 rounded-lg bg-[#FC4C02] px-5 py-3 font-medium text-white transition-all hover:bg-[#E34402] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#FC4C02] focus:ring-offset-2 focus:ring-offset-background"
+    aria-label="Follow my training journey on Strava"
   >
-    <IconStrava class="h-4 w-4" />
-    Strava
+    <!-- Strava Logo SVG -->
+    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/>
+    </svg>
+    Follow My Training Journey
   </a>
-)}
+</section>

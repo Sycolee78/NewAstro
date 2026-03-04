@@ -1,113 +1,108 @@
 // src/pages/api/instagram.ts
+// Instagram Basic Display API endpoint with server-side caching
+
 import type { APIRoute } from "astro";
 
 interface InstagramPost {
   id: string;
-  caption?: string;
+  media_type: string;
   media_url: string;
-  media_type: "IMAGE" | "VIDEO" | "CAROUSEL_ALBUM";
   permalink: string;
+  caption?: string;
   timestamp: string;
-  thumbnail_url?: string;
 }
 
-interface InstagramResponse {
-  data: InstagramPost[];
-  paging?: {
-    cursors: {
-      before: string;
-      after: string;
-    };
-    next?: string;
-  };
+interface CachedData {
+  posts: InstagramPost[];
+  timestamp: number;
 }
 
-// Simple in-memory cache
-let cachedData: { posts: InstagramPost[]; timestamp: number } | null = null;
-const CACHE_DURATION_MS = 60 * 60 * 1000; // 1 hour
+// Simple in-memory cache (1 hour TTL)
+const CACHE_TTL = 60 * 60 * 1000; // 1 hour in milliseconds
+let cache: CachedData | null = null;
 
-export const GET: APIRoute = async () => {
+async function fetchInstagramPosts(limit: number): Promise<InstagramPost[]> {
   const accessToken = import.meta.env.INSTAGRAM_ACCESS_TOKEN;
-
-  // Check if access token is configured
+  
   if (!accessToken) {
-    return new Response(
-      JSON.stringify({
-        error: "Instagram integration not configured",
-        message: "INSTAGRAM_ACCESS_TOKEN environment variable is not set",
-        posts: [],
-      }),
-      {
-        status: 200,
-        headers: {
-          "Content-Type": "application/json",
-          "Cache-Control": "public, max-age=3600",
-        },
-      }
-    );
+    console.error("INSTAGRAM_ACCESS_TOKEN not configured");
+    return [];
   }
-
-  // Check cache
-  if (cachedData && Date.now() - cachedData.timestamp < CACHE_DURATION_MS) {
-    return new Response(
-      JSON.stringify({ posts: cachedData.posts, cached: true }),
-      {
-        status: 200,
-        headers: {
-          "Content-Type": "application/json",
-          "Cache-Control": "public, max-age=3600",
-        },
-      }
-    );
+  
+  // Check cache first
+  if (cache && Date.now() - cache.timestamp < CACHE_TTL) {
+    return cache.posts.slice(0, limit);
   }
-
+  
   try {
-    // Instagram Basic Display API endpoint
-    const url = `https://graph.instagram.com/me/media?fields=id,caption,media_url,media_type,permalink,timestamp,thumbnail_url&access_token=${accessToken}&limit=6`;
-
+    const fields = "id,media_type,media_url,permalink,caption,timestamp";
+    const url = `https://graph.instagram.com/me/media?fields=${fields}&access_token=${accessToken}&limit=20`;
+    
     const response = await fetch(url);
-
+    
     if (!response.ok) {
       throw new Error(`Instagram API error: ${response.status}`);
     }
-
-    const data: InstagramResponse = await response.json();
-
-    // Transform and filter posts (only images for display)
-    const posts = data.data.map((post) => ({
-      id: post.id,
-      caption: post.caption?.slice(0, 150) || "",
-      imageUrl: post.media_type === "VIDEO" ? post.thumbnail_url : post.media_url,
-      permalink: post.permalink,
-      timestamp: post.timestamp,
-    }));
-
+    
+    const data = await response.json();
+    const posts: InstagramPost[] = data.data || [];
+    
+    // Filter out videos (optional - keep only images)
+    const imagePosts = posts.filter(
+      (post) => post.media_type === "IMAGE" || post.media_type === "CAROUSEL_ALBUM"
+    );
+    
     // Update cache
-    cachedData = { posts: data.data, timestamp: Date.now() };
+    cache = {
+      posts: imagePosts,
+      timestamp: Date.now(),
+    };
+    
+    return imagePosts.slice(0, limit);
+  } catch (error) {
+    console.error("Failed to fetch Instagram posts:", error);
+    
+    // Return cached data if available, even if stale
+    if (cache) {
+      return cache.posts.slice(0, limit);
+    }
+    
+    return [];
+  }
+}
 
-    return new Response(JSON.stringify({ posts, cached: false }), {
+export const GET: APIRoute = async ({ request }) => {
+  const url = new URL(request.url);
+  const limit = parseInt(url.searchParams.get("limit") || "6", 10);
+  const clampedLimit = Math.min(Math.max(limit, 1), 20);
+  
+  try {
+    const posts = await fetchInstagramPosts(clampedLimit);
+    
+    if (posts.length === 0) {
+      return new Response(JSON.stringify({ error: "No posts available" }), {
+        status: 404,
+        headers: {
+          "Content-Type": "application/json",
+          "Cache-Control": "public, max-age=3600", // Cache for 1 hour
+        },
+      });
+    }
+    
+    return new Response(JSON.stringify(posts), {
       status: 200,
       headers: {
         "Content-Type": "application/json",
-        "Cache-Control": "public, max-age=3600",
+        "Cache-Control": "public, max-age=3600", // Cache for 1 hour
       },
     });
   } catch (error) {
-    console.error("Instagram API error:", error);
-
-    return new Response(
-      JSON.stringify({
-        error: "Failed to fetch Instagram posts",
-        message: error instanceof Error ? error.message : "Unknown error",
-        posts: [],
-      }),
-      {
-        status: 200,
-        headers: {
-          "Content-Type": "application/json",
-          "Cache-Control": "public, max-age=300",
-        },
-      }
-    );
+    console.error("Instagram API route error:", error);
+    return new Response(JSON.stringify({ error: "Internal server error" }), {
+      status: 500,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   }
 };
