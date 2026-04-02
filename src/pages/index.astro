@@ -5,75 +5,139 @@ import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import Socials from "@/components/Socials.astro";
-import LinkButton from "@/components/LinkButton.astro";
 import Card from "@/components/Card.astro";
 import Hr from "@/components/Hr.astro";
 import InstagramFeed from "@/components/InstagramFeed.astro";
 import StravaLink from "@/components/StravaLink.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
-import IconRss from "@/components/icons/IconRss.astro";
-import IconArrowRight from "@/components/icons/IconArrowRight.astro";
 import { SITE } from "@/config";
 import { SOCIALS } from "@/constants";
 
 const posts = await getCollection("blog");
 const sortedPosts = getSortedPosts(posts);
-const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
-const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
+const featuredPosts = sortedPosts.filter(({ data }) => data.featured).slice(0, 3);
 ---
 
 <Layout>
   <Header />
 
-  <main id="main-content" data-layout="index">
-    <section id="hero" class="pt-32 pb-6 text-left">
-      <!-- ↑ increased from pt-8 to pt-32 for more vertical space -->
-      <p class="font-semibold text-blue-600 dark:text-orange-400 transition-colors duration-300">
-        Hallo, My Name is
+  <main id="main-content" data-layout="index" class="pt-24 sm:pt-32">
+    <!-- Hero -->
+    <section id="hero" class="pb-16">
+      <p class="font-semibold text-slate-500 dark:text-slate-400 tracking-wide">
+        Hi, my name is
       </p>
-      <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-5xl typewriter">
+      <h1 class="mt-2 text-4xl sm:text-5xl md:text-6xl font-bold text-slate-900 dark:text-slate-50">
         Emmanuel Buruvuru
       </h1>
-      <h2 class="mb-6 text-2xl sm:text-3xl font-semibold text-slate-700 dark:text-slate-300">
-        Cybersecurity Software Engineer
-      </h2>
-
-      <p class="mx-auto mt-4 max-w-1xl text-left">
-        I'm a Cybersecurity and Software Engineer passionate about crafting secure,
-        intelligent systems. Currently, I focus on building resilient, user-focused
-        solutions that bridge tech and trust.
+      <p class="mt-4 max-w-xl text-base sm:text-lg text-slate-700 dark:text-slate-300">
+        Im a cybersecurity-focused software engineer from Harare, Zimbabwe. I build secure,
+        resilient systems and tools that people can trust.
       </p>
 
-      <div class="mt-6 flex flex-col sm:flex-row justify-start items-start gap-4">
+      <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
         {SOCIALS.length > 0 && (
-          <div class="flex items-center gap-2">
-            <div class="whitespace-nowrap">Social Links:</div>
+          <div class="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300">
+            <span class="whitespace-nowrap font-medium">Find me on</span>
             <Socials />
           </div>
         )}
 
-        <!-- Resume Button opens PDF in new tab -->
         <a
           href="/assets/Buruvuru-Emmanuel-Resume.pdf"
           target="_blank"
           rel="noopener noreferrer"
-          class="rounded border border-current px-4 py-2 text-sm font-semibold transition hover:bg-accent hover:text-white"
+          class="inline-flex items-center rounded border border-slate-900 dark:border-slate-100 px-4 py-2 text-sm font-semibold text-slate-900 dark:text-slate-100 transition hover:bg-slate-900 hover:text-white dark:hover:bg-slate-100 dark:hover:text-slate-900"
         >
-          Resume
+          View résumé
         </a>
       </div>
     </section>
 
     <Hr />
 
-    <!-- Training Section -->
-    <StravaLink profileUrl="https://www.strava.com/athletes/132983852" />
+    <!-- Lets work together / What I do -->
+    <section id="work" class="py-12">
+      <h2 class="text-2xl sm:text-3xl font-semibold text-slate-900 dark:text-slate-50">
+        Lets work together.
+      </h2>
+      <p class="mt-4 max-w-2xl text-slate-700 dark:text-slate-300">
+        I help teams design and build secure, reliable software  from backend systems and
+        internal tools to security architectures that actually hold up under pressure.
+      </p>
+
+      <div class="mt-8 grid gap-6 md:grid-cols-3">
+        <Card title="Secure systems" description="Designing and implementing services with security baked in from day zero: authentication, authorization, policy, and observability." />
+        <Card title="Product engineering" description="Building end-to-end features, APIs, and internal tools that balance performance, maintainability, and clear user experience." />
+        <Card title="Technical partnerships" description="Working closely with founders and teams who care about long-term resilience, not just quick shipping." />
+      </div>
+    </section>
 
     <Hr />
 
-    <!-- Instagram Feed Section -->
-    <InstagramFeed limit={6} />
+    <!-- Selected work / Writing (using featured posts as a lightweight portfolio/blog surface) -->
+    {featuredPosts.length > 0 && (
+      <section id="selected-work" class="py-12">
+        <div class="flex items-baseline justify-between gap-4">
+          <h2 class="text-2xl sm:text-3xl font-semibold text-slate-900 dark:text-slate-50">
+            Selected writing & experiments
+          </h2>
+          <a
+            href="/archives"
+            class="text-sm font-medium text-blue-600 dark:text-orange-400 hover:underline"
+          >
+            View all
+          </a>
+        </div>
 
+        <div class="mt-6 grid gap-6 md:grid-cols-3">
+          {featuredPosts.map((post) => (
+            <Card
+              href={`/posts/${post.slug}/`}
+              title={post.data.title}
+              description={post.data.description ?? ""}
+              eyebrow={post.data.publishDate?.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}
+            />
+          ))}
+        </div>
+      </section>
+    )}
+
+    <Hr />
+
+    <!-- Beyond the keyboard: training & life -->
+    <section id="beyond" class="py-12">
+      <h2 class="text-2xl sm:text-3xl font-semibold text-slate-900 dark:text-slate-50">
+        Beyond the keyboard.
+      </h2>
+      <p class="mt-4 max-w-2xl text-slate-700 dark:text-slate-300">
+        I train like an athlete and build like an engineer. Badminton, running, and writing are
+        how I practice discipline, resilience, and long-term thinking.
+      </p>
+
+      <div class="mt-8 space-y-10">
+        <div>
+          <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-50">Training</h3>
+          <p class="mt-2 text-sm text-slate-700 dark:text-slate-300">
+            I track my training on Strava  running and conditioning that feed directly into my
+            work and life.
+          </p>
+          <div class="mt-4">
+            <StravaLink profileUrl="https://www.strava.com/athletes/132983852" />
+          </div>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-50">Snapshots</h3>
+          <p class="mt-2 text-sm text-slate-700 dark:text-slate-300">
+            Small windows into what Im up to when Im not at the keyboard.
+          </p>
+          <div class="mt-4">
+            <InstagramFeed limit={6} />
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <Footer />
