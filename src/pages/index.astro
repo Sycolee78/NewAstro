@@ -5,11 +5,11 @@ import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import Socials from "@/components/Socials.astro";
-import Card from "@/components/Card.astro";
 import Hr from "@/components/Hr.astro";
 import InstagramFeed from "@/components/InstagramFeed.astro";
 import StravaLink from "@/components/StravaLink.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
+import { getPath } from "@/utils/getPath";
 import { SITE } from "@/config";
 import { SOCIALS } from "@/constants";
 
@@ -31,7 +31,7 @@ const featuredPosts = sortedPosts.filter(({ data }) => data.featured).slice(0, 3
         Emmanuel Buruvuru
       </h1>
       <p class="mt-4 max-w-xl text-base sm:text-lg text-slate-700 dark:text-slate-300">
-        Im a cybersecurity-focused software engineer from Harare, Zimbabwe. I build secure,
+        I'm a cybersecurity-focused software engineer from Harare, Zimbabwe. I build secure,
         resilient systems and tools that people can trust.
       </p>
 
@@ -56,20 +56,38 @@ const featuredPosts = sortedPosts.filter(({ data }) => data.featured).slice(0, 3
 
     <Hr />
 
-    <!-- Lets work together / What I do -->
+    <!-- Let's work together / What I do -->
     <section id="work" class="py-12">
       <h2 class="text-2xl sm:text-3xl font-semibold text-slate-900 dark:text-slate-50">
-        Lets work together.
+        Let's work together.
       </h2>
       <p class="mt-4 max-w-2xl text-slate-700 dark:text-slate-300">
-        I help teams design and build secure, reliable software  from backend systems and
+        I help teams design and build secure, reliable software — from backend systems and
         internal tools to security architectures that actually hold up under pressure.
       </p>
 
       <div class="mt-8 grid gap-6 md:grid-cols-3">
-        <Card title="Secure systems" description="Designing and implementing services with security baked in from day zero: authentication, authorization, policy, and observability." />
-        <Card title="Product engineering" description="Building end-to-end features, APIs, and internal tools that balance performance, maintainability, and clear user experience." />
-        <Card title="Technical partnerships" description="Working closely with founders and teams who care about long-term resilience, not just quick shipping." />
+        <div class="rounded-lg border border-slate-200 dark:border-slate-700 p-6">
+          <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-50">Secure systems</h3>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">
+            Designing and implementing services with security baked in from day zero:
+            authentication, authorization, policy, and observability.
+          </p>
+        </div>
+        <div class="rounded-lg border border-slate-200 dark:border-slate-700 p-6">
+          <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-50">Product engineering</h3>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">
+            Building end-to-end features, APIs, and internal tools that balance performance,
+            maintainability, and clear user experience.
+          </p>
+        </div>
+        <div class="rounded-lg border border-slate-200 dark:border-slate-700 p-6">
+          <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-50">Technical partnerships</h3>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">
+            Working closely with founders and teams who care about long-term resilience,
+            not just quick shipping.
+          </p>
+        </div>
       </div>
     </section>
 
@@ -92,12 +110,18 @@ const featuredPosts = sortedPosts.filter(({ data }) => data.featured).slice(0, 3
 
         <div class="mt-6 grid gap-6 md:grid-cols-3">
           {featuredPosts.map((post) => (
-            <Card
-              href={`/posts/${post.slug}/`}
-              title={post.data.title}
-              description={post.data.description ?? ""}
-              eyebrow={post.data.publishDate?.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}
-            />
+            <a
+              href={getPath(post.id, post.filePath)}
+              class="block rounded-lg border border-slate-200 dark:border-slate-700 p-6 transition hover:border-slate-400 dark:hover:border-slate-500"
+            >
+              {post.data.pubDatetime && (
+                <span class="text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                  {post.data.pubDatetime.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}
+                </span>
+              )}
+              <h3 class="mt-2 text-lg font-semibold text-slate-900 dark:text-slate-50">{post.data.title}</h3>
+              <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">{post.data.description ?? ""}</p>
+            </a>
           ))}
         </div>
       </section>
@@ -119,7 +143,7 @@ const featuredPosts = sortedPosts.filter(({ data }) => data.featured).slice(0, 3
         <div>
           <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-50">Training</h3>
           <p class="mt-2 text-sm text-slate-700 dark:text-slate-300">
-            I track my training on Strava  running and conditioning that feed directly into my
+            I track my training on Strava — running and conditioning that feed directly into my
             work and life.
           </p>
           <div class="mt-4">
@@ -130,7 +154,7 @@ const featuredPosts = sortedPosts.filter(({ data }) => data.featured).slice(0, 3
         <div>
           <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-50">Snapshots</h3>
           <p class="mt-2 text-sm text-slate-700 dark:text-slate-300">
-            Small windows into what Im up to when Im not at the keyboard.
+            Small windows into what I'm up to when I'm not at the keyboard.
           </p>
           <div class="mt-4">
             <InstagramFeed limit={6} />
