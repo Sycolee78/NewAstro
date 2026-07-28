@@ -3,7 +3,7 @@ export const SITE = {
   author: "Emmanuel Buruvuru",
   desc: "Cybersecurity & software engineer and competitive athlete building secure, reliable systems with a performance mindset.",
   title: "EB",
-  ogImage: "site-preview.png",
+  ogImage: "og.png", // dynamically generated at /og.png (see src/pages/og.png.ts)
   lightAndDarkMode: true,
   postPerIndex: 4,
   postPerPage: 4,

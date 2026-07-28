@@ -78,7 +78,7 @@ export default async () => {
                             type: "p",
                             props: {
                               style: { fontSize: 72, fontWeight: "bold" },
-                              children: SITE.title,
+                              children: SITE.author,
                             },
                           },
                           {
@@ -122,7 +122,9 @@ export default async () => {
       width: 1200,
       height: 630,
       embedFont: true,
-      fonts: await loadGoogleFonts(SITE.title + SITE.desc + SITE.website),
+      fonts: await loadGoogleFonts(
+        SITE.author + SITE.title + SITE.desc + SITE.website
+      ),
     }
   );
 };
