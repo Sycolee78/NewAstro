@@ -31,7 +31,7 @@ const statusColors = {
   <Breadcrumb />
 
   <main id="main-content">
-    <article id="project" class="pb-10 pt-8">
+    <section id="project" class="pb-10 pt-8">
       <a
         href="/projects"
         class="text-sm font-medium text-blue-600 hover:underline dark:text-orange-400"
@@ -92,35 +92,35 @@ const statusColors = {
 
       <div class="mt-10 space-y-8">
         {project.problem && (
-          <section>
+          <div>
             <h2 class="text-lg font-semibold text-blue-600 dark:text-orange-400">The problem</h2>
             <p class="mt-2 max-w-2xl leading-relaxed text-foreground/80">{project.problem}</p>
-          </section>
+          </div>
         )}
 
         {project.approach && (
-          <section>
+          <div>
             <h2 class="text-lg font-semibold text-blue-600 dark:text-orange-400">The approach</h2>
             <p class="mt-2 max-w-2xl leading-relaxed text-foreground/80">{project.approach}</p>
-          </section>
+          </div>
         )}
 
         {project.highlights && project.highlights.length > 0 && (
-          <section>
+          <div>
             <h2 class="text-lg font-semibold text-blue-600 dark:text-orange-400">Highlights</h2>
             <ul class="mt-2 max-w-2xl list-disc space-y-1.5 pl-5 leading-relaxed text-foreground/80 marker:text-accent">
               {project.highlights.map(item => (
                 <li>{item}</li>
               ))}
             </ul>
-          </section>
+          </div>
         )}
 
         {project.role && (
-          <section>
+          <div>
             <h2 class="text-lg font-semibold text-blue-600 dark:text-orange-400">My role</h2>
             <p class="mt-2 max-w-2xl leading-relaxed text-foreground/80">{project.role}</p>
-          </section>
+          </div>
         )}
 
         {project.note && (
@@ -129,7 +129,7 @@ const statusColors = {
           </p>
         )}
       </div>
-    </article>
+    </section>
   </main>
 
   <Footer />
