@@ -30,49 +30,76 @@ const principles = [
   },
 ];
 
-// Skill groups — only technologies reflected in real experience and projects.
+// Skill groups — sourced directly from the résumé.
 const skillGroups = [
   {
-    title: "Software Engineering",
-    skills: ["Java", "Spring Boot", "Python", "FastAPI", "C", "React.js", "REST APIs"],
+    title: "Languages",
+    skills: ["Java", "Python", "JavaScript", "TypeScript"],
+  },
+  {
+    title: "Backend Engineering",
+    skills: ["Spring Boot", "Node.js", "REST APIs", "WebSockets", "Webhooks", "API Integrations"],
+  },
+  {
+    title: "Frontend & Mobile",
+    skills: ["React", "React Native", "HTML", "CSS"],
   },
   {
     title: "Data & AI",
-    skills: ["Machine Learning", "Data Science", "Simulation", "AI Planning"],
+    skills: ["ETL Pipelines", "Data Engineering", "ML", "RAG", "Vectorization"],
   },
   {
-    title: "Cloud, Mobile & Data",
-    skills: ["Docker", "FlutterFlow", "Firebase", "MongoDB", "MySQL"],
+    title: "Cloud & DevOps",
+    skills: ["Oracle Cloud", "AWS", "Azure", "Docker", "GitHub Actions", "CI/CD"],
   },
   {
-    title: "Cybersecurity",
-    skills: ["Check Point Firewalls", "Microsoft Intune", "Rapid7", "SIEM", "Incident Response"],
+    title: "Databases & Security",
+    skills: ["PostgreSQL", "MongoDB", "JWT", "RBAC", "Check Point", "Rapid7", "Microsoft Intune"],
   },
 ];
 
-// Experience — facts sourced from the About page (no invented dates or metrics).
+// Experience — sourced directly from the résumé (roles, dates, and metrics).
 const experience = [
   {
-    period: "Present",
-    role: "Cybersecurity Engineer",
+    period: "Jul 2025 – Present",
+    role: "Software Engineer",
+    org: "Africa Clinical Research Network",
+    bullets: [
+      "Developing AI-ready operational applications processing 5K+ records per day, improving workflow efficiency by 25%+.",
+      "Managing AI-ready integrations across 10+ ERP modules, streamlining workflows and reducing manual processing by 40%.",
+      "Designing AI-ready data pipelines and ETL workflows, improving data accuracy and processing speed by 30%+.",
+    ],
+  },
+  {
+    period: "Jun 2024 – Jun 2025",
+    role: "Software Developer / Associate Cybersecurity Engineer",
     org: "Ignite Africa",
-    summary:
-      "Designed and enforced security architectures with Check Point firewalls, managed endpoints via Microsoft Intune, and built internal and external policy frameworks. Ran vulnerability scanning with Rapid7 and used SIEM tooling for threat detection and incident response.",
+    bullets: [
+      "Developed reporting automations and conducted security assessments across 4 companies, remediating 50+ critical vulnerabilities before deployment.",
+      "Built Power Apps for business continuity and reduced incidents by 30–40% across 1000+ endpoints using Check Point and Rapid7.",
+    ],
   },
   {
-    period: "2023",
-    role: "Full-Stack Engineer",
-    org: "Accenture",
-    summary:
-      "Helped architect and launch a full-stack online classroom platform — Java and Spring Boot on the backend, React.js on the frontend, MongoDB for data, and REST APIs tying it together. Worked to performance, code-review, and system-design standards built to scale.",
+    period: "Feb 2023 – Nov 2023",
+    role: "Software Engineer",
+    org: "Accenture (Part-Time Project)",
+    bullets: [
+      "Built full-stack application features using Spring Boot, MongoDB, Node.js, and modern frontend technologies.",
+      "Developed and deployed secure internal learning-platform modules, improving reliability, usability, and deployment workflows.",
+    ],
   },
-  {
-    period: "2022",
-    role: "Freelance Engineer",
-    org: "Fiverr",
-    summary:
-      "Shipped client work end to end: MySQL schemas for data-heavy applications, Python automation scripts, Docker containers for deployment, and RESTful APIs in C and Python. Learned to scope work, ship on deadline, and communicate clearly with non-technical clients.",
-  },
+];
+
+// Education & certifications — sourced directly from the résumé.
+const education = {
+  school: "Curtin University",
+  degree: "BSc, Information Technology",
+  year: "2024",
+};
+
+const certifications = [
+  "CCNA: Enterprise Networking, Security, and Automation — Cisco",
+  "Oracle Cloud Infrastructure 2025 Certified AI Foundations Associate",
 ];
 ---
 
@@ -284,7 +311,8 @@ const experience = [
         Experience
       </h2>
       <p class="mt-3 max-w-2xl text-foreground/80">
-        From freelance shipping to enterprise engineering to securing production systems.
+        From enterprise full-stack engineering to cybersecurity to building AI-ready
+        systems in production.
       </p>
 
       <ol class="mt-8 space-y-6">
@@ -294,14 +322,35 @@ const experience = [
               <h3 class="text-lg font-semibold">
                 {job.role} <span class="text-foreground/60">· {job.org}</span>
               </h3>
-              <span class="text-xs font-medium uppercase tracking-wide text-foreground/60">
+              <span class="shrink-0 text-xs font-medium uppercase tracking-wide text-foreground/60">
                 {job.period}
               </span>
             </div>
-            <p class="mt-3 text-sm leading-relaxed text-foreground/80">{job.summary}</p>
+            <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-foreground/80 marker:text-accent">
+              {job.bullets.map(point => (
+                <li>{point}</li>
+              ))}
+            </ul>
           </li>
         ))}
       </ol>
+
+      <!-- Education & certifications -->
+      <div class="mt-8 grid gap-5 sm:grid-cols-2">
+        <div class="rounded-lg border border-border p-6">
+          <h3 class="text-sm font-semibold uppercase tracking-wide text-foreground/60">Education</h3>
+          <p class="mt-2 font-semibold">{education.degree}</p>
+          <p class="text-sm text-foreground/80">{education.school} · {education.year}</p>
+        </div>
+        <div class="rounded-lg border border-border p-6">
+          <h3 class="text-sm font-semibold uppercase tracking-wide text-foreground/60">Certifications</h3>
+          <ul class="mt-2 space-y-1.5 text-sm text-foreground/80">
+            {certifications.map(cert => (
+              <li>{cert}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
 
       <a
         href="/about"
