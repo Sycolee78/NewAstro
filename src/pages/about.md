@@ -3,7 +3,7 @@ layout: ../layouts/AboutLayout.astro
 title: "About Me"
 ---
 
-I'm an <strong class="text-blue-500 dark:text-orange-500">AI-focused Software Engineer</strong> who builds secure, scalable systems that improve how organizations actually work — full-stack applications, backend APIs, data pipelines, and AI-ready platforms. Beyond the code, I'm also a competitive athlete and a writer who believes deeply in discipline, consistency, and the pursuit of long-term mastery.
+I'm a <strong class="text-blue-500 dark:text-orange-500">Software Engineer</strong> who builds secure, scalable systems that improve how organizations actually work — full-stack applications, backend APIs, and data pipelines, increasingly with AI and machine learning in the mix. Beyond the code, I'm also a competitive athlete and a writer who believes deeply in discipline, consistency, and the pursuit of long-term mastery.
 
 This page is less of a résumé and more of a story — how I got here, what I've built, and where I'm going.
 
@@ -33,7 +33,7 @@ I developed reporting automations and ran security assessments across four compa
 
 ## Engineering with AI
 
-Since July 2025 I've been a <strong class="text-blue-500 dark:text-orange-500">Software Engineer at Africa Clinical Research Network</strong>, building AI-ready operational applications that process 5,000+ records a day and improve workflow efficiency. I manage integrations across 10+ ERP modules and design data pipelines and ETL workflows that improve data accuracy and processing speed.
+Since July 2025 I've been a <strong class="text-blue-500 dark:text-orange-500">Software Engineer at Africa Clinical Research Network</strong>, building operational applications that process 5,000+ clinical records a day. I deliver integrations across 10+ ERP modules — cutting manual processing by around 40% — and design data pipelines and ETL workflows that improve data accuracy and processing speed.
 
 Day to day I work across Java, Python, JavaScript and TypeScript, with Spring Boot and Node.js on the backend, React and React Native on the frontend, PostgreSQL and MongoDB for data, and Oracle Cloud, AWS, Azure, Docker, and CI/CD for delivery — increasingly with RAG and vectorization in the mix.
 

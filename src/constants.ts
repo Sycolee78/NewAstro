@@ -12,7 +12,7 @@ export const SOCIALS = [
   {
     name: "Github",
     href: "https://github.com/Sycolee78",
-    linkTitle: ` ${SITE.title} on Github`,
+    linkTitle: `${SITE.title} on Github`,
     icon: IconGitHub,
   },
   {

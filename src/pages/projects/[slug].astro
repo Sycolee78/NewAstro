@@ -1,0 +1,136 @@
+---
+// src/pages/projects/[slug].astro
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Breadcrumb from "@/components/Breadcrumb.astro";
+import { projects } from "@/data/projects";
+import { SITE } from "@/config";
+
+export function getStaticPaths() {
+  return projects.map(project => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+
+const statusColors = {
+  "In Progress": "bg-yellow-500/20 text-yellow-600 dark:text-yellow-400",
+  Completed: "bg-green-500/20 text-green-600 dark:text-green-400",
+  Archived: "bg-gray-500/20 text-gray-600 dark:text-gray-400",
+};
+---
+
+<Layout
+  title={`${project.title} | ${SITE.title}`}
+  description={project.description}
+>
+  <Header />
+  <Breadcrumb />
+
+  <main id="main-content">
+    <article id="project" class="pb-10 pt-8">
+      <a
+        href="/projects"
+        class="text-sm font-medium text-blue-600 hover:underline dark:text-orange-400"
+      >
+        ← All projects
+      </a>
+
+      <div class="mt-4 flex flex-wrap items-center gap-3">
+        <h1 class="text-2xl font-semibold tracking-wider sm:text-3xl">
+          {project.title}
+        </h1>
+        <span
+          class:list={[
+            "inline-block rounded-full px-3 py-1 text-xs font-medium",
+            statusColors[project.status],
+          ]}
+        >
+          {project.status}
+        </span>
+      </div>
+
+      <p class="mt-4 max-w-2xl text-foreground/80">{project.description}</p>
+
+      {project.tags && project.tags.length > 0 && (
+        <ul class="mt-5 flex flex-wrap gap-2">
+          {project.tags.map(tag => (
+            <li class="rounded-md bg-muted px-2.5 py-1 text-xs font-medium text-foreground/80">
+              {tag}
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {(project.githubUrl || project.liveUrl) && (
+        <div class="mt-6 flex flex-wrap gap-3">
+          {project.githubUrl && (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="rounded-md border border-current px-4 py-2 text-sm font-semibold transition hover:bg-accent hover:text-background"
+            >
+              View source ↗
+            </a>
+          )}
+          {project.liveUrl && (
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="rounded-md bg-accent px-4 py-2 text-sm font-semibold text-background transition hover:opacity-90"
+            >
+              Live demo ↗
+            </a>
+          )}
+        </div>
+      )}
+
+      <div class="mt-10 space-y-8">
+        {project.problem && (
+          <section>
+            <h2 class="text-lg font-semibold text-blue-600 dark:text-orange-400">The problem</h2>
+            <p class="mt-2 max-w-2xl leading-relaxed text-foreground/80">{project.problem}</p>
+          </section>
+        )}
+
+        {project.approach && (
+          <section>
+            <h2 class="text-lg font-semibold text-blue-600 dark:text-orange-400">The approach</h2>
+            <p class="mt-2 max-w-2xl leading-relaxed text-foreground/80">{project.approach}</p>
+          </section>
+        )}
+
+        {project.highlights && project.highlights.length > 0 && (
+          <section>
+            <h2 class="text-lg font-semibold text-blue-600 dark:text-orange-400">Highlights</h2>
+            <ul class="mt-2 max-w-2xl list-disc space-y-1.5 pl-5 leading-relaxed text-foreground/80 marker:text-accent">
+              {project.highlights.map(item => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {project.role && (
+          <section>
+            <h2 class="text-lg font-semibold text-blue-600 dark:text-orange-400">My role</h2>
+            <p class="mt-2 max-w-2xl leading-relaxed text-foreground/80">{project.role}</p>
+          </section>
+        )}
+
+        {project.note && (
+          <p class="max-w-2xl rounded-md border border-border bg-muted/40 p-4 text-sm text-foreground/70">
+            {project.note}
+          </p>
+        )}
+      </div>
+    </article>
+  </main>
+
+  <Footer />
+</Layout>

@@ -6,7 +6,6 @@ import Footer from "@/components/Footer.astro";
 import Socials from "@/components/Socials.astro";
 import Hr from "@/components/Hr.astro";
 import ProjectCard from "@/components/ProjectCard.astro";
-import InstagramFeed from "@/components/InstagramFeed.astro";
 import { projects } from "@/data/projects";
 import { certifications } from "@/data/certifications";
 import { SOCIALS } from "@/constants";
@@ -31,31 +30,23 @@ const principles = [
   },
 ];
 
-// Skill groups — sourced directly from the résumé.
+// Skill groups — a focused set I'm comfortable being grilled on (not an exhaustive list).
 const skillGroups = [
   {
     title: "Languages",
-    skills: ["Java", "Python", "JavaScript", "TypeScript"],
+    skills: ["Java", "Python", "TypeScript"],
   },
   {
-    title: "Backend Engineering",
-    skills: ["Spring Boot", "Node.js", "REST APIs", "WebSockets", "Webhooks", "API Integrations"],
-  },
-  {
-    title: "Frontend & Mobile",
-    skills: ["React", "React Native", "HTML", "CSS"],
+    title: "Backend & APIs",
+    skills: ["Spring Boot", "Node.js", "REST APIs", "PostgreSQL", "MongoDB"],
   },
   {
     title: "Data & AI",
-    skills: ["ETL Pipelines", "Data Engineering", "ML", "RAG", "Vectorization"],
+    skills: ["ETL Pipelines", "RAG", "Vectorization", "Machine Learning"],
   },
   {
     title: "Cloud & DevOps",
-    skills: ["Oracle Cloud", "AWS", "Azure", "Docker", "GitHub Actions", "CI/CD"],
-  },
-  {
-    title: "Databases & Security",
-    skills: ["PostgreSQL", "MongoDB", "JWT", "RBAC", "Check Point", "Rapid7", "Microsoft Intune"],
+    skills: ["Oracle Cloud", "AWS", "Docker", "CI/CD"],
   },
 ];
 
@@ -66,9 +57,9 @@ const experience = [
     role: "Software Engineer",
     org: "Africa Clinical Research Network",
     bullets: [
-      "Developing AI-ready operational applications processing 5K+ records per day, improving workflow efficiency by 25%+.",
-      "Managing AI-ready integrations across 10+ ERP modules, streamlining workflows and reducing manual processing by 40%.",
-      "Designing AI-ready data pipelines and ETL workflows, improving data accuracy and processing speed by 30%+.",
+      "Build operational applications that process 5,000+ clinical records per day.",
+      "Deliver integrations across 10+ ERP modules, cutting manual processing by ~40%.",
+      "Design data pipelines and ETL workflows that improve data accuracy and processing speed.",
     ],
   },
   {
@@ -103,8 +94,8 @@ const certPreview = certifications.slice(0, 3);
 ---
 
 <Layout
-  title="Emmanuel Buruvuru — Software Engineer & Athlete"
-  description="Emmanuel Buruvuru is a cybersecurity and software engineer, and a competitive badminton and running athlete, building secure, reliable systems with a performance mindset."
+  title="Emmanuel Buruvuru — Software Engineer"
+  description="Emmanuel Buruvuru is a software engineer focused on backend, data, and AI-driven systems — and a competitive badminton and running athlete who brings the same discipline to building reliable software."
 >
   <Header />
 
@@ -120,12 +111,12 @@ const certPreview = certifications.slice(0, 3);
             Emmanuel Buruvuru
           </h1>
           <h2 class="mb-5 text-xl font-semibold text-foreground/80 sm:text-2xl">
-            Cybersecurity &amp; Software Engineer
+            Software Engineer — Backend, Data &amp; AI
           </h2>
           <p class="max-w-xl leading-relaxed text-foreground/80">
-            I build secure, reliable digital products with the same discipline,
-            consistency, and performance mindset that competitive sport demands —
-            from full-stack platforms to intelligent, agent-driven systems.
+            I build reliable backend and data systems — from full-stack platforms to
+            production data pipelines — with a security-minded approach and the same
+            discipline competitive sport demands.
           </p>
 
           <div class="mt-7 flex flex-wrap items-center gap-3">
@@ -195,8 +186,8 @@ const certPreview = certifications.slice(0, 3);
         Engineering expertise
       </h2>
       <p class="mt-3 max-w-2xl text-foreground/80">
-        A pragmatic full-stack toolkit spanning product engineering, data and AI,
-        and the security practices that keep systems trustworthy.
+        The core of what I build with day to day — backend services, data pipelines,
+        and the cloud they run on.
       </p>
 
       <div class="mt-8 grid gap-5 sm:grid-cols-2">
@@ -213,6 +204,11 @@ const certPreview = certifications.slice(0, 3);
           </div>
         ))}
       </div>
+
+      <p class="mt-4 text-sm text-foreground/60">
+        Also comfortable with React, and security tooling (Check Point, Rapid7,
+        Microsoft Intune) from my cybersecurity work.
+      </p>
     </section>
 
     <Hr />
@@ -237,7 +233,9 @@ const certPreview = certifications.slice(0, 3);
             title={project.title}
             status={project.status}
             description={project.description}
+            slug={project.slug}
             githubUrl={project.githubUrl}
+            liveUrl={project.liveUrl}
             tags={project.tags}
           />
         ))}
@@ -283,24 +281,33 @@ const certPreview = certifications.slice(0, 3);
         </div>
       </div>
 
-      <a
-        href={stravaUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="mt-8 inline-flex items-center gap-3 rounded-lg bg-[#FC4C02] px-5 py-3 font-medium text-white transition-all hover:bg-[#E34402] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#FC4C02] focus:ring-offset-2 focus:ring-offset-background"
-        aria-label="Follow my training journey on Strava"
-      >
-        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/>
-        </svg>
-        Follow My Training Journey
-      </a>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a
+          href={stravaUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-3 rounded-lg bg-[#FC4C02] px-5 py-3 font-medium text-white transition-all hover:bg-[#E34402] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#FC4C02] focus:ring-offset-2 focus:ring-offset-background"
+          aria-label="Follow my training journey on Strava"
+        >
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/>
+          </svg>
+          Follow on Strava
+        </a>
+        <a
+          href="https://instagram.com/emmanuel.buruvuru"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-3 rounded-lg border border-current px-5 py-3 font-medium transition hover:bg-accent hover:text-background"
+          aria-label="Follow me on Instagram"
+        >
+          <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+          </svg>
+          Follow on Instagram
+        </a>
+      </div>
     </section>
-
-    <Hr />
-
-    <!-- Instagram / life updates (existing integration preserved) -->
-    <InstagramFeed limit={6} />
 
     <Hr />
 
@@ -310,8 +317,8 @@ const certPreview = certifications.slice(0, 3);
         Experience
       </h2>
       <p class="mt-3 max-w-2xl text-foreground/80">
-        From enterprise full-stack engineering to cybersecurity to building AI-ready
-        systems in production.
+        From enterprise full-stack engineering to cybersecurity to building
+        data-driven systems in production.
       </p>
 
       <ol class="mt-8 space-y-6">
