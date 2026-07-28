@@ -1,79 +1,351 @@
 ---
 // src/pages/index.astro
-import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import Socials from "@/components/Socials.astro";
-import LinkButton from "@/components/LinkButton.astro";
-import Card from "@/components/Card.astro";
 import Hr from "@/components/Hr.astro";
+import ProjectCard from "@/components/ProjectCard.astro";
 import InstagramFeed from "@/components/InstagramFeed.astro";
-import StravaLink from "@/components/StravaLink.astro";
-import getSortedPosts from "@/utils/getSortedPosts";
-import IconRss from "@/components/icons/IconRss.astro";
-import IconArrowRight from "@/components/icons/IconArrowRight.astro";
-import { SITE } from "@/config";
+import { projects } from "@/data/projects";
 import { SOCIALS } from "@/constants";
 
-const posts = await getCollection("blog");
-const sortedPosts = getSortedPosts(posts);
-const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
-const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
+const featuredProjects = projects.filter(p => p.featured).slice(0, 3);
+const resumeHref = "/assets/Buruvuru-Emmanuel-Resume.pdf";
+const stravaUrl = "https://www.strava.com/athletes/132983852";
+
+// How engineering and athletics reinforce each other — grounded in the About page.
+const principles = [
+  {
+    title: "Discipline",
+    body: "Progress in badminton and running comes from showing up on the days it's hard. I bring the same steady, deliberate habit to shipping and maintaining software.",
+  },
+  {
+    title: "Consistency",
+    body: "I track, iterate, and optimize my training the same way I approach code — small, compounding improvements over time beat unsustainable sprints.",
+  },
+  {
+    title: "Performance under pressure",
+    body: "Competition teaches you to stay composed when it counts. In engineering that means clear thinking during incidents, reviews, and deadlines.",
+  },
+];
+
+// Skill groups — only technologies reflected in real experience and projects.
+const skillGroups = [
+  {
+    title: "Software Engineering",
+    skills: ["Java", "Spring Boot", "Python", "FastAPI", "C", "React.js", "REST APIs"],
+  },
+  {
+    title: "Data & AI",
+    skills: ["Machine Learning", "Data Science", "Simulation", "AI Planning"],
+  },
+  {
+    title: "Cloud, Mobile & Data",
+    skills: ["Docker", "FlutterFlow", "Firebase", "MongoDB", "MySQL"],
+  },
+  {
+    title: "Cybersecurity",
+    skills: ["Check Point Firewalls", "Microsoft Intune", "Rapid7", "SIEM", "Incident Response"],
+  },
+];
+
+// Experience — facts sourced from the About page (no invented dates or metrics).
+const experience = [
+  {
+    period: "Present",
+    role: "Cybersecurity Engineer",
+    org: "Ignite Africa",
+    summary:
+      "Designed and enforced security architectures with Check Point firewalls, managed endpoints via Microsoft Intune, and built internal and external policy frameworks. Ran vulnerability scanning with Rapid7 and used SIEM tooling for threat detection and incident response.",
+  },
+  {
+    period: "2023",
+    role: "Full-Stack Engineer",
+    org: "Accenture",
+    summary:
+      "Helped architect and launch a full-stack online classroom platform — Java and Spring Boot on the backend, React.js on the frontend, MongoDB for data, and REST APIs tying it together. Worked to performance, code-review, and system-design standards built to scale.",
+  },
+  {
+    period: "2022",
+    role: "Freelance Engineer",
+    org: "Fiverr",
+    summary:
+      "Shipped client work end to end: MySQL schemas for data-heavy applications, Python automation scripts, Docker containers for deployment, and RESTful APIs in C and Python. Learned to scope work, ship on deadline, and communicate clearly with non-technical clients.",
+  },
+];
 ---
 
-<Layout>
+<Layout
+  title="Emmanuel Buruvuru — Software Engineer & Athlete"
+  description="Emmanuel Buruvuru is a cybersecurity and software engineer, and a competitive badminton and running athlete, building secure, reliable systems with a performance mindset."
+>
   <Header />
 
   <main id="main-content" data-layout="index">
-    <section id="hero" class="pt-32 pb-6 text-left">
-      <!-- ↑ increased from pt-8 to pt-32 for more vertical space -->
-      <p class="font-semibold text-blue-600 dark:text-orange-400 transition-colors duration-300">
-        Hallo, My Name is
-      </p>
-      <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-5xl typewriter">
-        Emmanuel Buruvuru
-      </h1>
-      <h2 class="mb-6 text-2xl sm:text-3xl font-semibold text-slate-700 dark:text-slate-300">
-        Cybersecurity Software Engineer
-      </h2>
+    <!-- Hero -->
+    <section id="hero" class="pt-28 pb-14 sm:pt-32">
+      <div class="flex flex-col-reverse items-start gap-8 sm:flex-row sm:items-center sm:justify-between">
+        <div class="reveal max-w-xl">
+          <p class="font-semibold tracking-wide text-blue-600 dark:text-orange-400">
+            Software Engineer <span aria-hidden="true">×</span> Athlete
+          </p>
+          <h1 class="my-3 inline-block text-4xl font-bold sm:my-4 sm:text-5xl typewriter">
+            Emmanuel Buruvuru
+          </h1>
+          <h2 class="mb-5 text-xl font-semibold text-foreground/80 sm:text-2xl">
+            Cybersecurity &amp; Software Engineer
+          </h2>
+          <p class="max-w-xl leading-relaxed text-foreground/80">
+            I build secure, reliable digital products with the same discipline,
+            consistency, and performance mindset that competitive sport demands —
+            from full-stack platforms to intelligent, agent-driven systems.
+          </p>
 
-      <p class="mx-auto mt-4 max-w-1xl text-left">
-        I'm a Cybersecurity and Software Engineer passionate about crafting secure,
-        intelligent systems. Currently, I focus on building resilient, user-focused
-        solutions that bridge tech and trust.
-      </p>
-
-      <div class="mt-6 flex flex-col sm:flex-row justify-start items-start gap-4">
-        {SOCIALS.length > 0 && (
-          <div class="flex items-center gap-2">
-            <div class="whitespace-nowrap">Social Links:</div>
-            <Socials />
+          <div class="mt-7 flex flex-wrap items-center gap-3">
+            <a
+              href="#featured-projects"
+              class="rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-background transition hover:opacity-90"
+            >
+              View Projects
+            </a>
+            <a
+              href={resumeHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="rounded-md border border-current px-5 py-2.5 text-sm font-semibold transition hover:bg-accent hover:text-background"
+            >
+              Download Résumé
+            </a>
           </div>
-        )}
 
-        <!-- Resume Button opens PDF in new tab -->
-        <a
-          href="/assets/Buruvuru-Emmanuel-Resume.pdf"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="rounded border border-current px-4 py-2 text-sm font-semibold transition hover:bg-accent hover:text-white"
-        >
-          Resume
-        </a>
+          {SOCIALS.length > 0 && (
+            <div class="mt-6 flex items-center gap-2">
+              <span class="whitespace-nowrap text-sm text-foreground/70">Find me on</span>
+              <Socials />
+            </div>
+          )}
+        </div>
+
+        <div class="shrink-0">
+          <img
+            src="/images/profile.png"
+            alt="Portrait of Emmanuel Buruvuru"
+            width="176"
+            height="176"
+            class="size-32 rounded-full border-4 border-blue-500 object-cover shadow-lg sm:size-44 dark:border-orange-400"
+          />
+        </div>
       </div>
     </section>
 
     <Hr />
 
-    <!-- Training Section -->
-    <StravaLink profileUrl="https://www.strava.com/athletes/132983852" />
+    <!-- Positioning: where engineering meets athletics -->
+    <section id="ethos" class="py-12">
+      <h2 class="text-2xl font-semibold tracking-wider sm:text-3xl">
+        Engineering discipline, athletic mindset
+      </h2>
+      <p class="mt-3 max-w-2xl text-foreground/80">
+        I don't treat software and sport as separate lives. The habits that make me
+        a better athlete make me a better engineer — and the reverse is just as true.
+      </p>
+
+      <div class="mt-8 grid gap-5 sm:grid-cols-3">
+        {principles.map(item => (
+          <div class="rounded-lg border border-border p-6 transition hover:border-accent/60 hover:shadow-md">
+            <h3 class="text-lg font-semibold text-blue-600 dark:text-orange-400">{item.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-foreground/80">{item.body}</p>
+          </div>
+        ))}
+      </div>
+    </section>
 
     <Hr />
 
-    <!-- Instagram Feed Section -->
+    <!-- Engineering expertise -->
+    <section id="engineering" class="py-12">
+      <h2 class="text-2xl font-semibold tracking-wider sm:text-3xl">
+        Engineering expertise
+      </h2>
+      <p class="mt-3 max-w-2xl text-foreground/80">
+        A pragmatic full-stack toolkit spanning product engineering, data and AI,
+        and the security practices that keep systems trustworthy.
+      </p>
+
+      <div class="mt-8 grid gap-5 sm:grid-cols-2">
+        {skillGroups.map(group => (
+          <div class="rounded-lg border border-border p-6">
+            <h3 class="mb-3 text-lg font-semibold">{group.title}</h3>
+            <ul class="flex flex-wrap gap-2">
+              {group.skills.map(skill => (
+                <li class="rounded-md bg-muted px-2.5 py-1 text-xs font-medium text-foreground/80">
+                  {skill}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <Hr />
+
+    <!-- Featured projects -->
+    <section id="featured-projects" class="py-12">
+      <div class="flex items-baseline justify-between gap-4">
+        <h2 class="text-2xl font-semibold tracking-wider sm:text-3xl">
+          Featured work
+        </h2>
+        <a
+          href="/projects"
+          class="text-sm font-medium text-blue-600 hover:underline dark:text-orange-400"
+        >
+          View all projects →
+        </a>
+      </div>
+
+      <div class="mt-8 grid gap-6 lg:grid-cols-2">
+        {featuredProjects.map(project => (
+          <ProjectCard
+            title={project.title}
+            status={project.status}
+            description={project.description}
+            githubUrl={project.githubUrl}
+            tags={project.tags}
+          />
+        ))}
+      </div>
+    </section>
+
+    <Hr />
+
+    <!-- Athletic journey -->
+    <section id="athletics" class="py-12">
+      <h2 class="text-2xl font-semibold tracking-wider sm:text-3xl">
+        Athletic journey
+      </h2>
+      <p class="mt-3 max-w-2xl text-foreground/80">
+        I train with the mindset of a competitive athlete — badminton is my
+        competitive edge, and running builds the aerobic base and mental toughness
+        that carry into everything else.
+      </p>
+
+      <div class="mt-8 grid gap-5 sm:grid-cols-3">
+        <div class="rounded-lg border border-border p-6">
+          <h3 class="text-lg font-semibold text-blue-600 dark:text-orange-400">Badminton</h3>
+          <p class="mt-2 text-sm text-foreground/80">
+            Competitive singles training with a clear target ahead.
+          </p>
+          <p class="mt-3 text-xs font-medium uppercase tracking-wide text-foreground/60">
+            Goal — Mauritian Open 2026
+          </p>
+        </div>
+        <div class="rounded-lg border border-border p-6">
+          <h3 class="text-lg font-semibold text-blue-600 dark:text-orange-400">Running</h3>
+          <p class="mt-2 text-sm text-foreground/80">
+            Building aerobic base and consistency — tracked and iterated on like any
+            other performance system.
+          </p>
+        </div>
+        <div class="rounded-lg border border-border p-6">
+          <h3 class="text-lg font-semibold text-blue-600 dark:text-orange-400">Traits it builds</h3>
+          <p class="mt-2 text-sm text-foreground/80">
+            Focus, resilience, and consistency under pressure — the same qualities I
+            bring to engineering teams.
+          </p>
+        </div>
+      </div>
+
+      <a
+        href={stravaUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mt-8 inline-flex items-center gap-3 rounded-lg bg-[#FC4C02] px-5 py-3 font-medium text-white transition-all hover:bg-[#E34402] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#FC4C02] focus:ring-offset-2 focus:ring-offset-background"
+        aria-label="Follow my training journey on Strava"
+      >
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/>
+        </svg>
+        Follow My Training Journey
+      </a>
+    </section>
+
+    <Hr />
+
+    <!-- Instagram / life updates (existing integration preserved) -->
     <InstagramFeed limit={6} />
 
+    <Hr />
+
+    <!-- Experience -->
+    <section id="experience" class="py-12">
+      <h2 class="text-2xl font-semibold tracking-wider sm:text-3xl">
+        Experience
+      </h2>
+      <p class="mt-3 max-w-2xl text-foreground/80">
+        From freelance shipping to enterprise engineering to securing production systems.
+      </p>
+
+      <ol class="mt-8 space-y-6">
+        {experience.map(job => (
+          <li class="relative rounded-lg border border-border p-6">
+            <div class="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
+              <h3 class="text-lg font-semibold">
+                {job.role} <span class="text-foreground/60">· {job.org}</span>
+              </h3>
+              <span class="text-xs font-medium uppercase tracking-wide text-foreground/60">
+                {job.period}
+              </span>
+            </div>
+            <p class="mt-3 text-sm leading-relaxed text-foreground/80">{job.summary}</p>
+          </li>
+        ))}
+      </ol>
+
+      <a
+        href="/about"
+        class="mt-6 inline-block text-sm font-medium text-blue-600 hover:underline dark:text-orange-400"
+      >
+        Read the full story →
+      </a>
+    </section>
+
+    <Hr />
+
+    <!-- Contact -->
+    <section id="contact" class="py-12">
+      <h2 class="text-2xl font-semibold tracking-wider sm:text-3xl">
+        Let's work together
+      </h2>
+      <p class="mt-3 max-w-2xl text-foreground/80">
+        I'm open to conversations about interesting problems and ambitious projects, including:
+      </p>
+
+      <ul class="mt-5 grid gap-2 text-sm text-foreground/80 sm:grid-cols-2">
+        <li class="rounded-md bg-muted/60 px-3 py-2">Software engineering roles</li>
+        <li class="rounded-md bg-muted/60 px-3 py-2">Technical consulting &amp; security</li>
+        <li class="rounded-md bg-muted/60 px-3 py-2">Product collaborations</li>
+        <li class="rounded-md bg-muted/60 px-3 py-2">Sports partnerships &amp; sponsorships</li>
+      </ul>
+
+      <div class="mt-7 flex flex-wrap items-center gap-3">
+        <a
+          href="mailto:emmanuelburuvuru@gmail.com"
+          class="rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-background transition hover:opacity-90"
+        >
+          Email me
+        </a>
+        <a
+          href="https://www.linkedin.com/in/emmanuel-buruvuru-a20b46246/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="rounded-md border border-current px-5 py-2.5 text-sm font-semibold transition hover:bg-accent hover:text-background"
+        >
+          Connect on LinkedIn
+        </a>
+      </div>
+    </section>
   </main>
 
   <Footer />

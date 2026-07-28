@@ -84,6 +84,35 @@ html[data-theme="dark"] {
   animation: typewriter 3s steps(30, end) forwards, blink 0.75s step-end infinite;
 }
 
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    animation: fade-in-up 0.6s ease-out both;
+  }
+}
+
+/* Respect users who prefer reduced motion: no typewriter, no reveal transforms. */
+@media (prefers-reduced-motion: reduce) {
+  .typewriter {
+    animation: none;
+    width: auto;
+    border-right: none;
+  }
+  .reveal {
+    animation: none;
+  }
+}
+
 @layer base {
   /* override Typography plugin’s strong color */
   .prose strong {
