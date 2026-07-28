@@ -1,0 +1,78 @@
+---
+// src/pages/certifications.astro
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Breadcrumb from "@/components/Breadcrumb.astro";
+import { certifications } from "@/data/certifications";
+import { SITE } from "@/config";
+---
+
+<Layout
+  title={`Certifications | ${SITE.title}`}
+  description="Verified certifications held by Emmanuel Buruvuru, including Oracle Cloud Infrastructure and Cisco CCNA credentials."
+>
+  <Header />
+  <Breadcrumb />
+
+  <main id="main-content">
+    <section id="certifications" class="pb-6 pt-8">
+      <h1 class="text-2xl font-semibold tracking-wider sm:text-3xl">
+        Certifications
+      </h1>
+      <p class="mt-4 mb-8 text-foreground/80">
+        Verified credentials across cloud architecture, AI, networking, and security.
+        Select any certificate to view the original document.
+      </p>
+
+      <div class="grid gap-6 sm:grid-cols-1 lg:grid-cols-2">
+        {certifications.map(cert => (
+          <article
+            class="group flex flex-col rounded-lg border border-border bg-background p-6 transition-all hover:border-accent/50 hover:shadow-lg"
+          >
+            <div class="mb-3 flex items-center justify-between gap-3">
+              <span class="rounded-full bg-muted px-3 py-1 text-xs font-medium text-foreground/70">
+                {cert.issuer}
+              </span>
+              <span class="text-xs font-medium uppercase tracking-wide text-foreground/60">
+                Issued {cert.issued}
+              </span>
+            </div>
+
+            <h2 class="text-lg font-semibold text-foreground transition-colors group-hover:text-accent">
+              {cert.title}
+            </h2>
+
+            <dl class="mt-3 space-y-1 text-sm text-foreground/70">
+              {cert.validUntil && (
+                <div class="flex gap-2">
+                  <dt class="font-medium">Valid until:</dt>
+                  <dd>{cert.validUntil}</dd>
+                </div>
+              )}
+              {cert.credentialId && (
+                <div class="flex flex-wrap gap-2">
+                  <dt class="font-medium">Credential ID:</dt>
+                  <dd class="break-all">{cert.credentialId}</dd>
+                </div>
+              )}
+            </dl>
+
+            <a
+              href={cert.file}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-5 inline-flex w-fit items-center gap-2 rounded-md border border-current px-4 py-2 text-sm font-semibold transition hover:bg-accent hover:text-background"
+              aria-label={`View the ${cert.title} certificate (opens PDF in a new tab)`}
+            >
+              View certificate
+              <span aria-hidden="true">→</span>
+            </a>
+          </article>
+        ))}
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

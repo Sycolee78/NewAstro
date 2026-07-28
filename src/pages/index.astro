@@ -8,6 +8,7 @@ import Hr from "@/components/Hr.astro";
 import ProjectCard from "@/components/ProjectCard.astro";
 import InstagramFeed from "@/components/InstagramFeed.astro";
 import { projects } from "@/data/projects";
+import { certifications } from "@/data/certifications";
 import { SOCIALS } from "@/constants";
 
 const featuredProjects = projects.filter(p => p.featured).slice(0, 3);
@@ -90,17 +91,15 @@ const experience = [
   },
 ];
 
-// Education & certifications — sourced directly from the résumé.
+// Education — sourced directly from the résumé.
 const education = {
   school: "Curtin University",
   degree: "BSc, Information Technology",
   year: "2024",
 };
 
-const certifications = [
-  "CCNA: Enterprise Networking, Security, and Automation — Cisco",
-  "Oracle Cloud Infrastructure 2025 Certified AI Foundations Associate",
-];
+// Show a preview of certifications on the homepage; the full list lives on /certifications.
+const certPreview = certifications.slice(0, 3);
 ---
 
 <Layout
@@ -343,10 +342,18 @@ const certifications = [
           <p class="text-sm text-foreground/80">{education.school} · {education.year}</p>
         </div>
         <div class="rounded-lg border border-border p-6">
-          <h3 class="text-sm font-semibold uppercase tracking-wide text-foreground/60">Certifications</h3>
+          <div class="flex items-baseline justify-between gap-3">
+            <h3 class="text-sm font-semibold uppercase tracking-wide text-foreground/60">Certifications</h3>
+            <a
+              href="/certifications"
+              class="text-xs font-medium text-blue-600 hover:underline dark:text-orange-400"
+            >
+              View all →
+            </a>
+          </div>
           <ul class="mt-2 space-y-1.5 text-sm text-foreground/80">
-            {certifications.map(cert => (
-              <li>{cert}</li>
+            {certPreview.map(cert => (
+              <li>{cert.title} <span class="text-foreground/50">· {cert.issuer}</span></li>
             ))}
           </ul>
         </div>

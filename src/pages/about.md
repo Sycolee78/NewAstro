@@ -3,33 +3,39 @@ layout: ../layouts/AboutLayout.astro
 title: "About Me"
 ---
 
-I'm a <strong class="text-blue-500 dark:text-orange-500">Cybersecurity & Software Engineer</strong> who builds secure, performant systems that actually solve problems. But beyond the code, I'm also a competitive athlete and a writer who believes deeply in discipline, intentionality, and the pursuit of long-term mastery.
+I'm an <strong class="text-blue-500 dark:text-orange-500">AI-focused Software Engineer</strong> who builds secure, scalable systems that improve how organizations actually work — full-stack applications, backend APIs, data pipelines, and AI-ready platforms. Beyond the code, I'm also a competitive athlete and a writer who believes deeply in discipline, consistency, and the pursuit of long-term mastery.
 
 This page is less of a résumé and more of a story — how I got here, what I've built, and where I'm going.
 
 ---
 
-## Where It Started
+## Foundations
 
-My journey into software began in <strong class="text-blue-500 dark:text-orange-500">2022 as a freelance engineer on Fiverr</strong>. I wasn't waiting for permission — I built what clients needed: MySQL schemas for data-heavy applications, Python automation scripts, Docker containers for deployment, and RESTful APIs in both C and Python.
-
-Those early projects taught me the fundamentals: how to scope work, ship on deadline, and communicate with people who don't speak "developer." It was messy, fast, and exactly the education I needed.
+I studied at <strong class="text-blue-500 dark:text-orange-500">Curtin University</strong>, earning a Bachelor of Science in Information Technology (2024). Alongside my degree I certified across the stack I actually work in — earning Cisco's <strong class="text-blue-500 dark:text-orange-500">CCNA (Enterprise Networking, Security, and Automation)</strong> and a series of <strong class="text-blue-500 dark:text-orange-500">Oracle Cloud Infrastructure</strong> credentials, including Architect Associate and AI Foundations Associate.
 
 ---
 
 ## Building at Scale
 
-In 2023, I joined <strong class="text-blue-500 dark:text-orange-500">Accenture</strong> to help architect and launch a full-stack online classroom platform. This wasn't freelance chaos — it was enterprise-grade engineering: Java on the backend with Spring Boot, React.js on the frontend, MongoDB for flexible data modeling, and REST APIs tying it all together.
+In 2023 I worked with <strong class="text-blue-500 dark:text-orange-500">Accenture</strong> on a part-time engineering project, building full-stack features for a secure internal learning platform. The stack was Java and Spring Boot on the backend, Node.js services, MongoDB for data, and modern frontend technologies.
 
-Working at scale meant thinking differently. Performance mattered. Code reviews mattered. System design decisions had downstream consequences. I learned to build software that could grow — and that other engineers could maintain.
+Working at that level meant thinking differently. Performance mattered. Code reviews mattered. System-design decisions had downstream consequences. I learned to ship features that were reliable, usable, and maintainable by other engineers.
 
 ---
 
 ## Securing the Systems
 
-After graduation, I pivoted into cybersecurity at <strong class="text-blue-500 dark:text-orange-500">Ignite Africa</strong>. The mission shifted from "build it" to "protect it."
+From June 2024 to June 2025 I worked at <strong class="text-blue-500 dark:text-orange-500">Ignite Africa</strong> as a Software Developer and Associate Cybersecurity Engineer. The mission expanded from "build it" to "build it and protect it."
 
-I designed and enforced security architectures using Check Point firewalls, managed endpoints with Microsoft Intune, and built internal/external policy frameworks. I worked with Rapid7 for vulnerability scanning and SIEM tools for threat detection and incident response. The role taught me that security isn't an afterthought — it's a discipline woven into every layer of a system.
+I developed reporting automations and ran security assessments across four companies, remediating more than 50 critical vulnerabilities before deployment. I built Power Apps for business continuity and helped reduce incidents by 30–40% across 1000+ endpoints using tools like Check Point and Rapid7. Security stopped being an afterthought and became a discipline woven into every layer.
+
+---
+
+## Engineering with AI
+
+Since July 2025 I've been a <strong class="text-blue-500 dark:text-orange-500">Software Engineer at Africa Clinical Research Network</strong>, building AI-ready operational applications that process 5,000+ records a day and improve workflow efficiency. I manage integrations across 10+ ERP modules and design data pipelines and ETL workflows that improve data accuracy and processing speed.
+
+Day to day I work across Java, Python, JavaScript and TypeScript, with Spring Boot and Node.js on the backend, React and React Native on the frontend, PostgreSQL and MongoDB for data, and Oracle Cloud, AWS, Azure, Docker, and CI/CD for delivery — increasingly with RAG and vectorization in the mix.
 
 ---
 
@@ -37,11 +43,11 @@ I designed and enforced security architectures using Check Point firewalls, mana
 
 Engineering is what I do. But it's not all I am.
 
-<strong class="text-blue-500 dark:text-orange-500">Badminton & Running</strong> — I train with the mindset of an elite athlete. Badminton is my competitive edge (I'm working toward the Mauritian Open 2026), and running builds the aerobic base and mental toughness that spills into everything else. I track, iterate, and optimize my training the same way I approach code.
+<strong class="text-blue-500 dark:text-orange-500">Badminton & Running</strong> — I train with the mindset of a competitive athlete. Badminton is my competitive edge (I'm working toward the Mauritian Open 2026), and running builds the aerobic base and mental toughness that spill into everything else. I track, iterate, and optimize my training the same way I approach code.
 
 <strong class="text-blue-500 dark:text-orange-500">Continuous Learning</strong> — I'm constantly diving into AI, machine learning, and data systems. Not just to stay relevant — but because building smarter systems genuinely excites me.
 
-<strong class="text-blue-500 dark:text-orange-500">Language & Culture</strong> — I speak French fluently and I'm learning German. Language unlocks culture, and culture expands perspective. It's all connected.
+<strong class="text-blue-500 dark:text-orange-500">Language & Culture</strong> — alongside English, I speak French and German at an intermediate level. Language unlocks culture, and culture expands perspective. It's all connected.
 
 <strong class="text-blue-500 dark:text-orange-500">Writing</strong> — I write introspective poetry that explores emotion, paradox, and the human condition. It's a different kind of engineering — building meaning from words.
 
