@@ -35,7 +35,7 @@ I developed reporting automations and ran security assessments across four compa
 
 Since July 2025 I've been a <strong class="text-blue-500 dark:text-orange-500">Software Engineer at Africa Clinical Research Network</strong>, building operational applications that process 5,000+ clinical records a day. I deliver integrations across 10+ ERP modules — cutting manual processing by around 40% — and design data pipelines and ETL workflows that improve data accuracy and processing speed.
 
-Day to day I work across Java, Python, JavaScript and TypeScript, with Spring Boot and Node.js on the backend, React and React Native on the frontend, PostgreSQL and MongoDB for data, and Oracle Cloud, AWS, Azure, Docker, and CI/CD for delivery — increasingly with RAG and vectorization in the mix.
+Day to day I work across Java, Python, JavaScript and TypeScript, with Django, Spring Boot and Node.js on the backend, React and React Native on the frontend, PostgreSQL, MySQL and MongoDB for data, and Oracle Cloud, AWS, Azure, Docker, and CI/CD for delivery — increasingly with RAG and vectorization in the mix.
 
 ---
 
