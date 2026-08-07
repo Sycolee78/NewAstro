@@ -62,9 +62,9 @@ export const projects: Project[] = [
   {
     slug: "koste",
     title: "Koste",
-    status: "In Progress",
+    status: "Completed",
     description:
-      "Smart bill-splitting mobile app for the Mauritian dining market — scan a receipt, split by item at the table, and settle up through local payment rails.",
+      "Smart bill-splitting mobile app for the Mauritian dining market — scan a receipt, split by item at the table, and settle up through local payment rails. Fully coded and tested, now seeking investment to launch.",
     tags: ["React Native", "Expo", "TypeScript", "Supabase", "PostgreSQL", "Mobile App"],
     featured: true,
     problem:
@@ -80,7 +80,7 @@ export const projects: Project[] = [
       "Built for Mauritius compliance — DPA 2017, PCI DSS (SAQ A), and Bank of Mauritius payment rules.",
     ],
     role: "Worked on the mobile app and Supabase backend.",
-    note: "A market-specific product for Mauritius (MUR currency, +230 phone auth, local payment rails, EN/FR receipts).",
+    note: "Investment pitch: Koste is fully coded and tested, purpose-built for the Mauritian market (MUR currency, +230 phone auth, local payment rails, EN/FR receipts). The concept is now seeking investment and launch partners — reach out via the contact section to discuss.",
   },
   {
     slug: "agrimesh-autonomous",
