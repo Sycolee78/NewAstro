@@ -31,6 +31,35 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    slug: "architect",
+    title: "Architect",
+    status: "In Progress",
+    description:
+      "Terrain-aware generative design engine for houses — a plot and a client brief go in; a sited, planned, structurally screened, serviced, code-checked and costed proposal comes out.",
+    tags: [
+      "Python",
+      "Django",
+      "React Native",
+      "PostgreSQL",
+      "Generative Design",
+      "IFC/BIM",
+    ],
+    featured: true,
+    problem:
+      "Most of what makes a house buildable is decided before anyone draws it, and those decisions are coupled: where the building sits sets the earthworks, which set the floor level, which decides whether it can drain by gravity, while the plan decides where columns can land and therefore the spans. A designer resolves these in sequence over weeks and discovers the contradictions late.",
+    approach:
+      "A deterministic engineering core with AI only at the edges. A six-stage pipeline (site, layout, structure, services, codes, quantities) resolves the coupled decisions in seconds and reports the contradictions immediately, always returning a proposal — viable or not — with every blocker attached. Floor plans are searched as slicing trees that tile the footprint by construction; building codes and cost rates live in reviewable data packs rather than in the engine; and IFC 4 is the canonical deliverable, with disclaimers embedded inside the model. The engine is a library wrapped by a Django/DRF service on PostgreSQL, with React web and React Native (Expo) clients sharing an OpenAPI-generated type contract.",
+    highlights: [
+      "Six-stage pipeline whose joins report which upstream assumption to revisit — e.g. drainage failing is reported as the millimetres the platform must rise.",
+      "Pareto trade-off search over briefs returns the frontier of options, not a single weighted answer.",
+      "Building codes and cost rates modelled as reviewable, dated data packs, making the system multi-market.",
+      "IFC 4.3 export with disclaimers carried inside the model as property sets.",
+      "Full stack: engine library, Django/DRF service with Celery/Redis, React web app, and React Native mobile client on one API.",
+    ],
+    role: "Designed and built the engine, service, and both clients.",
+    note: "Scheme-stage screening only — nothing it produces is for construction, and every engineering output carries an explicit disclaimer. Source is currently private.",
+  },
+  {
     slug: "agrimesh-autonomous",
     title: "AgriMesh Autonomous",
     status: "In Progress",
