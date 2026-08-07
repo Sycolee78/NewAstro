@@ -60,6 +60,29 @@ export const projects: Project[] = [
     note: "Scheme-stage screening only — nothing it produces is for construction, and every engineering output carries an explicit disclaimer. Source is currently private.",
   },
   {
+    slug: "koste",
+    title: "Koste",
+    status: "In Progress",
+    description:
+      "Smart bill-splitting mobile app for the Mauritian dining market — scan a receipt, split by item at the table, and settle up through local payment rails.",
+    tags: ["React Native", "Expo", "TypeScript", "Supabase", "PostgreSQL", "Mobile App"],
+    featured: true,
+    problem:
+      "Splitting a restaurant bill fairly is tedious: working out who had what, handling shared items, adding VAT and service charge, and then settling up across different payment methods.",
+    approach:
+      "A cross-platform mobile app (React Native + Expo, TypeScript) backed by Supabase — PostgreSQL with row-level security, auth, storage, and edge functions. Diners scan a receipt with on-device OCR (Google ML Kit, bilingual EN/FR), start a session others join by QR code with real-time sync, and assign items — including shared items by fraction. The split engine distributes Mauritius VAT (15%) and service charge proportionally to each person's subtotal, and payments settle through local rails.",
+    highlights: [
+      "On-device receipt OCR with a bilingual EN/FR parser (Google ML Kit) — no data leaves the phone.",
+      "QR-code dining sessions with real-time sync across all participants (Supabase Realtime).",
+      "Split engine distributes 15% VAT and service charge proportionally, with shared-item fractions.",
+      "Local payments via MCB PaySmart / MIPS, POP bank-to-bank, Apple Pay, and Google Pay.",
+      "Offline Bluetooth session sharing that auto-syncs to the backend when connectivity returns.",
+      "Built for Mauritius compliance — DPA 2017, PCI DSS (SAQ A), and Bank of Mauritius payment rules.",
+    ],
+    role: "Worked on the mobile app and Supabase backend.",
+    note: "A market-specific product for Mauritius (MUR currency, +230 phone auth, local payment rails, EN/FR receipts).",
+  },
+  {
     slug: "agrimesh-autonomous",
     title: "AgriMesh Autonomous",
     status: "In Progress",
