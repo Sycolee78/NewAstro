@@ -118,21 +118,23 @@ const isActive = (path: string) => {
   function toggleNav() {
     const menuBtn = document.querySelector("#menu-btn");
     const menuItems = document.querySelector("#menu-items");
-    const menuIcon = document.querySelector("#menu-icon");
-    const closeIcon = document.querySelector("#close-icon");
 
-    if (!menuBtn || !menuItems || !menuIcon || !closeIcon) return;
+    if (!menuBtn || !menuItems) return;
+
+    const setOpen = (open: boolean) => {
+      menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+      menuBtn.setAttribute("aria-label", open ? "Close Menu" : "Open Menu");
+      menuItems.classList.toggle("hidden", !open);
+    };
 
     menuBtn.addEventListener("click", () => {
-      const openMenu = menuBtn.getAttribute("aria-expanded") === "true";
-
-      menuBtn.setAttribute("aria-expanded", openMenu ? "false" : "true");
-      menuBtn.setAttribute("aria-label", openMenu ? "Open Menu" : "Close Menu");
-
-      menuItems.classList.toggle("hidden");
-      menuIcon.classList.toggle("hidden");
-      closeIcon.classList.toggle("hidden");
+      setOpen(menuBtn.getAttribute("aria-expanded") !== "true");
     });
+
+    // Close the mobile menu after tapping a link.
+    menuItems.querySelectorAll("a").forEach(link =>
+      link.addEventListener("click", () => setOpen(false))
+    );
   }
 
   toggleNav();

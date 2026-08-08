@@ -29,6 +29,8 @@ export interface Project {
   note?: string;
   /** Optional primary call-to-action button (e.g. an investment mailto). */
   cta?: { label: string; href: string };
+  /** Optional interactive embed (e.g. a UI prototype) shown on the detail page. */
+  embed?: { src: string; title: string };
 }
 
 export const projects: Project[] = [
@@ -86,6 +88,10 @@ export const projects: Project[] = [
     cta: {
       label: "Invest in Koste",
       href: "mailto:benjaminthomas031216@gmail.com?cc=emmanuelburuvuru@gmail.com&subject=Investment%20interest%20in%20Koste&body=Hi%20Benjamin%20and%20Emmanuel%2C%0A%0AI%20am%20interested%20in%20learning%20more%20about%20investing%20in%20Koste.%20Could%20we%20set%20up%20a%20time%20to%20talk%3F%0A%0AThanks%2C",
+    },
+    embed: {
+      src: "/koste-demo/",
+      title: "Koste interactive UI demo",
     },
   },
   {

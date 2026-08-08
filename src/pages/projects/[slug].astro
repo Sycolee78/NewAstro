@@ -98,6 +98,25 @@ const statusColors = {
         </div>
       )}
 
+      {project.embed && (
+        <div class="mt-8">
+          <h2 class="mb-3 text-lg font-semibold text-blue-600 dark:text-orange-400">
+            Interactive demo
+          </h2>
+          <p class="mb-4 text-sm text-foreground/70">
+            Tap the left or right side of the screen (or use the controls) to move
+            through the app.
+          </p>
+          <iframe
+            src={project.embed.src}
+            title={project.embed.title}
+            loading="lazy"
+            class="w-full rounded-xl border border-border bg-[#063D2E]"
+            style="height: min(760px, 82vh); min-height: 520px;"
+          ></iframe>
+        </div>
+      )}
+
       <div class="mt-10 space-y-8">
         {project.problem && (
           <div>
