@@ -65,8 +65,16 @@ const statusColors = {
         </ul>
       )}
 
-      {(project.githubUrl || project.liveUrl) && (
+      {(project.githubUrl || project.liveUrl || project.cta) && (
         <div class="mt-6 flex flex-wrap gap-3">
+          {project.cta && (
+            <a
+              href={project.cta.href}
+              class="rounded-md bg-accent px-4 py-2 text-sm font-semibold text-background transition hover:opacity-90"
+            >
+              {project.cta.label}
+            </a>
+          )}
           {project.githubUrl && (
             <a
               href={project.githubUrl}

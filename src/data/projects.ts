@@ -27,6 +27,8 @@ export interface Project {
   role?: string;
   /** Any honest caveat, e.g. proprietary source. */
   note?: string;
+  /** Optional primary call-to-action button (e.g. an investment mailto). */
+  cta?: { label: string; href: string };
 }
 
 export const projects: Project[] = [
@@ -80,7 +82,11 @@ export const projects: Project[] = [
       "Built for Mauritius compliance — DPA 2017, PCI DSS (SAQ A), and Bank of Mauritius payment rules.",
     ],
     role: "Worked on the mobile app and Supabase backend.",
-    note: "Investment pitch: Koste is fully coded and tested, purpose-built for the Mauritian market (MUR currency, +230 phone auth, local payment rails, EN/FR receipts). The concept is now seeking investment and launch partners — reach out via the contact section to discuss.",
+    note: "Investment pitch: Koste is fully coded and tested, purpose-built for the Mauritian market (MUR currency, +230 phone auth, local payment rails, EN/FR receipts). The concept is now seeking investment and launch partners.",
+    cta: {
+      label: "Invest in Koste",
+      href: "mailto:benjaminthomas031216@gmail.com?cc=emmanuelburuvuru@gmail.com&subject=Investment%20interest%20in%20Koste&body=Hi%20Benjamin%20and%20Emmanuel%2C%0A%0AI%20am%20interested%20in%20learning%20more%20about%20investing%20in%20Koste.%20Could%20we%20set%20up%20a%20time%20to%20talk%3F%0A%0AThanks%2C",
+    },
   },
   {
     slug: "agrimesh-autonomous",
