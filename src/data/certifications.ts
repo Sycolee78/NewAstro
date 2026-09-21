@@ -13,6 +13,10 @@ export interface Certification {
   credentialId?: string;
   /** Path to the certificate PDF (served from /public). */
   file: string;
+  /** "certification" (exam credential) or "training" (course completion). Defaults to certification. */
+  kind?: "certification" | "training";
+  /** Training duration, e.g. "32 hours". */
+  hours?: string;
 }
 
 export const certifications: Certification[] = [
@@ -52,5 +56,23 @@ export const certifications: Certification[] = [
     issued: "August 17, 2025",
     credentialId: "eadc3ccf-1e82-4f55-b61e-9261980d8547",
     file: "/certifications/ich-good-clinical-practice.pdf",
+  },
+  {
+    kind: "training",
+    title: "Oracle Cloud Infrastructure Developer Professional (2026): Hands-on Workshop",
+    issuer: "Oracle University",
+    issued: "August 28, 2026",
+    hours: "32 hours",
+    credentialId: "Event ID 276933",
+    file: "/certifications/oci-developer-professional-workshop.pdf",
+  },
+  {
+    kind: "training",
+    title: "Oracle Cloud Infrastructure DevOps Professional (Ed 4, Live Virtual Class)",
+    issuer: "Oracle University",
+    issued: "September 21, 2026",
+    hours: "40 hours",
+    credentialId: "Event ID 276934",
+    file: "/certifications/oci-devops-professional-lvc.pdf",
   },
 ];
