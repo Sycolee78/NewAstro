@@ -1,16 +1,16 @@
 ---
 // src/pages/index.astro
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
 import Socials from "@/components/Socials.astro";
-import Hr from "@/components/Hr.astro";
 import ProjectCard from "@/components/ProjectCard.astro";
 import { projects } from "@/data/projects";
 import { certifications } from "@/data/certifications";
 import { SOCIALS } from "@/constants";
 
-const featuredProjects = projects.filter(p => p.featured).slice(0, 3);
+const spotlight = projects.find(p => p.slug === "avail-africa");
+const featuredProjects = projects
+  .filter(p => p.featured && !p.external)
+  .slice(0, 3);
 const resumeHref = "/assets/Buruvuru-Emmanuel-Resume.pdf";
 const stravaUrl = "https://www.strava.com/athletes/132983852";
 
@@ -57,6 +57,16 @@ const skillGroups = [
 // Experience — sourced directly from the résumé (roles, dates, and metrics).
 const experience = [
   {
+    period: "Oct 2026 – Present",
+    role: "Founder & CEO, Lead Forward Deployed Engineer",
+    org: "Avail Africa",
+    href: "https://availafrica.com",
+    bullets: [
+      "Founded Avail Africa to build software and AI that makes health, agriculture, sport and community services available — in local languages, on any phone.",
+      "Designed and shipped availafrica.com (Expo, React Native Web, TypeScript, static export).",
+    ],
+  },
+  {
     period: "Jul 2025 – Present",
     role: "Software Engineer",
     org: "Africa Clinical Research Network",
@@ -101,320 +111,426 @@ const certPreview = certifications.slice(0, 3);
   title="Emmanuel Buruvuru — Software Engineer"
   description="Emmanuel Buruvuru is a software engineer focused on backend, data, and AI-driven systems — and a competitive badminton and running athlete who brings the same discipline to building reliable software."
 >
-  <Header />
-
-  <main id="main-content" data-layout="index">
-    <!-- Hero -->
-    <section id="hero" class="pt-28 pb-14 sm:pt-32">
-      <div class="flex flex-col-reverse items-start gap-8 sm:flex-row sm:items-center sm:justify-between">
-        <div class="reveal max-w-xl">
-          <p class="font-semibold tracking-wide text-blue-600 dark:text-orange-400">
-            Software Engineer <span aria-hidden="true">×</span> Athlete
-          </p>
-          <h1 class="my-3 inline-block text-4xl font-bold sm:my-4 sm:text-5xl typewriter">
-            Emmanuel Buruvuru
-          </h1>
-          <h2 class="mb-5 text-xl font-semibold text-foreground/80 sm:text-2xl">
-            Software Engineer — Backend, Data &amp; AI
-          </h2>
-          <p class="max-w-xl leading-relaxed text-foreground/80">
-            I build reliable backend and data systems — from full-stack platforms to
-            production data pipelines — with a security-minded approach and the same
-            discipline competitive sport demands.
-          </p>
-
-          <div class="mt-7 flex flex-wrap items-center gap-3">
-            <a
-              href="#featured-projects"
-              class="rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-background transition hover:opacity-90"
-            >
-              View Projects
-            </a>
-            <a
-              href={resumeHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="rounded-md border border-current px-5 py-2.5 text-sm font-semibold transition hover:bg-accent hover:text-background"
-            >
-              Download Résumé
-            </a>
-          </div>
-
-          {SOCIALS.length > 0 && (
-            <div class="mt-6 flex items-center gap-2">
-              <span class="whitespace-nowrap text-sm text-foreground/70">Find me on</span>
+  <!-- Hero -->
+  <section id="hero" class="relative overflow-hidden">
+    <span
+      class="ring-motif -top-40 -right-40 size-[620px] border-[100px] border-ember/10"
+      aria-hidden="true"></span>
+    <div
+      class="relative container-x grid items-center gap-12 pt-14 pb-20 sm:pt-20 lg:grid-cols-[1.25fr_0.75fr] lg:pb-28"
+    >
+      <div class="reveal">
+        <a
+          href="https://availafrica.com"
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center gap-2.5 rounded-full border-[1.5px] border-line bg-white py-2 pr-4 pl-3 text-sm font-medium no-underline hover:border-ink"
+        >
+          <span class="dot"></span> Building <strong>Avail Africa</strong>
+          <span aria-hidden="true">↗</span>
+        </a>
+        <p class="mt-8 eyebrow text-ember-deep">
+          Software Engineer <span aria-hidden="true">×</span> Athlete
+        </p>
+        <h1
+          class="mt-4 text-[44px] leading-[1.02] font-extrabold tracking-[-0.03em] sm:text-7xl"
+        >
+          Emmanuel <span class="hl">Buruvuru</span>
+        </h1>
+        <h2 class="mt-5 text-2xl font-bold text-ink sm:text-[28px]">
+          Software Engineer — Backend, Data &amp; AI
+        </h2>
+        <p class="mt-5 max-w-xl text-lg leading-relaxed text-ink-70">
+          I build reliable backend and data systems — from full-stack platforms
+          to production data pipelines — with a security-minded approach and the
+          same discipline competitive sport demands.
+        </p>
+        <div class="mt-8 flex flex-wrap items-center gap-3">
+          <a href="#featured-projects" class="btn-primary"
+            >View Projects <span aria-hidden="true">→</span></a
+          >
+          <a
+            href={resumeHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-ghost">Download Résumé</a
+          >
+        </div>
+        {
+          SOCIALS.length > 0 && (
+            <div class="mt-8 flex items-center gap-3">
+              <span class="text-sm font-medium whitespace-nowrap text-ink-70">
+                Find me on
+              </span>
               <Socials />
             </div>
-          )}
-        </div>
+          )
+        }
+      </div>
 
-        <div class="shrink-0">
+      <div class="reveal flex justify-center lg:justify-end">
+        <div class="relative">
+          <span
+            class="ring-motif -inset-6 border-[18px] border-ember-tint"
+            aria-hidden="true"></span>
           <img
             src="/images/profile.png"
             alt="Portrait of Emmanuel Buruvuru"
-            width="176"
-            height="176"
-            class="size-32 rounded-full border-4 border-blue-500 object-cover shadow-lg sm:size-44 dark:border-orange-400"
+            width="320"
+            height="320"
+            class="relative size-56 rounded-full border-[6px] border-ember object-cover sm:size-72 lg:size-80"
           />
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <Hr />
-
-    <!-- Positioning: where engineering meets athletics -->
-    <section id="ethos" class="py-12">
-      <h2 class="text-2xl font-semibold tracking-wider sm:text-3xl">
-        Engineering discipline, athletic mindset
-      </h2>
-      <p class="mt-3 max-w-2xl text-foreground/80">
-        I don't treat software and sport as separate lives. The habits that make me
-        a better athlete make me a better engineer — and the reverse is just as true.
-      </p>
-
-      <div class="mt-8 grid gap-5 sm:grid-cols-3">
-        {principles.map(item => (
-          <div class="rounded-lg border border-border p-6 transition hover:border-accent/60 hover:shadow-md">
-            <h3 class="text-lg font-semibold text-blue-600 dark:text-orange-400">{item.title}</h3>
-            <p class="mt-2 text-sm leading-relaxed text-foreground/80">{item.body}</p>
-          </div>
-        ))}
+  <!-- Positioning: where engineering meets athletics -->
+  <section id="ethos" class="section bg-white">
+    <div class="container-x">
+      <div class="max-w-2xl">
+        <p class="eyebrow text-ink-70">Ethos</p>
+        <h2 class="mt-3 text-[28px] leading-tight font-bold sm:text-4xl">
+          Engineering discipline, athletic mindset
+        </h2>
+        <p class="mt-4 text-lg leading-relaxed text-ink-70">
+          I don't treat software and sport as separate lives. The habits that
+          make me a better athlete make me a better engineer — and the reverse
+          is just as true.
+        </p>
       </div>
-    </section>
+      <ol class="mt-10 grid gap-5 md:grid-cols-3">
+        {
+          principles.map((item, i) => (
+            <li class="card bg-paper">
+              <span
+                class="grid size-12 place-items-center rounded-full bg-ember font-display text-xl font-extrabold"
+                aria-hidden="true"
+              >
+                {i + 1}
+              </span>
+              <h3 class="mt-5 text-2xl font-bold">{item.title}</h3>
+              <p class="mt-2 leading-relaxed text-ink-70">{item.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
 
-    <Hr />
-
-    <!-- Engineering expertise -->
-    <section id="engineering" class="py-12">
-      <h2 class="text-2xl font-semibold tracking-wider sm:text-3xl">
-        Engineering expertise
-      </h2>
-      <p class="mt-3 max-w-2xl text-foreground/80">
-        The core of what I build with day to day — backend services, data pipelines,
-        and the cloud they run on.
-      </p>
-
-      <div class="mt-8 grid gap-5 sm:grid-cols-2">
-        {skillGroups.map(group => (
-          <div class="rounded-lg border border-border p-6">
-            <h3 class="mb-3 text-lg font-semibold">{group.title}</h3>
-            <ul class="flex flex-wrap gap-2">
-              {group.skills.map(skill => (
-                <li class="rounded-md bg-muted px-2.5 py-1 text-xs font-medium text-foreground/80">
-                  {skill}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+  <!-- Engineering expertise -->
+  <section id="engineering" class="section">
+    <div class="container-x">
+      <div class="max-w-2xl">
+        <p class="eyebrow text-ink-70">Skills</p>
+        <h2 class="mt-3 text-[28px] leading-tight font-bold sm:text-4xl">
+          Engineering expertise
+        </h2>
+        <p class="mt-4 text-lg leading-relaxed text-ink-70">
+          The core of what I build with day to day — backend services, data
+          pipelines, and the cloud they run on.
+        </p>
       </div>
-
-      <p class="mt-4 text-sm text-foreground/60">
+      <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          skillGroups.map(group => (
+            <div class="card">
+              <h3 class="text-xl font-bold">{group.title}</h3>
+              <ul class="mt-4 flex flex-wrap gap-2">
+                {group.skills.map(skill => (
+                  <li class="pill">{skill}</li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+      <p class="mt-6 text-sm text-ink-70">
         Also comfortable with React, and security tooling (Check Point, Rapid7,
         Microsoft Intune) from my cybersecurity work.
       </p>
-    </section>
+    </div>
+  </section>
 
-    <Hr />
-
-    <!-- Featured projects -->
-    <section id="featured-projects" class="py-12">
-      <div class="flex items-baseline justify-between gap-4">
-        <h2 class="text-2xl font-semibold tracking-wider sm:text-3xl">
-          Featured work
-        </h2>
+  <!-- Featured projects -->
+  <section id="featured-projects" class="section bg-white">
+    <div class="container-x">
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p class="eyebrow text-ink-70">Projects</p>
+          <h2 class="mt-3 text-[28px] leading-tight font-bold sm:text-4xl">
+            Featured work
+          </h2>
+        </div>
         <a
           href="/projects"
-          class="text-sm font-medium text-blue-600 hover:underline dark:text-orange-400"
+          class="text-[15px] font-bold text-ember-deep no-underline hover:underline"
+          >View all projects →</a
         >
-          View all projects →
-        </a>
       </div>
-
-      <div class="mt-8 grid gap-6 lg:grid-cols-2">
-        {featuredProjects.map(project => (
-          <ProjectCard
-            title={project.title}
-            status={project.status}
-            description={project.description}
-            slug={project.slug}
-            githubUrl={project.githubUrl}
-            liveUrl={project.liveUrl}
-            tags={project.tags}
-          />
-        ))}
+      {
+        spotlight && (
+          <div class="mt-10">
+            <ProjectCard project={spotlight} spotlight />
+          </div>
+        )
+      }
+      <div class="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {featuredProjects.map(project => <ProjectCard project={project} />)}
       </div>
-    </section>
+    </div>
+  </section>
 
-    <Hr />
-
-    <!-- Athletic journey -->
-    <section id="athletics" class="py-12">
-      <h2 class="text-2xl font-semibold tracking-wider sm:text-3xl">
-        Athletic journey
-      </h2>
-      <p class="mt-3 max-w-2xl text-foreground/80">
-        I train with the mindset of a competitive athlete — badminton is my
-        competitive edge, and running builds the aerobic base and mental toughness
-        that carry into everything else.
-      </p>
-
-      <div class="mt-8 grid gap-5 sm:grid-cols-3">
-        <div class="rounded-lg border border-border p-6">
-          <h3 class="text-lg font-semibold text-blue-600 dark:text-orange-400">Badminton</h3>
-          <p class="mt-2 text-sm text-foreground/80">
+  <!-- Athletic journey -->
+  <section id="athletics" class="section bg-ink text-paper">
+    <span
+      class="ring-motif -top-52 -right-56 size-[560px] border-[90px] border-strava/10"
+      aria-hidden="true"></span>
+    <div class="relative container-x">
+      <div class="max-w-2xl">
+        <p class="eyebrow text-ember">Beyond the keyboard</p>
+        <h2 class="mt-3 text-[28px] leading-tight font-bold sm:text-4xl">
+          Athletic journey
+        </h2>
+        <p class="mt-4 text-lg leading-relaxed text-ink-soft">
+          I train with the mindset of a competitive athlete — badminton is my
+          competitive edge, and running builds the aerobic base and mental
+          toughness that carry into everything else.
+        </p>
+      </div>
+      <div class="mt-10 grid gap-4 md:grid-cols-3">
+        <div class="card-ink">
+          <h3 class="text-2xl font-bold">Badminton</h3>
+          <p class="mt-2 leading-relaxed text-ink-soft">
             Competitive singles training with a clear target ahead.
           </p>
-          <p class="mt-3 text-xs font-medium uppercase tracking-wide text-foreground/60">
-            Goal — Mauritian Open 2026
+          <p
+            class="mt-6 font-display text-[28px] leading-none font-extrabold text-ember"
+          >
+            Mauritian Open 2026
+          </p>
+          <p class="mt-2 eyebrow text-ink-soft">Goal</p>
+        </div>
+        <div class="card-ink">
+          <h3 class="text-2xl font-bold">Running</h3>
+          <p class="mt-2 leading-relaxed text-ink-soft">
+            Building aerobic base and consistency — tracked and iterated on like
+            any other performance system.
           </p>
         </div>
-        <div class="rounded-lg border border-border p-6">
-          <h3 class="text-lg font-semibold text-blue-600 dark:text-orange-400">Running</h3>
-          <p class="mt-2 text-sm text-foreground/80">
-            Building aerobic base and consistency — tracked and iterated on like any
-            other performance system.
-          </p>
-        </div>
-        <div class="rounded-lg border border-border p-6">
-          <h3 class="text-lg font-semibold text-blue-600 dark:text-orange-400">Traits it builds</h3>
-          <p class="mt-2 text-sm text-foreground/80">
-            Focus, resilience, and consistency under pressure — the same qualities I
-            bring to engineering teams.
+        <div class="card-ink">
+          <h3 class="text-2xl font-bold">Traits it builds</h3>
+          <p class="mt-2 leading-relaxed text-ink-soft">
+            Focus, resilience, and consistency under pressure — the same
+            qualities I bring to engineering teams.
           </p>
         </div>
       </div>
-
-      <div class="mt-8 flex flex-wrap gap-3">
+      <div class="mt-10 flex flex-wrap gap-3">
         <a
           href={stravaUrl}
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-flex items-center gap-3 rounded-lg bg-[#FC4C02] px-5 py-3 font-medium text-white transition-all hover:bg-[#E34402] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#FC4C02] focus:ring-offset-2 focus:ring-offset-background"
+          class="btn border-strava bg-strava text-ink"
           aria-label="Follow my training journey on Strava"
         >
-          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/>
-          </svg>
+          <svg
+            class="size-5"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            aria-hidden="true"
+            ><path
+              d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"
+            ></path></svg
+          >
           Follow on Strava
         </a>
         <a
           href="https://instagram.com/emmanuel.buruvuru"
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-flex items-center gap-3 rounded-lg border border-current px-5 py-3 font-medium transition hover:bg-accent hover:text-background"
+          class="btn-outline-light"
           aria-label="Follow me on Instagram"
         >
-          <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-          </svg>
+          <svg
+            class="size-5"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            ><path
+              d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+            ></path></svg
+          >
           Follow on Instagram
         </a>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <Hr />
+  <!-- Experience -->
+  <section id="experience" class="section">
+    <div class="container-x">
+      <div class="max-w-2xl">
+        <p class="eyebrow text-ink-70">Career</p>
+        <h2 class="mt-3 text-[28px] leading-tight font-bold sm:text-4xl">
+          Experience
+        </h2>
+        <p class="mt-4 text-lg leading-relaxed text-ink-70">
+          From enterprise full-stack engineering to cybersecurity to building
+          data-driven systems in production.
+        </p>
+      </div>
 
-    <!-- Experience -->
-    <section id="experience" class="py-12">
-      <h2 class="text-2xl font-semibold tracking-wider sm:text-3xl">
-        Experience
-      </h2>
-      <p class="mt-3 max-w-2xl text-foreground/80">
-        From enterprise full-stack engineering to cybersecurity to building
-        data-driven systems in production.
-      </p>
-
-      <ol class="mt-8 space-y-6">
-        {experience.map(job => (
-          <li class="relative rounded-lg border border-border p-6">
-            <div class="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
-              <h3 class="text-lg font-semibold">
-                {job.role} <span class="text-foreground/60">· {job.org}</span>
-              </h3>
-              <span class="shrink-0 text-xs font-medium uppercase tracking-wide text-foreground/60">
-                {job.period}
-              </span>
-            </div>
-            <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-foreground/80 marker:text-accent">
-              {job.bullets.map(point => (
-                <li>{point}</li>
-              ))}
-            </ul>
-          </li>
-        ))}
+      <ol
+        class="relative mt-12 space-y-6 before:absolute before:top-2 before:bottom-2 before:left-[11px] before:w-[3px] before:rounded before:bg-line sm:before:left-[13px]"
+      >
+        {
+          experience.map((job, i) => (
+            <li class="relative pl-10 sm:pl-14">
+              <span
+                class:list={[
+                  "absolute top-7 left-0 size-[25px] rounded-full border-[3px] border-ember sm:size-[29px]",
+                  i === 0
+                    ? "bg-ember shadow-[0_0_0_8px_rgba(255,91,35,.18)]"
+                    : "bg-paper",
+                ]}
+                aria-hidden="true"
+              />
+              <div class="card">
+                <div class="flex flex-col gap-1.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
+                  <h3 class="text-xl font-bold">
+                    {job.role}
+                    <span class="font-sans text-base font-medium text-ink-70">
+                      ·{" "}
+                      {"href" in job && job.href ? (
+                        <a
+                          href={job.href}
+                          target="_blank"
+                          rel="noopener"
+                          class="font-bold text-ember-deep"
+                        >
+                          {job.org} ↗
+                        </a>
+                      ) : (
+                        job.org
+                      )}
+                    </span>
+                  </h3>
+                  <span class="shrink-0 eyebrow text-ink-70">{job.period}</span>
+                </div>
+                <ul class="mt-4 list-disc space-y-2 pl-5 leading-relaxed text-ink-70 marker:text-ember">
+                  {job.bullets.map(point => (
+                    <li>{point}</li>
+                  ))}
+                </ul>
+              </div>
+            </li>
+          ))
+        }
       </ol>
 
       <!-- Education & certifications -->
-      <div class="mt-8 grid gap-5 sm:grid-cols-2">
-        <div class="rounded-lg border border-border p-6">
-          <h3 class="text-sm font-semibold uppercase tracking-wide text-foreground/60">Education</h3>
-          <p class="mt-2 font-semibold">{education.degree}</p>
-          <p class="text-sm text-foreground/80">{education.school} · {education.year}</p>
+      <div class="mt-10 grid gap-5 md:grid-cols-2">
+        <div class="card">
+          <p class="eyebrow text-ink-70">Education</p>
+          <p class="mt-3 font-display text-2xl font-bold">{education.degree}</p>
+          <p class="mt-1 text-ink-70">{education.school} · {education.year}</p>
         </div>
-        <div class="rounded-lg border border-border p-6">
+        <div class="card">
           <div class="flex items-baseline justify-between gap-3">
-            <h3 class="text-sm font-semibold uppercase tracking-wide text-foreground/60">Certifications</h3>
+            <p class="eyebrow text-ink-70">Certifications</p>
             <a
               href="/certifications"
-              class="text-xs font-medium text-blue-600 hover:underline dark:text-orange-400"
+              class="text-sm font-bold text-ember-deep no-underline hover:underline"
+              >View all →</a
             >
-              View all →
-            </a>
           </div>
-          <ul class="mt-2 space-y-1.5 text-sm text-foreground/80">
-            {certPreview.map(cert => (
-              <li>{cert.title} <span class="text-foreground/50">· {cert.issuer}</span></li>
-            ))}
+          <ul class="mt-3 space-y-2.5">
+            {
+              certPreview.map(cert => (
+                <li class="flex gap-2.5 leading-snug">
+                  <span class="mt-1.5 dot" aria-hidden="true" />
+                  <span>
+                    {cert.title}{" "}
+                    <span class="text-ink-70">· {cert.issuer}</span>
+                  </span>
+                </li>
+              ))
+            }
           </ul>
         </div>
       </div>
 
       <a
         href="/about"
-        class="mt-6 inline-block text-sm font-medium text-blue-600 hover:underline dark:text-orange-400"
+        class="mt-8 inline-block text-[15px] font-bold text-ember-deep no-underline hover:underline"
+        >Read the full story →</a
       >
-        Read the full story →
-      </a>
-    </section>
+    </div>
+  </section>
 
-    <Hr />
-
-    <!-- Contact -->
-    <section id="contact" class="py-12">
-      <h2 class="text-2xl font-semibold tracking-wider sm:text-3xl">
-        Let's work together
-      </h2>
-      <p class="mt-3 max-w-2xl text-foreground/80">
-        I'm open to conversations about interesting problems and ambitious projects, including:
-      </p>
-
-      <ul class="mt-5 grid gap-2 text-sm text-foreground/80 sm:grid-cols-2">
-        <li class="rounded-md bg-muted/60 px-3 py-2">Software engineering roles</li>
-        <li class="rounded-md bg-muted/60 px-3 py-2">Technical consulting &amp; security</li>
-        <li class="rounded-md bg-muted/60 px-3 py-2">Product collaborations</li>
-        <li class="rounded-md bg-muted/60 px-3 py-2">Startup investment (Koste)</li>
-        <li class="rounded-md bg-muted/60 px-3 py-2">Sports partnerships &amp; sponsorships</li>
-      </ul>
-
-      <div class="mt-7 flex flex-wrap items-center gap-3">
-        <a
-          href="mailto:emmanuelburuvuru@gmail.com"
-          class="rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-background transition hover:opacity-90"
+  <!-- Contact -->
+  <section id="contact" class="section bg-ember">
+    <span
+      class="ring-motif -bottom-56 -left-32 size-[380px] border-[64px] border-ink/10"
+      aria-hidden="true"></span>
+    <div
+      class="relative container-x grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:items-center"
+    >
+      <div>
+        <h2
+          class="text-4xl leading-[1.05] font-extrabold tracking-tight sm:text-5xl"
         >
-          Email me
-        </a>
-        <a
-          href="https://www.linkedin.com/in/emmanuel-buruvuru-a20b46246/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="rounded-md border border-current px-5 py-2.5 text-sm font-semibold transition hover:bg-accent hover:text-background"
-        >
-          Connect on LinkedIn
-        </a>
+          Let's work together
+        </h2>
+        <p class="mt-4 max-w-xl text-lg">
+          I'm open to conversations about interesting problems and ambitious
+          projects, including:
+        </p>
+        <div class="mt-8 flex flex-wrap items-center gap-3">
+          <a href="mailto:emmanuel.buruvuru@availafrica.com" class="btn-dark"
+            >Email me <span aria-hidden="true">→</span></a
+          >
+          <a
+            href="https://www.linkedin.com/in/emmanuel-buruvuru-a20b46246/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-light">Connect on LinkedIn</a
+          >
+        </div>
       </div>
-    </section>
-  </main>
-
-  <Footer />
+      <ul class="grid gap-2.5 sm:grid-cols-2">
+        <li
+          class="flex items-center gap-3 rounded-2xl bg-white/55 px-4 py-3.5 font-bold"
+        >
+          <span class="size-3 shrink-0 rounded-full bg-ink" aria-hidden="true"
+          ></span>Software engineering roles
+        </li>
+        <li
+          class="flex items-center gap-3 rounded-2xl bg-white/55 px-4 py-3.5 font-bold"
+        >
+          <span class="size-3 shrink-0 rounded-full bg-ink" aria-hidden="true"
+          ></span>Technical consulting &amp; security
+        </li>
+        <li
+          class="flex items-center gap-3 rounded-2xl bg-white/55 px-4 py-3.5 font-bold"
+        >
+          <span class="size-3 shrink-0 rounded-full bg-ink" aria-hidden="true"
+          ></span>Product collaborations
+        </li>
+        <li
+          class="flex items-center gap-3 rounded-2xl bg-white/55 px-4 py-3.5 font-bold"
+        >
+          <span class="size-3 shrink-0 rounded-full bg-ink" aria-hidden="true"
+          ></span>Startup investment (Koste)
+        </li>
+        <li
+          class="flex items-center gap-3 rounded-2xl bg-white/55 px-4 py-3.5 font-bold sm:col-span-2"
+        >
+          <span class="size-3 shrink-0 rounded-full bg-ink" aria-hidden="true"
+          ></span>Sports partnerships &amp; sponsorships
+        </li>
+      </ul>
+    </div>
+  </section>
 </Layout>

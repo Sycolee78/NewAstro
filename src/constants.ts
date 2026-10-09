@@ -1,10 +1,8 @@
 import IconMail from "@/components/icons/IconMail.astro";
 import IconGitHub from "@/components/icons/IconGitHub.astro";
-import IconBrandX from "@/components/icons/IconBrandX.astro";
 import IconLinkedin from "@/components/icons/IconLinkedin.astro";
 import IconWhatsapp from "@/components/icons/IconWhatsapp.astro";
 import IconFacebook from "@/components/icons/IconFacebook.astro";
-import IconTelegram from "@/components/icons/IconTelegram.astro";
 import IconPinterest from "@/components/icons/IconPinterest.astro";
 import { SITE } from "@/config";
 
@@ -23,7 +21,7 @@ export const SOCIALS = [
   },
   {
     name: "Mail",
-    href: "mailto:emmanuelburuvuru@gmail.com",
+    href: "mailto:emmanuel.buruvuru@availafrica.com",
     linkTitle: `Send an email to ${SITE.title}`,
     icon: IconMail,
   },

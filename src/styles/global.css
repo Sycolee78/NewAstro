@@ -1,123 +1,199 @@
 @import "tailwindcss";
 @import "./typography.css";
 
-@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+/*
+ * Emmanuel Buruvuru — portfolio.
+ * Visual language: the Avail Africa brand (kit v1.1), personal edition.
+ * Ink + Paper base, Ember accent, Bricolage Grotesque + Inter, ring and dot motifs.
+ */
 
-:root,
-html[data-theme="light"] {
-  --background: #fdfdfd;
-  --foreground: #282728;
-  --accent: #006cac;
-  --muted: #e6e6e6;
-  --border: #ece9e9;
+@font-face {
+  font-family: "Bricolage Grotesque";
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/BricolageGrotesque-700.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Bricolage Grotesque";
+  font-weight: 800;
+  font-display: swap;
+  src: url("/fonts/BricolageGrotesque-800.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/Inter-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/Inter-500.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/Inter-700.woff2") format("woff2");
 }
 
-html[data-theme="dark"] {
-  --background: #212737;
-  --foreground: #eaedf3;
-  --accent: #ff6b01;
-  --muted: #343f60bf;
-  --border: #ab4b08;
-}
+@theme {
+  --color-ink: #15122e;
+  --color-ink-70: #4d4a66;
+  --color-ink-soft: #b9b5d6;
+  --color-paper: #fff7ee;
+  --color-line: #eadfd2;
+  --color-ember: #ff5b23;
+  --color-ember-deep: #c2380a;
+  --color-ember-tint: #ffe6da;
+  --color-sprint: #1e90ff;
+  --color-sprint-deep: #0a5fc2;
+  --color-sprint-tint: #ddeeff;
+  --color-harvest-deep: #0e7a43;
+  --color-harvest-tint: #ddf6e8;
+  --color-spark: #ffc21a;
+  --color-spark-deep: #8a6200;
+  --color-spark-tint: #fff1c7;
+  --color-strava: #fc4c02;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-accent: var(--accent);
-  --color-muted: var(--muted);
-  --color-border: var(--border);
+  --font-display: "Bricolage Grotesque", "Inter", system-ui, sans-serif;
+  --font-sans:
+    "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --radius-card: 24px;
 }
 
 @layer base {
-  * {
-    @apply border-border outline-accent/75;
-    scrollbar-width: auto;
-    scrollbar-color: var(--color-muted) transparent;
-  }
   html {
-    @apply overflow-y-scroll scroll-smooth;
+    scroll-behavior: smooth;
+    scroll-padding-top: 88px;
+    -webkit-text-size-adjust: 100%;
   }
   body {
-    @apply flex min-h-svh flex-col bg-background font-mono text-foreground selection:bg-accent/75 selection:text-background;
+    @apply flex min-h-svh flex-col bg-paper font-sans text-ink antialiased selection:bg-ember selection:text-ink;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-display;
+    text-wrap: balance;
   }
   a,
-  button {
-    @apply outline-offset-1 outline-accent focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-dashed;
+  button,
+  summary,
+  iframe {
+    @apply rounded-md outline-offset-3 focus-visible:outline-2 focus-visible:outline-ember;
   }
   button:not(:disabled),
-  [role="button"]:not(:disabled) {
+  summary {
     cursor: pointer;
   }
-  section,
-  footer {
-    @apply mx-auto max-w-3xl px-4;
-  }
 }
 
-.active-nav {
-  @apply underline decoration-wavy decoration-2 underline-offset-4;
+/* Layout + components (declared as utilities so they compose with @apply) */
+@utility container-x {
+  @apply mx-auto w-full max-w-6xl px-4 sm:px-6;
+}
+@utility section {
+  @apply relative overflow-hidden py-16 sm:py-24;
+}
+@utility eyebrow {
+  @apply text-[13px] leading-4 font-bold tracking-[0.12em] uppercase;
 }
 
-@keyframes typewriter {
-  0% {
-    width: 0;
-  }
-  100% {
-    width: 100%;
-  }
+@utility btn {
+  @apply inline-flex min-h-12 items-center gap-2.5 rounded-full border-2 px-6 py-3 text-[15px] leading-none font-bold no-underline transition-transform duration-150 hover:-translate-y-0.5;
+}
+@utility btn-primary {
+  @apply btn border-ember bg-ember text-ink;
+}
+@utility btn-dark {
+  @apply btn border-ink bg-ink text-paper;
+}
+@utility btn-ghost {
+  @apply btn border-ink bg-transparent text-ink hover:bg-white;
+}
+@utility btn-light {
+  @apply btn border-paper bg-paper text-ink;
+}
+@utility btn-outline-light {
+  @apply btn border-white/40 bg-transparent text-paper;
 }
 
-@keyframes blink {
-  0%, 100% {
-    border-color: transparent;
-  }
-  50% {
-    border-color: currentColor;
-  }
+@utility card {
+  @apply rounded-[24px] border-[1.5px] border-line bg-white p-6 sm:p-8;
+}
+@utility card-ink {
+  @apply rounded-[22px] border-[1.5px] border-white/10 bg-white/5 p-6;
+}
+@utility pill {
+  @apply inline-flex items-center rounded-full border-[1.5px] border-ink bg-white px-3.5 py-1.5 text-sm font-medium;
+}
+@utility tag {
+  @apply inline-flex items-center rounded-full bg-paper px-2.5 py-1 text-xs font-medium text-ink-70;
 }
 
-.typewriter {
-  overflow: hidden;
-  white-space: nowrap;
-  border-right: 2px solid currentColor;
-  width: 0;
-  animation: typewriter 3s steps(30, end) forwards, blink 0.75s step-end infinite;
+/* Ember highlight bar behind one headline word */
+.hl {
+  background-image: linear-gradient(
+    transparent 60%,
+    var(--color-ember) 60%,
+    var(--color-ember) 94%,
+    transparent 94%
+  );
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  padding: 0 0.04em;
 }
 
-@keyframes fade-in-up {
+/* Ring motif: the Avail mark's bowl, scaled up and cropped. Decorative. */
+@utility ring-motif {
+  @apply pointer-events-none absolute rounded-full border-solid;
+}
+
+/* Status dot ("available" light) */
+@utility dot {
+  @apply inline-block size-2.5 shrink-0 rounded-full bg-ember;
+  box-shadow: 0 0 0 4px rgb(255 91 35 / 0.18);
+}
+
+/* Skip link */
+.skip-link {
+  @apply absolute -top-24 left-4 z-[60] rounded-full bg-ink px-4 py-3 text-sm font-bold text-paper focus:top-3;
+}
+
+/* Mobile menu (works without JavaScript via <details>) */
+.menu summary::-webkit-details-marker {
+  display: none;
+}
+.menu summary {
+  list-style: none;
+}
+
+@keyframes rise {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(14px);
   }
   to {
     opacity: 1;
     transform: none;
   }
 }
-
 @media (prefers-reduced-motion: no-preference) {
   .reveal {
-    animation: fade-in-up 0.6s ease-out both;
+    animation: rise 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
   }
 }
-
-/* Respect users who prefer reduced motion: no typewriter, no reveal transforms. */
 @media (prefers-reduced-motion: reduce) {
-  .typewriter {
-    animation: none;
-    width: auto;
-    border-right: none;
+  html {
+    scroll-behavior: auto;
   }
-  .reveal {
-    animation: none;
-  }
-}
-
-@layer base {
-  /* override Typography plugin’s strong color */
-  .prose strong {
-    color: var(--accent);
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
   }
 }
-
-

@@ -1,42 +1,22 @@
 ---
 // src/pages/projects.astro
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
-import Breadcrumb from "@/components/Breadcrumb.astro";
+import PageHeader from "@/components/PageHeader.astro";
 import ProjectCard from "@/components/ProjectCard.astro";
 import { projects } from "@/data/projects";
 import { SITE } from "@/config";
 ---
 
 <Layout title={`Projects | ${SITE.title}`}>
-  <Header />
-  <Breadcrumb />
-
-  <main id="main-content">
-    <section id="projects" class="pb-6 pt-8">
-      <h1 class="text-2xl font-semibold tracking-wider sm:text-3xl">
-        Projects
-      </h1>
-      <p class="mt-4 mb-8 text-foreground/80">
-        A collection of projects I'm working on — from security tools to intelligent systems.
-      </p>
-
-      <div class="grid gap-6 sm:grid-cols-1 lg:grid-cols-2">
-        {projects.map((project) => (
-          <ProjectCard
-            title={project.title}
-            status={project.status}
-            description={project.description}
-            slug={project.slug}
-            githubUrl={project.githubUrl}
-            liveUrl={project.liveUrl}
-            tags={project.tags}
-          />
-        ))}
-      </div>
-    </section>
-  </main>
-
-  <Footer />
+  <PageHeader eyebrow="Work" title="Projects">
+    <p>
+      A collection of projects I'm working on — from security tools to
+      intelligent systems.
+    </p>
+  </PageHeader>
+  <section class="container-x pb-24">
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {projects.map(project => <ProjectCard project={project} />)}
+    </div>
+  </section>
 </Layout>

@@ -1,26 +1,64 @@
 ---
-import Hr from "./Hr.astro";
 import Socials from "./Socials.astro";
+import { SITE } from "@/config";
 
 const currentYear = new Date().getFullYear();
-
-export interface Props {
-  noMarginTop?: boolean;
-}
-
-const { noMarginTop = false } = Astro.props;
 ---
 
-<footer class:list={["w-full", { "mt-auto": !noMarginTop }]}>
-  <Hr noPadding />
-  <div
-    class="flex flex-col items-center justify-between py-6 sm:flex-row-reverse sm:py-4"
-  >
-    <Socials centered />
-    <div class="my-2 flex flex-col items-center whitespace-nowrap sm:flex-row">
-      <span>Copyright &#169; {currentYear}</span>
-      <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
-      <span>All rights reserved.</span>
+<footer class="relative overflow-hidden bg-ink text-paper">
+  <span
+    class="ring-motif -right-24 -bottom-40 size-[380px] border-[64px] border-ember/10"
+    aria-hidden="true"></span>
+  <div class="relative container-x py-14">
+    <div
+      class="flex flex-col gap-10 md:flex-row md:items-start md:justify-between"
+    >
+      <div class="max-w-sm">
+        <p class="font-display text-2xl font-extrabold">{SITE.author}</p>
+        <p class="mt-2 text-[15px] leading-relaxed text-ink-soft">
+          {SITE.desc}
+        </p>
+        <a
+          href="https://availafrica.com"
+          target="_blank"
+          rel="noopener"
+          class="mt-4 inline-flex items-center gap-2 text-[15px] font-bold text-paper no-underline hover:underline"
+        >
+          <span class="dot"></span> Founder &amp; CEO, Avail Africa ↗
+        </a>
+      </div>
+      <nav
+        aria-label="Footer"
+        class="grid grid-cols-2 gap-x-10 gap-y-2.5 text-[15px]"
+      >
+        <a href="/" class="no-underline hover:underline">Home</a>
+        <a href="/projects" class="no-underline hover:underline">Projects</a>
+        <a href="/certifications" class="no-underline hover:underline"
+          >Certifications</a
+        >
+        <a href="/about" class="no-underline hover:underline">About</a>
+        <a href="/#contact" class="no-underline hover:underline">Contact</a>
+        <a
+          href="/assets/Buruvuru-Emmanuel-Resume.pdf"
+          target="_blank"
+          rel="noopener"
+          class="no-underline hover:underline">Résumé</a
+        >
+      </nav>
+      <Socials tone="dark" />
+    </div>
+    <div
+      class="mt-12 flex flex-col gap-2 border-t border-white/10 pt-6 text-[13px] text-ink-soft sm:flex-row sm:justify-between"
+    >
+      <span>Copyright © {currentYear} · All rights reserved.</span>
+      <span
+        >Built in the <a
+          href="https://availafrica.com"
+          target="_blank"
+          rel="noopener"
+          class="text-paper">Avail Africa</a
+        > design language.</span
+      >
     </div>
   </div>
 </footer>

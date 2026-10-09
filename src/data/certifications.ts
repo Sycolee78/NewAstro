@@ -29,7 +29,8 @@ export const certifications: Certification[] = [
     file: "/certifications/oci-architect-associate.pdf",
   },
   {
-    title: "Oracle Cloud Infrastructure 2025 Certified AI Foundations Associate",
+    title:
+      "Oracle Cloud Infrastructure 2025 Certified AI Foundations Associate",
     issuer: "Oracle",
     issued: "October 18, 2025",
     validUntil: "October 18, 2027",
@@ -59,7 +60,8 @@ export const certifications: Certification[] = [
   },
   {
     kind: "training",
-    title: "Oracle Cloud Infrastructure Developer Professional (2026): Hands-on Workshop",
+    title:
+      "Oracle Cloud Infrastructure Developer Professional (2026): Hands-on Workshop",
     issuer: "Oracle University",
     issued: "August 28, 2026",
     hours: "32 hours",
@@ -68,7 +70,8 @@ export const certifications: Certification[] = [
   },
   {
     kind: "training",
-    title: "Oracle Cloud Infrastructure DevOps Professional (Ed 4, Live Virtual Class)",
+    title:
+      "Oracle Cloud Infrastructure DevOps Professional (Ed 4, Live Virtual Class)",
     issuer: "Oracle University",
     issued: "September 21, 2026",
     hours: "40 hours",

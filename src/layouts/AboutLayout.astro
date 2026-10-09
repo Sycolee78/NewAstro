@@ -1,9 +1,7 @@
 ---
 // src/layouts/AboutLayout.astro
-import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
-import Breadcrumb from "@/components/Breadcrumb.astro";
 import Layout from "./Layout.astro";
+import PageHeader from "@/components/PageHeader.astro";
 import { SITE } from "@/config";
 
 export interface Props {
@@ -17,28 +15,26 @@ const { frontmatter } = Astro.props;
 ---
 
 <Layout title={`${frontmatter.title} | ${SITE.title}`}>
-  <Header />
-  <Breadcrumb />
-
-  <main id="main-content">
-    <section
-      id="about"
-      class="
-        prose
-        prose-strong:text-blue-500
-        dark:prose-dark
-        dark:prose-strong:text-orange-500
-        mb-28
-        max-w-3xl
-        prose-img:border-0
-      "
-    >
-      <h1 class="text-2xl tracking-wider sm:text-3xl">
-        {frontmatter.title}
-      </h1>
+  <PageHeader eyebrow="Story" title={frontmatter.title} />
+  <div class="container-x grid gap-12 pb-24 lg:grid-cols-[1fr_300px]">
+    <article id="about" class="prose-avail prose">
       <slot />
-    </section>
-  </main>
-
-  <Footer />
+    </article>
+    <aside class="hidden lg:block">
+      <div class="sticky top-24">
+        <div class="relative mx-auto w-fit">
+          <span
+            class="ring-motif -inset-5 border-[16px] border-ember-tint"
+            aria-hidden="true"></span>
+          <img
+            src="/images/profile.png"
+            alt="Portrait of Emmanuel Buruvuru"
+            width="260"
+            height="260"
+            class="relative size-64 rounded-full border-[6px] border-ember object-cover"
+          />
+        </div>
+      </div>
+    </aside>
+  </div>
 </Layout>

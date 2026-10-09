@@ -1,21 +1,9 @@
 export const SITE = {
-  website: "https://emmanuelburuvuru.netlify.app/", // deployed production domain
+  website: "https://emmanuel.availafrica.com/", // deployed production domain
   author: "Emmanuel Buruvuru",
   desc: "Cybersecurity & software engineer and competitive athlete building secure, reliable systems with a performance mindset.",
   title: "EB",
-  ogImage: "og.png", // dynamically generated at /og.png (see src/pages/og.png.ts)
-  lightAndDarkMode: true,
-  postPerIndex: 4,
-  postPerPage: 4,
-  scheduledPostMargin: 15 * 60 * 1000, // 15 minutes
-  showArchives: true,
-  showBackButton: true, // show back button in post detail
-  editPost: {
-    enabled: true,
-    text: "Suggest Changes",
-    url: "https://github.com/satnaing/astro-paper/edit/main/",
-  },
-  dynamicOgImage: true,
-  lang: "en", // html lang code. Set this empty and default will be "en"
-  timezone: "Asia/Bangkok", // Default global timezone (IANA format) https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  ogImage: "og.png", // generated at build time by src/pages/og.png.ts
+  lang: "en",
+  timezone: "Indian/Mauritius",
 } as const;

@@ -57,6 +57,6 @@ Engineering is what I do. But it's not all I am.
 
 I'm always open to conversations about interesting problems, ambitious projects, or collaborations that matter.
 
-👉 **[Email me](mailto:emmanuelburuvuru@gmail.com)** or connect on **[LinkedIn](https://www.linkedin.com/in/emmanuel-buruvuru-a20b46246/)**.
+👉 **[Email me](mailto:emmanuel.buruvuru@availafrica.com)** or connect on **[LinkedIn](https://www.linkedin.com/in/emmanuel-buruvuru-a20b46246/)**.
 
 Let's build something worth building.

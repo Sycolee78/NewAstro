@@ -1,163 +1,168 @@
 ---
 // src/pages/projects/[slug].astro
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
-import Breadcrumb from "@/components/Breadcrumb.astro";
+import StatusPill from "@/components/StatusPill.astro";
 import { projects } from "@/data/projects";
 import { SITE } from "@/config";
 
 export function getStaticPaths() {
-  return projects.map(project => ({
-    params: { slug: project.slug },
-    props: { project },
-  }));
+  // External projects (e.g. Avail Africa) link straight to their own site.
+  return projects
+    .filter(project => !project.external)
+    .map(project => ({ params: { slug: project.slug }, props: { project } }));
 }
 
 const { project } = Astro.props;
-
-const statusColors = {
-  "In Progress": "bg-yellow-500/20 text-yellow-600 dark:text-yellow-400",
-  Completed: "bg-green-500/20 text-green-600 dark:text-green-400",
-  Archived: "bg-gray-500/20 text-gray-600 dark:text-gray-400",
-};
+const accentBg =
+  project.accent === "sprint" ? "bg-sprint-tint" : "bg-ember-tint";
+const sections = [
+  { title: "The problem", body: project.problem },
+  { title: "The approach", body: project.approach },
+].filter(s => s.body);
 ---
 
 <Layout
   title={`${project.title} | ${SITE.title}`}
   description={project.description}
 >
-  <Header />
-  <Breadcrumb />
-
-  <main id="main-content">
-    <section id="project" class="pb-10 pt-8">
+  <section class:list={["relative overflow-hidden", accentBg]}>
+    <span
+      class="ring-motif -top-40 -right-44 size-[520px] border-[84px] border-white/50"
+      aria-hidden="true"></span>
+    <div class="relative container-x pt-10 pb-14 sm:pt-14">
       <a
         href="/projects"
-        class="text-sm font-medium text-blue-600 hover:underline dark:text-orange-400"
+        class="text-[15px] font-bold text-ink no-underline hover:underline"
+        >← All projects</a
       >
-        ← All projects
-      </a>
-
-      <div class="mt-4 flex flex-wrap items-center gap-3">
-        <h1 class="text-2xl font-semibold tracking-wider sm:text-3xl">
+      <div class="mt-6 flex flex-wrap items-center gap-3">
+        <h1
+          class="text-[40px] leading-[1.04] font-extrabold tracking-[-0.025em] sm:text-6xl"
+        >
           {project.title}
         </h1>
-        <span
-          class:list={[
-            "inline-block rounded-full px-3 py-1 text-xs font-medium",
-            statusColors[project.status],
-          ]}
-        >
-          {project.status}
-        </span>
+        <StatusPill status={project.status} />
       </div>
+      <p class="mt-5 max-w-2xl text-lg leading-relaxed text-ink-70">
+        {project.description}
+      </p>
 
-      <p class="mt-4 max-w-2xl text-foreground/80">{project.description}</p>
+      {
+        project.tags && project.tags.length > 0 && (
+          <ul class="mt-6 flex flex-wrap gap-2" aria-label="Technologies">
+            {project.tags.map(tag => (
+              <li class="pill">{tag}</li>
+            ))}
+          </ul>
+        )
+      }
 
-      {project.tags && project.tags.length > 0 && (
-        <ul class="mt-5 flex flex-wrap gap-2">
-          {project.tags.map(tag => (
-            <li class="rounded-md bg-muted px-2.5 py-1 text-xs font-medium text-foreground/80">
-              {tag}
-            </li>
-          ))}
-        </ul>
-      )}
+      {
+        (project.githubUrl || project.liveUrl || project.cta) && (
+          <div class="mt-8 flex flex-wrap gap-3">
+            {project.cta && (
+              <a href={project.cta.href} class="btn-primary">
+                {project.cta.label} <span aria-hidden="true">→</span>
+              </a>
+            )}
+            {project.githubUrl && (
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-ghost"
+              >
+                View source ↗
+              </a>
+            )}
+            {project.liveUrl && (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-dark"
+              >
+                {project.liveLabel ?? "Live demo"} ↗
+              </a>
+            )}
+          </div>
+        )
+      }
+    </div>
+  </section>
 
-      {(project.githubUrl || project.liveUrl || project.cta) && (
-        <div class="mt-6 flex flex-wrap gap-3">
-          {project.cta && (
-            <a
-              href={project.cta.href}
-              class="rounded-md bg-accent px-4 py-2 text-sm font-semibold text-background transition hover:opacity-90"
-            >
-              {project.cta.label}
-            </a>
-          )}
-          {project.githubUrl && (
-            <a
-              href={project.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="rounded-md border border-current px-4 py-2 text-sm font-semibold transition hover:bg-accent hover:text-background"
-            >
-              View source ↗
-            </a>
-          )}
-          {project.liveUrl && (
-            <a
-              href={project.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="rounded-md bg-accent px-4 py-2 text-sm font-semibold text-background transition hover:opacity-90"
-            >
-              Live demo ↗
-            </a>
-          )}
-        </div>
-      )}
-
-      {project.embed && (
-        <div class="mt-8">
-          <h2 class="mb-3 text-lg font-semibold text-blue-600 dark:text-orange-400">
-            Interactive demo
-          </h2>
-          <p class="mb-4 text-sm text-foreground/70">
-            Tap the left or right side of the screen (or use the controls) to move
-            through the app.
+  <div class="container-x py-14 sm:py-20">
+    {
+      project.embed && (
+        <div class="mb-14">
+          <h2 class="text-[28px] font-bold">Interactive demo</h2>
+          <p class="mt-2 mb-5 text-ink-70">
+            Tap the left or right side of the screen (or use the controls) to
+            move through the app.
           </p>
           <iframe
             src={project.embed.src}
             title={project.embed.title}
             loading="lazy"
-            class="w-full rounded-xl border border-border bg-[#063D2E]"
+            class="w-full rounded-[24px] border-[1.5px] border-line bg-[#063D2E]"
             style="height: min(760px, 82vh); min-height: 520px;"
-          ></iframe>
+          />
         </div>
-      )}
+      )
+    }
 
-      <div class="mt-10 space-y-8">
-        {project.problem && (
-          <div>
-            <h2 class="text-lg font-semibold text-blue-600 dark:text-orange-400">The problem</h2>
-            <p class="mt-2 max-w-2xl leading-relaxed text-foreground/80">{project.problem}</p>
-          </div>
-        )}
-
-        {project.approach && (
-          <div>
-            <h2 class="text-lg font-semibold text-blue-600 dark:text-orange-400">The approach</h2>
-            <p class="mt-2 max-w-2xl leading-relaxed text-foreground/80">{project.approach}</p>
-          </div>
-        )}
-
-        {project.highlights && project.highlights.length > 0 && (
-          <div>
-            <h2 class="text-lg font-semibold text-blue-600 dark:text-orange-400">Highlights</h2>
-            <ul class="mt-2 max-w-2xl list-disc space-y-1.5 pl-5 leading-relaxed text-foreground/80 marker:text-accent">
-              {project.highlights.map(item => (
-                <li>{item}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {project.role && (
-          <div>
-            <h2 class="text-lg font-semibold text-blue-600 dark:text-orange-400">My role</h2>
-            <p class="mt-2 max-w-2xl leading-relaxed text-foreground/80">{project.role}</p>
-          </div>
-        )}
-
-        {project.note && (
-          <p class="max-w-2xl rounded-md border border-border bg-muted/40 p-4 text-sm text-foreground/70">
-            {project.note}
-          </p>
-        )}
+    <div class="grid gap-10 lg:grid-cols-[1.4fr_1fr]">
+      <div class="space-y-10">
+        {
+          sections.map(s => (
+            <div>
+              <h2 class="flex items-center gap-3 text-[28px] font-bold">
+                <span class="dot" aria-hidden="true" />
+                {s.title}
+              </h2>
+              <p class="mt-3 text-[17px] leading-[1.7] text-ink-70">{s.body}</p>
+            </div>
+          ))
+        }
+        {
+          project.highlights && project.highlights.length > 0 && (
+            <div>
+              <h2 class="flex items-center gap-3 text-[28px] font-bold">
+                <span class="dot" aria-hidden="true" />
+                Highlights
+              </h2>
+              <ul class="mt-4 space-y-3">
+                {project.highlights.map(item => (
+                  <li class="flex gap-3 text-[17px] leading-relaxed text-ink-70">
+                    <span
+                      class="mt-2.5 size-2 shrink-0 rounded-full bg-ember"
+                      aria-hidden="true"
+                    />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
       </div>
-    </section>
-  </main>
-
-  <Footer />
+      <aside class="space-y-5 lg:sticky lg:top-24 lg:self-start">
+        {
+          project.role && (
+            <div class="card">
+              <h2 class="eyebrow text-ink-70">My role</h2>
+              <p class="mt-3 text-[17px] leading-relaxed">{project.role}</p>
+            </div>
+          )
+        }
+        {
+          project.note && (
+            <div class="rounded-[24px] bg-ink p-6 text-paper sm:p-8">
+              <p class="leading-relaxed text-ink-soft">{project.note}</p>
+            </div>
+          )
+        }
+      </aside>
+    </div>
+  </div>
 </Layout>

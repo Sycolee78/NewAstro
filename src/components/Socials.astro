@@ -1,25 +1,34 @@
 ---
 import { SOCIALS } from "@/constants";
-import LinkButton from "./LinkButton.astro";
 
 export interface Props {
-  centered?: boolean;
+  tone?: "light" | "dark";
 }
-
-const { centered = false } = Astro.props;
+const { tone = "light" } = Astro.props;
 ---
 
-<div class:list={["flex-wrap justify-center gap-1", { flex: centered }]}>
+<ul class="flex items-center gap-2" aria-label="Social links">
   {
     SOCIALS.map(social => (
-      <LinkButton
-        href={social.href}
-        class="p-2 hover:rotate-6 sm:p-1"
-        title={social.linkTitle}
-      >
-        <social.icon class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110" />
-        <span class="sr-only">{social.linkTitle}</span>
-      </LinkButton>
+      <li>
+        <a
+          href={social.href}
+          title={social.linkTitle}
+          target={social.href.startsWith("http") ? "_blank" : undefined}
+          rel={
+            social.href.startsWith("http") ? "noopener noreferrer" : undefined
+          }
+          class:list={[
+            "grid size-11 place-items-center rounded-full border-[1.5px] transition-transform hover:-translate-y-0.5",
+            tone === "dark"
+              ? "border-white/25 text-paper hover:bg-white/10"
+              : "border-ink text-ink hover:bg-white",
+          ]}
+        >
+          <social.icon class="size-5 fill-transparent stroke-current stroke-2" />
+          <span class="sr-only">{social.linkTitle}</span>
+        </a>
+      </li>
     ))
   }
-</div>
+</ul>
