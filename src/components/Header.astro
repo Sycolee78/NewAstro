@@ -1,144 +1,131 @@
 ---
-import Hr from "./Hr.astro";
-import IconMoon from "./icons/IconMoon.astro";
-import IconSunHigh from "./icons/IconSunHigh.astro";
-import IconMenuDeep from "./icons/IconMenuDeep.astro";
 import { SITE } from "@/config";
 
-
-const { pathname } = Astro.url;
-
-// Remove trailing slash from current pathname if exists
-const currentPath =
-  pathname.endsWith("/") && pathname !== "/" ? pathname.slice(0, -1) : pathname;
-
-const isActive = (path: string) => {
-  const currentPathArray = currentPath.split("/").filter(p => p.trim());
-  const pathArray = path.split("/").filter(p => p.trim());
-
-  return currentPath === path || currentPathArray[0] === pathArray[0];
-};
+const path = Astro.url.pathname.replace(/\/+$/, "") || "/";
+const links = [
+  { href: "/projects", label: "Projects" },
+  { href: "/certifications", label: "Certifications" },
+  { href: "/about", label: "About" },
+  { href: "/#contact", label: "Contact" },
+];
+const isActive = (href: string) =>
+  href !== "/#contact" && (path === href || path.startsWith(`${href}/`));
 ---
 
-<header>
-  <a
-    id="skip-to-content"
-    href="#main-content"
-    class="absolute -top-full left-16 z-50 bg-background px-3 py-2 text-accent backdrop-blur-lg transition-all focus:top-4"
-  >
-    Skip to content
-  </a>
-  <div
-    id="nav-container"
-    class="mx-auto flex max-w-3xl flex-col items-center justify-between sm:flex-row"
-  >
-    <div
-      id="top-nav-wrap"
-      class="relative flex w-full items-baseline justify-between bg-background p-4 sm:items-center sm:py-6"
-    >
+<header
+  class="sticky top-0 z-50 border-b border-line/70 bg-paper/90 backdrop-blur-md"
+>
+  <div class="container-x flex h-[72px] items-center justify-between gap-6">
     <a
-    href="/"
-    aria-label="Emmanuel Buruvuru — home"
-    class="inline-flex size-12 items-center justify-center rounded-full border-2 border-blue-500 bg-gradient-to-br from-blue-100 to-blue-50 font-bold tracking-tight text-blue-600 transition-all hover:scale-105 sm:size-14 dark:border-orange-400 dark:from-gray-800 dark:to-gray-700 dark:text-orange-400"
-  >
-    <span class="text-lg sm:text-xl">EB</span>
-  </a>
-  
-      <nav
-        id="nav-menu"
-        class="flex w-full flex-col items-center sm:ml-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0"
+      href="/"
+      class="group flex items-center gap-3 no-underline"
+      aria-label={`${SITE.author} — home`}
+    >
+      <span
+        class="relative grid size-11 place-items-center rounded-full border-[3px] border-ink font-display text-[15px] font-extrabold text-ink"
       >
-        <button
-          id="menu-btn"
-          class="focus-outline self-end p-2 sm:hidden"
-          aria-label="Open Menu"
-          aria-expanded="false"
-          aria-controls="menu-items"
-        >
-          <IconMenuDeep id="menu-icon" />
-        </button>
-        <ul
-          id="menu-items"
-          class:list={[
-            "mt-4 grid w-44 grid-cols-2 place-content-center gap-2",
-            "[&>li>a]:block [&>li>a]:px-4 [&>li>a]:py-3 [&>li>a]:text-center [&>li>a]:font-medium [&>li>a]:hover:text-accent sm:[&>li>a]:px-2 sm:[&>li>a]:py-1",
-            "hidden",
-            "sm:mt-0 sm:ml-0 sm:flex sm:w-auto sm:gap-x-5 sm:gap-y-0",
-          ]}
-        >
-          <li class="col-span-2">
-            <a href="/" class:list={{ "active-nav": isActive("/") }}>
-              Home
-            </a>
-          </li>
-          <li class="col-span-2">
-            <a href="/projects" class:list={{ "active-nav": isActive("/projects") }}>
-              Projects
-            </a>
-          </li>
-          <li class="col-span-2">
-            <a href="/certifications" class:list={{ "active-nav": isActive("/certifications") }}>
-              Certifications
-            </a>
-          </li>
-          <li class="col-span-2">
-            <a href="/about" class:list={{ "active-nav": isActive("/about") }}>
-              About
-            </a>
-          </li>
-          <li class="col-span-2">
-            <a href="/#contact">
-              Contact
-            </a>
+        EB
+        <span
+          class="absolute -top-1 -right-1 size-3 rounded-full bg-ember ring-2 ring-paper"
+          aria-hidden="true"></span>
+      </span>
+      <span
+        class="hidden font-display text-lg leading-none font-extrabold tracking-tight sm:block"
+      >
+        Emmanuel Buruvuru
+      </span>
+    </a>
+
+    <nav aria-label="Main" class="hidden items-center gap-7 md:flex">
+      {
+        links.map(l => (
+          <a
+            href={l.href}
+            aria-current={isActive(l.href) ? "page" : undefined}
+            class:list={[
+              "text-[15px] font-medium no-underline transition-colors hover:text-ember-deep",
+              isActive(l.href) &&
+                "font-bold underline decoration-ember decoration-[3px] underline-offset-[10px]",
+            ]}
+          >
+            {l.label}
+          </a>
+        ))
+      }
+      <a
+        href="https://availafrica.com"
+        class="btn-dark !min-h-11 !px-5 !text-sm"
+        target="_blank"
+        rel="noopener"
+      >
+        Avail Africa <span aria-hidden="true">↗</span>
+      </a>
+    </nav>
+
+    <details class="menu md:hidden">
+      <summary
+        class="grid size-11 place-items-center rounded-full bg-ink text-paper"
+        aria-label="Menu"
+      >
+        <span class="flex flex-col gap-[5px]" aria-hidden="true">
+          <span class="block h-[2.5px] w-[18px] rounded bg-paper"></span>
+          <span class="block h-[2.5px] w-[18px] rounded bg-paper"></span>
+        </span>
+      </summary>
+      <nav
+        aria-label="Main"
+        class="absolute inset-x-0 top-[72px] border-b border-line bg-paper px-4 pt-2 pb-6 shadow-[0_18px_40px_rgba(21,18,46,.12)]"
+      >
+        <ul class="flex flex-col">
+          <li>
+            <a
+              href="/"
+              class="block border-b border-line py-3.5 font-display text-2xl font-bold no-underline"
+              >Home</a
+            >
           </li>
           {
-            SITE.lightAndDarkMode && (
-              <li class="col-span-1 flex items-center justify-center">
-                <button
-                  id="theme-btn"
-                  class="focus-outline relative size-12 p-4 sm:size-8 hover:[&>svg]:stroke-accent"
-                  title="Toggles light & dark"
-                  aria-label="auto"
-                  aria-live="polite"
+            links.map(l => (
+              <li>
+                <a
+                  href={l.href}
+                  aria-current={isActive(l.href) ? "page" : undefined}
+                  class:list={[
+                    "block border-b border-line py-3.5 font-display text-2xl font-bold no-underline",
+                    isActive(l.href) && "text-ember-deep",
+                  ]}
                 >
-                  <IconMoon class="absolute top-[50%] left-[50%] -translate-[50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-                  <IconSunHigh class="absolute top-[50%] left-[50%] -translate-[50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-                </button>
+                  {l.label}
+                </a>
               </li>
-            )
+            ))
           }
         </ul>
+        <a
+          href="https://availafrica.com"
+          class="mt-5 btn-dark"
+          target="_blank"
+          rel="noopener"
+        >
+          Avail Africa <span aria-hidden="true">↗</span>
+        </a>
       </nav>
-    </div>
+    </details>
   </div>
-  <Hr />
 </header>
 
 <script>
-  function toggleNav() {
-    const menuBtn = document.querySelector("#menu-btn");
-    const menuItems = document.querySelector("#menu-items");
-
-    if (!menuBtn || !menuItems) return;
-
-    const setOpen = (open: boolean) => {
-      menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
-      menuBtn.setAttribute("aria-label", open ? "Close Menu" : "Open Menu");
-      menuItems.classList.toggle("hidden", !open);
-    };
-
-    menuBtn.addEventListener("click", () => {
-      setOpen(menuBtn.getAttribute("aria-expanded") !== "true");
-    });
-
-    // Close the mobile menu after tapping a link.
-    menuItems.querySelectorAll("a").forEach(link =>
-      link.addEventListener("click", () => setOpen(false))
+  // Progressive enhancement: close the menu after choosing a link or pressing Escape.
+  const menu = document.querySelector<HTMLDetailsElement>("details.menu");
+  menu
+    ?.querySelectorAll("a")
+    .forEach(a =>
+      a.addEventListener("click", () => menu.removeAttribute("open"))
     );
-  }
-
-  toggleNav();
-
-  // Runs on view transitions navigation
-  document.addEventListener("astro:after-swap", toggleNav);
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && menu?.open) {
+      menu.removeAttribute("open");
+      menu.querySelector("summary")?.focus();
+    }
+  });
 </script>

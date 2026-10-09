@@ -1,13 +1,13 @@
 ---
 // src/pages/certifications.astro
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
-import Breadcrumb from "@/components/Breadcrumb.astro";
+import PageHeader from "@/components/PageHeader.astro";
 import { certifications } from "@/data/certifications";
 import { SITE } from "@/config";
 
-const certs = certifications.filter(c => (c.kind ?? "certification") === "certification");
+const certs = certifications.filter(
+  c => (c.kind ?? "certification") === "certification"
+);
 const training = certifications.filter(c => c.kind === "training");
 
 const groups = [
@@ -19,7 +19,8 @@ const groups = [
   },
   {
     heading: "Training & courses",
-    blurb: "Instructor-led courses I've completed, with certificates of completion.",
+    blurb:
+      "Instructor-led courses I've completed, with certificates of completion.",
     items: training,
   },
 ].filter(g => g.items.length > 0);
@@ -29,80 +30,68 @@ const groups = [
   title={`Certifications | ${SITE.title}`}
   description="Verified certifications and completed training courses held by Emmanuel Buruvuru, including Oracle Cloud Infrastructure and Cisco credentials."
 >
-  <Header />
-  <Breadcrumb />
+  <PageHeader eyebrow="Credentials" title="Certifications & training">
+    <p>
+      Credentials and completed courses. Select any item to view the original
+      certificate.
+    </p>
+  </PageHeader>
 
-  <main id="main-content">
-    <section id="certifications" class="pb-6 pt-8">
-      <h1 class="text-2xl font-semibold tracking-wider sm:text-3xl">
-        Certifications & training
-      </h1>
-      <p class="mt-4 mb-8 text-foreground/80">
-        Credentials and completed courses. Select any item to view the original
-        certificate.
-      </p>
-
-      {groups.map(group => (
-        <div class="mb-12">
-          <h2 class="text-lg font-semibold tracking-wide">{group.heading}</h2>
-          <p class="mt-1 mb-6 text-sm text-foreground/70">{group.blurb}</p>
-
-          <div class="grid gap-6 sm:grid-cols-1 lg:grid-cols-2">
+  <div class="container-x space-y-16 pb-24">
+    {
+      groups.map(group => (
+        <section>
+          <h2 class="text-[28px] font-bold">{group.heading}</h2>
+          <p class="mt-1 mb-7 text-ink-70">{group.blurb}</p>
+          <div class="grid gap-5 md:grid-cols-2">
             {group.items.map(cert => (
-              <article
-                class="group flex flex-col rounded-lg border border-border bg-background p-6 transition-all hover:border-accent/50 hover:shadow-lg"
-              >
-                <div class="mb-3 flex items-center justify-between gap-3">
-                  <span class="rounded-full bg-muted px-3 py-1 text-xs font-medium text-foreground/70">
+              <article class="flex flex-col card">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                  <span class="pill !py-1 !text-xs !font-bold">
                     {cert.issuer}
                   </span>
-                  <span class="text-xs font-medium uppercase tracking-wide text-foreground/60">
-                    {cert.kind === "training" ? "Completed" : "Issued"} {cert.issued}
+                  <span class="eyebrow text-ink-70">
+                    {cert.kind === "training" ? "Completed" : "Issued"}{" "}
+                    {cert.issued}
                   </span>
                 </div>
-
-                <h3 class="text-lg font-semibold text-foreground transition-colors group-hover:text-accent">
+                <h3 class="mt-4 text-xl leading-snug font-bold">
                   {cert.title}
                 </h3>
-
-                <dl class="mt-3 space-y-1 text-sm text-foreground/70">
+                <dl class="mt-3 space-y-1 text-[15px] text-ink-70">
                   {cert.validUntil && (
                     <div class="flex gap-2">
-                      <dt class="font-medium">Valid until:</dt>
+                      <dt class="font-bold text-ink">Valid until:</dt>
                       <dd>{cert.validUntil}</dd>
                     </div>
                   )}
                   {cert.hours && (
                     <div class="flex gap-2">
-                      <dt class="font-medium">Duration:</dt>
+                      <dt class="font-bold text-ink">Duration:</dt>
                       <dd>{cert.hours}</dd>
                     </div>
                   )}
                   {cert.credentialId && (
                     <div class="flex flex-wrap gap-2">
-                      <dt class="font-medium">Credential ID:</dt>
+                      <dt class="font-bold text-ink">Credential ID:</dt>
                       <dd class="break-all">{cert.credentialId}</dd>
                     </div>
                   )}
                 </dl>
-
                 <a
                   href={cert.file}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="mt-5 inline-flex w-fit items-center gap-2 rounded-md border border-current px-4 py-2 text-sm font-semibold transition hover:bg-accent hover:text-background"
+                  class="mt-6 btn-ghost !min-h-11 self-start !px-5 !text-sm"
                   aria-label={`View the ${cert.title} certificate (opens PDF in a new tab)`}
                 >
-                  View certificate
-                  <span aria-hidden="true">→</span>
+                  View certificate <span aria-hidden="true">→</span>
                 </a>
               </article>
             ))}
           </div>
-        </div>
-      ))}
-    </section>
-  </main>
-
-  <Footer />
+        </section>
+      ))
+    }
+  </div>
 </Layout>

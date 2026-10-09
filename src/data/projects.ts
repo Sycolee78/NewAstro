@@ -31,9 +31,28 @@ export interface Project {
   cta?: { label: string; href: string };
   /** Optional interactive embed (e.g. a UI prototype) shown on the detail page. */
   embed?: { src: string; title: string };
+  /** Label for the liveUrl link (defaults to "Live demo"). */
+  liveLabel?: string;
+  /** Card links straight to liveUrl (new tab) instead of a case-study page. */
+  external?: boolean;
+  /** Brand colour for the card ("ember" for Avail Africa, "sprint" for Avail Sport). */
+  accent?: "ember" | "sprint";
 }
 
 export const projects: Project[] = [
+  {
+    slug: "avail-africa",
+    title: "Avail Africa",
+    status: "In Progress",
+    description:
+      "My company: software and AI that reaches the last mile — tools for healthcare, agriculture, sport and community programmes in Zimbabwe and across Africa, in local languages, on any phone.",
+    liveUrl: "https://availafrica.com",
+    liveLabel: "Visit availafrica.com",
+    external: true,
+    accent: "ember",
+    tags: ["Founder & CEO", "Expo", "React Native Web", "TypeScript", "AI"],
+    featured: true,
+  },
   {
     slug: "architect",
     title: "Architect",
@@ -69,7 +88,14 @@ export const projects: Project[] = [
     status: "Completed",
     description:
       "Smart bill-splitting mobile app for the Mauritian dining market — scan a receipt, split by item at the table, and settle up through local payment rails. Fully coded and tested, now seeking investment to launch.",
-    tags: ["React Native", "Expo", "TypeScript", "Supabase", "PostgreSQL", "Mobile App"],
+    tags: [
+      "React Native",
+      "Expo",
+      "TypeScript",
+      "Supabase",
+      "PostgreSQL",
+      "Mobile App",
+    ],
     featured: true,
     problem:
       "Splitting a restaurant bill fairly is tedious: working out who had what, handling shared items, adding VAT and service charge, and then settling up across different payment methods.",
@@ -87,7 +113,7 @@ export const projects: Project[] = [
     note: "Investment pitch: Koste is fully coded and tested, purpose-built for the Mauritian market (MUR currency, +230 phone auth, local payment rails, EN/FR receipts). The concept is now seeking investment and launch partners.",
     cta: {
       label: "Invest in Koste",
-      href: "mailto:benjaminthomas031216@gmail.com?cc=emmanuelburuvuru@gmail.com&subject=Investment%20interest%20in%20Koste&body=Hi%20Benjamin%20and%20Emmanuel%2C%0A%0AI%20am%20interested%20in%20learning%20more%20about%20investing%20in%20Koste.%20Could%20we%20set%20up%20a%20time%20to%20talk%3F%0A%0AThanks%2C",
+      href: "mailto:benjaminthomas031216@gmail.com?cc=emmanuel.buruvuru@availafrica.com&subject=Investment%20interest%20in%20Koste&body=Hi%20Benjamin%20and%20Emmanuel%2C%0A%0AI%20am%20interested%20in%20learning%20more%20about%20investing%20in%20Koste.%20Could%20we%20set%20up%20a%20time%20to%20talk%3F%0A%0AThanks%2C",
     },
     embed: {
       src: "/koste-demo/",
@@ -181,6 +207,9 @@ export const projects: Project[] = [
     description:
       "A FlutterFlow app connecting users with sports, gym, and educational activities in Mauritius.",
     tags: ["FlutterFlow", "Firebase", "Mobile App", "Figma"],
+    liveUrl: "https://availafrica.com/sport",
+    liveLabel: "Avail Sport",
+    accent: "sprint",
     problem:
       "People in Mauritius lack a single place to discover and book sports, gym, and educational activities.",
     approach:

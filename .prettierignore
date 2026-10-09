@@ -12,3 +12,6 @@
 !.prettierrc
 !eslint.config.js
 !README.md
+
+# Minified demo bundle (built from koste-demo-src)
+/public/koste-demo/

@@ -1,40 +1,28 @@
 ---
 // src/pages/404.astro
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
-import LinkButton from "@/components/LinkButton.astro";
 import { SITE } from "@/config";
 ---
 
 <Layout title={`404 – Page Not Found | ${SITE.title}`}>
-  <Header />
-
-  <main
-    id="main-content"
-    class="flex grow flex-col items-center justify-center px-4 py-32 text-center"
-  >
-    <!-- Big monospace 404 -->
-    <h1 class="font-mono text-[6rem] font-bold leading-none text-blue-500 dark:text-orange-500">
-      404
-    </h1>
-
-    <!-- Friendly message -->
-    <p class="mt-4 text-xl text-slate-700 dark:text-slate-300 max-w-lg">
-      Oops — the page you’re looking for doesn’t exist.
-    </p>
-    <p class="mt-2 text-lg text-slate-500 dark:text-slate-400 max-w-md">
-      It may have been moved or removed. Try heading back home or using the menu above.
-    </p>
-
-    <!-- Home button -->
-    <LinkButton
-      href="/"
-      class="mt-8 px-6 py-3 text-lg font-semibold transition hover:bg-accent hover:text-white"
-    >
-      ← Back to Home
-    </LinkButton>
-  </main>
-
-  <Footer />
+  <section class="relative flex flex-1 items-center overflow-hidden">
+    <span
+      class="ring-motif -top-40 -right-44 size-[520px] border-[84px] border-ember/10"
+      aria-hidden="true"></span>
+    <div class="relative container-x py-28 text-center">
+      <p
+        class="font-display text-[120px] leading-none font-extrabold tracking-[-0.04em] text-ember"
+      >
+        404
+      </p>
+      <h1 class="mt-4 text-3xl font-bold sm:text-4xl">
+        Oops — the page you’re looking for doesn’t exist.
+      </h1>
+      <p class="mx-auto mt-3 max-w-md text-lg text-ink-70">
+        It may have been moved or removed. Try heading back home or using the
+        menu above.
+      </p>
+      <a href="/" class="mt-8 btn-dark">← Back to Home</a>
+    </div>
+  </section>
 </Layout>

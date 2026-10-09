@@ -1,0 +1,24 @@
+---
+export interface Props {
+  eyebrow: string;
+  title: string;
+}
+const { eyebrow, title } = Astro.props;
+---
+
+<section class="relative overflow-hidden">
+  <span
+    class="ring-motif -top-40 -right-44 size-[520px] border-[84px] border-ember/10"
+    aria-hidden="true"></span>
+  <div class="relative container-x pt-14 pb-10 sm:pt-20">
+    <p class="eyebrow text-ember-deep">{eyebrow}</p>
+    <h1
+      class="mt-4 text-[40px] leading-[1.04] font-extrabold tracking-[-0.025em] sm:text-6xl"
+    >
+      {title}
+    </h1>
+    <div class="mt-5 max-w-2xl text-lg leading-relaxed text-ink-70">
+      <slot />
+    </div>
+  </div>
+</section>
