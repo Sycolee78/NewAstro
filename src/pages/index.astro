@@ -57,16 +57,6 @@ const skillGroups = [
 // Experience — sourced directly from the résumé (roles, dates, and metrics).
 const experience = [
   {
-    period: "Oct 2026 – Present",
-    role: "Founder & CEO, Lead Forward Deployed Engineer",
-    org: "Avail Africa",
-    href: "https://availafrica.com",
-    bullets: [
-      "Founded Avail Africa to build software and AI that makes health, agriculture, sport and community services available — in local languages, on any phone.",
-      "Designed and shipped availafrica.com (Expo, React Native Web, TypeScript, static export).",
-    ],
-  },
-  {
     period: "Jul 2025 – Present",
     role: "Software Engineer",
     org: "Africa Clinical Research Network",
@@ -402,18 +392,7 @@ const certPreview = certifications.slice(0, 3);
                     {job.role}
                     <span class="font-sans text-base font-medium text-ink-70">
                       ·{" "}
-                      {"href" in job && job.href ? (
-                        <a
-                          href={job.href}
-                          target="_blank"
-                          rel="noopener"
-                          class="font-bold text-ember-deep"
-                        >
-                          {job.org} ↗
-                        </a>
-                      ) : (
-                        job.org
-                      )}
+                      {job.org}
                     </span>
                   </h3>
                   <span class="shrink-0 eyebrow text-ink-70">{job.period}</span>
@@ -428,6 +407,17 @@ const certPreview = certifications.slice(0, 3);
           ))
         }
       </ol>
+
+      <p class="mt-6 pl-10 text-[15px] text-ink-70 sm:pl-14">
+        On the side, I'm building
+        <a
+          href="https://availafrica.com"
+          target="_blank"
+          rel="noopener"
+          class="font-bold text-ember-deep">Avail Africa ↗</a
+        >, software and AI that makes health, agriculture, sport and community
+        services available in local languages, on any phone.
+      </p>
 
       <!-- Education & certifications -->
       <div class="mt-10 grid gap-5 md:grid-cols-2">
