@@ -23,19 +23,45 @@ const {
 
 const socialImageURL = new URL(ogImage, Astro.site ?? Astro.url);
 
+const personId = `${SITE.website}#person`;
 const structuredData = {
   "@context": "https://schema.org",
-  "@type": "Person",
-  name: SITE.author,
-  url: SITE.website,
-  image: new URL("/images/profile.png", SITE.website).toString(),
-  jobTitle: "Software Engineer",
-  worksFor: {
-    "@type": "Organization",
-    name: "Avail Africa",
-    url: "https://availafrica.com",
-  },
-  sameAs: SOCIALS.filter(s => s.href.startsWith("http")).map(s => s.href),
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": personId,
+      name: SITE.author,
+      givenName: "Emmanuel",
+      familyName: "Buruvuru",
+      url: SITE.website,
+      image: new URL("/images/profile.png", SITE.website).toString(),
+      description: SITE.desc,
+      jobTitle: "Software & AI Engineer",
+      worksFor: {
+        "@type": "Organization",
+        name: "Africa Clinical Research Network",
+      },
+      alumniOf: {
+        "@type": "CollegeOrUniversity",
+        name: "Curtin University",
+      },
+      address: { "@type": "PostalAddress", addressCountry: "MU" },
+      knowsAbout: [
+        "Software engineering",
+        "Artificial intelligence",
+        "Data engineering",
+        "Health technology",
+      ],
+      sameAs: SOCIALS.filter(s => s.href.startsWith("http")).map(s => s.href),
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE.website}#website`,
+      url: SITE.website,
+      name: SITE.author,
+      author: { "@id": personId },
+    },
+  ],
 };
 ---
 
