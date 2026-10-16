@@ -3,13 +3,14 @@ import { SITE } from "@/config";
 
 const path = Astro.url.pathname.replace(/\/+$/, "") || "/";
 const links = [
+  { href: "/#experience", label: "Experience" },
   { href: "/projects", label: "Projects" },
   { href: "/certifications", label: "Certifications" },
   { href: "/about", label: "About" },
   { href: "/#contact", label: "Contact" },
 ];
 const isActive = (href: string) =>
-  href !== "/#contact" && (path === href || path.startsWith(`${href}/`));
+  !href.startsWith("/#") && (path === href || path.startsWith(`${href}/`));
 ---
 
 <header
